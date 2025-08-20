@@ -1,7 +1,7 @@
-import { SwitchLanguage } from '~/components/SwitchLanguage';
-import { SwitchTheme } from '~/components/SwitchTheme';
-import { useHomePage } from '~/hooks/useHomePage';
-import { managerClassNames } from '~/utils/managerClassNames';
+import { SwitchLanguage } from "~/components/SwitchLanguage";
+import { SwitchTheme } from "~/components/SwitchTheme";
+import { useHomePage } from "~/hooks/useHomePage";
+import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
 
 export function Config() {
   const { isHomePage } = useHomePage();
@@ -9,8 +9,8 @@ export function Config() {
   return (
     <div
       className={managerClassNames([
-        'flex fixed bottom-2 right-2 flex-col gap-2 z-10 border p-4 rounded shadow-lg shadow-black/25 dark:shadow-white/25 backdrop-blur-md',
-        { 'xl:hidden': !isHomePage },
+        "flex fixed bottom-2 right-2 flex-col gap-2 z-10 border p-4 rounded shadow-lg shadow-black/25 dark:shadow-white/25 backdrop-blur-md",
+        { "xl:hidden": !isHomePage },
       ])}
     >
       <SwitchTheme />

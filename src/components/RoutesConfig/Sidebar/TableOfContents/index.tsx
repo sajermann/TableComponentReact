@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 
-import { useLoadingLazy } from '~/hooks/useLoadingLazy';
-import { useTranslation } from '~/hooks/useTranslation';
-import { useWindow } from '~/hooks/useWindow';
-import { managerClassNames } from '~/utils/managerClassNames';
+import { useLoadingLazy } from "~/hooks/useLoadingLazy";
+import { useTranslation } from "~/hooks/useTranslation";
+import { useWindow } from "~/hooks/useWindow";
+import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
 
 type TMenu = {
   type: string;
@@ -35,14 +35,14 @@ export function TableOfContents() {
     for (let i = 0; i < subs.length; i += 1) {
       menus.push({
         type: subs[i].nodeName,
-        title: subs[i].textContent || '',
+        title: subs[i].textContent || "",
         anchor: `${i}-${subs[i].nodeName}-${subs[i].textContent}`,
         top: subs[i].getBoundingClientRect().top,
         active: false,
       });
       subs[i].setAttribute(
-        'id',
-        `${i}-${subs[i].nodeName}-${subs[i].textContent}`,
+        "id",
+        `${i}-${subs[i].nodeName}-${subs[i].textContent}`
       );
     }
 
@@ -50,9 +50,9 @@ export function TableOfContents() {
 
     if (menus.length === 0) return;
     const closest = menus.reduce((prev, curr) =>
-      Math.abs(curr.top - goal) < Math.abs(prev.top - goal) ? curr : prev,
+      Math.abs(curr.top - goal) < Math.abs(prev.top - goal) ? curr : prev
     );
-    const menusWithActive = menus.map(item => {
+    const menusWithActive = menus.map((item) => {
       if (item.anchor === closest.anchor) {
         return { ...item, active: true };
       }
@@ -64,7 +64,7 @@ export function TableOfContents() {
 
   useEffect(
     () => load(),
-    [scrollPosition, location.pathname, currentLanguage, isLoadingLazy],
+    [scrollPosition, location.pathname, currentLanguage, isLoadingLazy]
   );
 
   if (!optionsMenu.length) {
@@ -73,23 +73,23 @@ export function TableOfContents() {
 
   return (
     <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2">
-      <p>{translate('TABLE_OF_CONTENTS')}</p>
+      <p>{translate("TABLE_OF_CONTENTS")}</p>
       <nav>
         <ul>
-          {optionsMenu.map(item => (
+          {optionsMenu.map((item) => (
             <li
               key={`#${item.anchor}`}
               className={managerClassNames([
-                'hover:opacity-70 transition-opacity duration-300',
+                "hover:opacity-70 transition-opacity duration-300",
                 {
-                  'pl-6': item.type === 'H2',
-                  'pl-12': item.type === 'H3',
+                  "pl-6": item.type === "H2",
+                  "pl-12": item.type === "H3",
                 },
               ])}
             >
               <button
                 className={managerClassNames({
-                  '!text-primary-700 border-l-4 border-primary-700 pl-1':
+                  "!text-primary-700 border-l-4 border-primary-700 pl-1":
                     item.active,
                 })}
                 onClick={() => scrollToSection(item.anchor)}
