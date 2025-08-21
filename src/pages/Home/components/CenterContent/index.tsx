@@ -1,20 +1,20 @@
-import { EyeIcon } from 'lucide-react';
-import { Link } from 'react-router';
-import { useRoutesMenu } from '~/hooks/useRoutesMenu';
-import { managerClassNames } from '~/utils/managerClassNames';
+import { EyeIcon } from "lucide-react";
+import { Link } from "react-router";
+import { useRoutesMenu } from "~/hooks/useRoutesMenu";
+import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
 
 export function CenterContent() {
   const { globalRoutes: options } = useRoutesMenu();
   return (
     <div className="flex flex-wrap items-center justify-center gap-2">
       {options.map(
-        opt =>
+        (opt) =>
           !opt.hide?.home && (
             <div
               key={opt.path}
               className={managerClassNames([
-                'flex flex-col border border-solid dark:border-white',
-                'text-xl overflow-auto rounded-2xl w-64',
+                "flex flex-col border border-solid dark:border-white",
+                "text-xl overflow-auto rounded-2xl w-64",
                 { [opt.className as string]: opt.className },
               ])}
             >
@@ -26,10 +26,10 @@ export function CenterContent() {
                 <Link
                   to={opt.path}
                   className={managerClassNames([
-                    'flex flex-col items-center justify-center gap-1 p-1',
-                    'text-white duration-500 transition-colors text-sm',
-                    'hover:text-primary-700 hover:opacity-70',
-                    'transition-opacity duration-300',
+                    "flex flex-col items-center justify-center gap-1 p-1",
+                    "text-white duration-500 transition-colors text-sm",
+                    "hover:text-primary-700 hover:opacity-70",
+                    "transition-opacity duration-300",
                   ])}
                 >
                   <EyeIcon width="2rem" height="2rem" />
@@ -37,7 +37,7 @@ export function CenterContent() {
                 </Link>
               </footer>
             </div>
-          ),
+          )
       )}
     </div>
   );

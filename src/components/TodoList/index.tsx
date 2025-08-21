@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useTranslation } from '~/hooks/useTranslation';
-import { managerClassNames } from '~/utils/managerClassNames';
-import { Section } from '../Section';
+import { useState } from "react";
+import { useTranslation } from "~/hooks/useTranslation";
+import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
+import { Section } from "../Section";
 
 export function TodoList() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -9,10 +9,10 @@ export function TodoList() {
   return (
     <div
       className={managerClassNames([
-        'relative',
+        "relative",
         { border: true },
-        { 'rounded my-2 gap-2 w-full': true },
-        { 'flex-col': true },
+        { "rounded my-2 gap-2 w-full": true },
+        { "flex-col": true },
       ])}
     >
       <header className="border-b">
@@ -21,10 +21,10 @@ export function TodoList() {
 
       <main
         className={managerClassNames([
-          'px-7 rounded my-2 gap-2 w-full overflow-hidden flex-col',
-          ' transition-[max-height] duration-500 max-h-auto',
-          { 'max-h-48': !isExpanded },
-          { 'mb-14 ': isExpanded },
+          "px-7 rounded my-2 gap-2 w-full overflow-hidden flex-col",
+          " transition-[max-height] duration-500 max-h-auto",
+          { "max-h-48": !isExpanded },
+          { "mb-14 ": isExpanded },
         ])}
       >
         <div>
@@ -73,7 +73,7 @@ export function TodoList() {
           <input type="checkbox" disabled /> - Disabled Month
         </div>
         <div>
-          <input type="checkbox" disabled /> - Disabled Year{' '}
+          <input type="checkbox" disabled /> - Disabled Year{" "}
         </div>
       </main>
 
@@ -82,9 +82,9 @@ export function TodoList() {
           type="button"
           // variant="option"
           // colorStyle="mono"
-          onClick={() => setIsExpanded(prev => !prev)}
+          onClick={() => setIsExpanded((prev) => !prev)}
         >
-          {isExpanded ? translate('COLLAPSE') : translate('EXPAND')}
+          {isExpanded ? translate("COLLAPSE") : translate("EXPAND")}
         </button>
       </footer>
     </div>

@@ -1,4 +1,4 @@
-import { TRoutesMenu } from '~/types/TRoutesMenu';
+import { TRoutesMenu } from '~/types';
 import { TBreadcrumb } from '../../types';
 import { _getMyChild } from '../getMyChild';
 

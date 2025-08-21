@@ -1,0 +1,18 @@
+.tr {
+	height: 68px;
+	max-height: 68px;
+	min-height: 68px;
+}
+
+.isExpanded {
+	border-color: #e5e7eb;
+	border-width: 2px;
+	border-bottom-width: 0px;
+	background: rgb(34 197 94) !important;
+	color: black;
+}
+
+.isSelected {
+	border-color: #08da1a;
+	border-width: 1px;
+}

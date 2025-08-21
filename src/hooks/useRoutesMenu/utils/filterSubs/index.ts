@@ -1,4 +1,4 @@
-import { TRoutesMenu } from '~/types/TRoutesMenu';
+import { TRoutesMenu } from '~/types';
 
 export function _filterSubs(
   menu: TRoutesMenu,

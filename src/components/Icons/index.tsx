@@ -1,11 +1,11 @@
-import { SVGProps } from 'react';
+import { SVGProps } from "react";
 
 const ICONS = {
   brazil: ({ width, height, ...rest }: IconProps) => (
     <svg
       {...rest}
-      width={width || '100%'}
-      height={height || '100%'}
+      width={width || "100%"}
+      height={height || "100%"}
       textRendering="geometricPrecision"
       fillRule="evenodd"
       xmlSpace="preserve"
@@ -450,9 +450,9 @@ const ICONS = {
   linkedin: ({ width, height, color, ...rest }: IconProps) => (
     <svg
       {...rest}
-      width={width || '100%'}
-      height={height || '100%'}
-      fill={color || 'currentColor'}
+      width={width || "100%"}
+      height={height || "100%"}
+      fill={color || "currentColor"}
       viewBox="0 0 256 256"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -464,7 +464,7 @@ const ICONS = {
         height="184"
         rx="8"
         fill="none"
-        stroke={color || 'currentColor'}
+        stroke={color || "currentColor"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="16"
@@ -475,7 +475,7 @@ const ICONS = {
         x2="120"
         y2="176"
         fill="none"
-        stroke={color || 'currentColor'}
+        stroke={color || "currentColor"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="16"
@@ -486,7 +486,7 @@ const ICONS = {
         x2="88"
         y2="176"
         fill="none"
-        stroke={color || 'currentColor'}
+        stroke={color || "currentColor"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="16"
@@ -494,7 +494,7 @@ const ICONS = {
       <path
         d="M120,140a28,28,0,0,1,56,0v36"
         fill="none"
-        stroke={color || 'currentColor'}
+        stroke={color || "currentColor"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="16"
@@ -506,16 +506,16 @@ const ICONS = {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
-      width={width || '100%'}
-      height={height || '100%'}
-      fill={color || 'currentColor'}
+      width={width || "100%"}
+      height={height || "100%"}
+      fill={color || "currentColor"}
       viewBox="0 0 256 256"
     >
       <rect width="256" height="256" fill="none" />
       <path
         d="M84,240a23.9,23.9,0,0,0,24-24V168"
         fill="none"
-        stroke={color || 'currentColor'}
+        stroke={color || "currentColor"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="16"
@@ -523,7 +523,7 @@ const ICONS = {
       <path
         d="M172,240a23.9,23.9,0,0,1-24-24V168"
         fill="none"
-        stroke={color || 'currentColor'}
+        stroke={color || "currentColor"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="16"
@@ -531,7 +531,7 @@ const ICONS = {
       <path
         d="M152,168h16a23.9,23.9,0,0,1,24,24v8a23.9,23.9,0,0,0,24,24"
         fill="none"
-        stroke={color || 'currentColor'}
+        stroke={color || "currentColor"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="16"
@@ -539,7 +539,7 @@ const ICONS = {
       <path
         d="M104,168H88a23.9,23.9,0,0,0-24,24v8a23.9,23.9,0,0,1-24,24"
         fill="none"
-        stroke={color || 'currentColor'}
+        stroke={color || "currentColor"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="16"
@@ -547,11 +547,34 @@ const ICONS = {
       <path
         d="M111.8,64A52,52,0,0,0,68,40a52,52,0,0,0-3.5,44.7A49.3,49.3,0,0,0,56,112v8a48,48,0,0,0,48,48h48a48,48,0,0,0,48-48v-8a49.3,49.3,0,0,0-8.5-27.3A52,52,0,0,0,188,40a52,52,0,0,0-43.8,24Z"
         fill="none"
-        stroke={color || 'currentColor'}
+        stroke={color || "currentColor"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="16"
       />
+    </svg>
+  ),
+  indeterminate: ({ width, height, color, ...rest }: IconProps) => (
+    <svg
+      width={width || "100%"}
+      height={height || "50%"}
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <g id="Layer_1">
+        <title>Layer 1</title>
+        <rect
+          stroke="#000"
+          rx="3"
+          id="svg_1"
+          width={width || "100%"}
+          height={height || "100%"}
+          y="-0.07418"
+          x="-0.01483"
+          strokeWidth="0"
+          fill={color || "currentColor"}
+        />
+      </g>
     </svg>
   ),
 };

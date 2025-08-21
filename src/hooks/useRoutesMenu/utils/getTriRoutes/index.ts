@@ -1,4 +1,4 @@
-import { TRoutesMenu } from '~/types/TRoutesMenu';
+import { TRoutesMenu } from '~/types';
 import { TTriRoutes } from '../../types';
 import { _getNext } from '../getNext';
 import { _getPrev } from '../getPrev';

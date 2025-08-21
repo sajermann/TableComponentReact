@@ -1,11 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { _handleChangeDarkModeInDom } from '~/hooks/useDarkMode/utils';
-import { IUseDarkModeZustand } from './interface';
 
 const IDENTIFIER = `${import.meta.env.VITE_APPLICATION_IDENTIFIER}:darkMode`;
 
-export const useDarkMode = create<IUseDarkModeZustand>()(
+export const useDarkMode = create<{
+  darkMode: boolean;
+  toggleDarkMode: () => void;
+}>()(
   persist(
     set => ({
       darkMode: true,
