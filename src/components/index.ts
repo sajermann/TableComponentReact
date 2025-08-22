@@ -13,3 +13,6 @@ export * from './SwitchLanguage';
 export * from './SwitchTheme';
 export * from './TodoList';
 export * from './Checkbox';
+export * from './Button';
+export * from './Select';
+export * from './Datepicker';

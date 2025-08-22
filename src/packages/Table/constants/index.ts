@@ -1,2 +1,1 @@
-export * from './default-page'
-export * from './roles'
+export * from './default-page';

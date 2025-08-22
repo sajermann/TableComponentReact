@@ -53,8 +53,8 @@ function person(...lens: number[]) {
   const makeDataLevel = (depth = 0): TPerson[] => {
     const len = lens[depth]!;
     return range(len).map((i): TPerson => {
-      const name = faker.name.firstName();
-      const lastName = faker.name.lastName();
+      const name = faker.person.firstName();
+      const lastName = faker.person.lastName();
       const domainEmail = faker.helpers.arrayElement([
         'hotmail',
         'gmail',

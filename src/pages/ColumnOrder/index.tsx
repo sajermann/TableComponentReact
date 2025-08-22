@@ -5,7 +5,7 @@ import { TPerson } from "~/types";
 
 import { Table } from "~/packages/Table";
 import { makeData } from "~/utils";
-import { BeautifulDnd } from "./components/BeautifulDnd";
+import { ColumnOrderSelector } from "./components/ColumnOrderSelector";
 
 export function ColumnOrderPage() {
   const { translate } = useTranslation();
@@ -34,8 +34,7 @@ export function ColumnOrderPage() {
       <div>{translate("COLUMN_ORDER_WITH_STATE_FULLY_CONTROLLED")}</div>
 
       <div className="flex flex-col justify-center items-center">
-        <div>{translate("DRAG_AND_DROP_FOR_CHANGE_COLUMN_ORDER")}</div>
-        <BeautifulDnd items={columnOrder} setItems={setColumnOrder} />
+        <ColumnOrderSelector items={columnOrder} onChange={setColumnOrder} />
       </div>
       <Table
         columns={columns}

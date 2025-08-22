@@ -32,6 +32,12 @@ const ColumnOrderPage = lazy(() =>
   }))
 );
 
+const EditablePage = lazy(() =>
+  import("~/pages/Editable").then(({ EditablePage: Editable }) => ({
+    default: Editable,
+  }))
+);
+
 // const FilterPage = lazy(() =>
 //   import("~/pages/Filter").then(({ FilterPage: Filter }) => ({
 //     default: Filter,
@@ -47,12 +53,6 @@ const ColumnOrderPage = lazy(() =>
 // const SortPage = lazy(() =>
 //   import("~/pages/Sort").then(({ SortPage: Sort }) => ({
 //     default: Sort,
-//   }))
-// );
-
-// const EditablePage = lazy(() =>
-//   import("~/pages/Editable").then(({ EditablePage: Editable }) => ({
-//     default: Editable,
 //   }))
 // );
 
@@ -135,7 +135,7 @@ export function useRoutesMenu() {
         },
         {
           name: "ColumnVisibility",
-          path: "/table/column-visibility",
+          path: "/column-visibility",
           implements_code:
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
           docs_code:
@@ -145,13 +145,23 @@ export function useRoutesMenu() {
         },
         {
           name: "ColumnOrder",
-          path: "/table/column-order",
+          path: "/column-order",
           implements_code:
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
           docs_code:
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/ColumnOrder",
           element: <ColumnOrderPage />,
           label: translate("COLUMN_ORDER"),
+        },
+        {
+          name: "Editable",
+          path: "/editable",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Editable",
+          element: <EditablePage />,
+          label: translate("EDITABLE"),
         },
         // {
         //   name: "Filter",
@@ -204,16 +214,7 @@ export function useRoutesMenu() {
         //   element: <SortPage />,
         //   label: translate("SORT"),
         // },
-        // {
-        //   name: "Editable",
-        //   path: "/table/editable",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Editable",
-        //   element: <EditablePage />,
-        //   label: translate("EDITABLE"),
-        // },
+
         // {
         //   name: "FullEditable",
         //   path: "/table/full-editable",

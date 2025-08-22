@@ -106,6 +106,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, Props>(
     ref
   ) => {
     const [situation, setSituation] = useState(() => {
+      console.log(`default`, { checked, defaultChecked });
       if (checked === true || defaultChecked === true) {
         return "checked";
       }
@@ -141,19 +142,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, Props>(
           })
         }
         className={checkboxPropsInternal({
-          class: managerClassNames([
-            { [className as string]: className },
-            {
-              "bg-red-500":
-                (situation === "checked" || situation === "indeterminate") &&
-                iserror,
-            },
-            {
-              "bg-primary-500":
-                (situation === "checked" || situation === "indeterminate") &&
-                !iserror,
-            },
-          ]),
+          className,
         })}
         id={id}
         {...rest}

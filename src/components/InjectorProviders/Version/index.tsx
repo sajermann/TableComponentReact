@@ -1,3 +1,4 @@
+const MODE = import.meta.env.VITE_MODE;
 const DEPLOY_TIME = import.meta.env.VITE_DEPLOY_TIME;
 const COMMIT_HASH = import.meta.env.VITE_COMMIT_HASH;
 const COMMIT_SHORT_HASH = import.meta.env.VITE_COMMIT_SHORT_HASH;
@@ -8,16 +9,19 @@ const LAST_COMMIT_DATE = import.meta.env.VITE_LAST_COMMIT_DATE;
 const TOTAL_COMMITS = import.meta.env.VITE_TOTAL_COMMITS;
 
 export function Version() {
-  console.table({
-    DEPLOY_TIME,
-    COMMIT_HASH,
-    COMMIT_SHORT_HASH,
-    COMMIT_MESSAGE,
-    COMMIT_AUTHOR,
-    BRANCH_NAME,
-    LAST_COMMIT_DATE,
-    TOTAL_COMMITS,
-  });
+  if (MODE === "production") {
+    console.table({
+      MODE,
+      DEPLOY_TIME,
+      COMMIT_HASH,
+      COMMIT_SHORT_HASH,
+      COMMIT_MESSAGE,
+      COMMIT_AUTHOR,
+      BRANCH_NAME,
+      LAST_COMMIT_DATE,
+      TOTAL_COMMITS,
+    });
+  }
 
   return null;
 }

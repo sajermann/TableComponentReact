@@ -48,7 +48,7 @@ export function IsLoading<T>({
             })}
             style={{ textAlign: "center" }}
           >
-            {translate("LOADING...")}
+            {translate("LOADING")}...
           </Td>
         </Tr>
       )}

@@ -77,7 +77,6 @@ const DEFAULT_OPTIONS = [
     label: "100",
   },
 ];
-console.log({ DEFAULT_OPTIONS });
 
 export function Pagination<T>({
   table,

@@ -91,7 +91,7 @@ export function ColumnVisibilityPage() {
           <div>{translate("COLUMNS_VISIBLED")}</div>
           <div className="flex justify-center text-center gap-4 flex-wrap">
             {OPTIONS.map((item) => (
-              <ContainerInput key={item.id} className="items-center w-28">
+              <ContainerInput key={item.id} className="items-center w-fit">
                 <Label htmlFor={item.id}>{item.label}</Label>
                 <Checkbox
                   checked={item.checked}
