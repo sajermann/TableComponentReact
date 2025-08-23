@@ -4,23 +4,16 @@ import {
   HTMLAttributes,
   MouseEvent,
   ReactNode,
-  Ref,
-  forwardRef,
-  useCallback,
   useState,
 } from "react";
 import { tv } from "tailwind-variants";
 
+import { CheckedState } from "@radix-ui/react-checkbox";
 import { CheckIcon } from "lucide-react";
-import { managerClassNames } from "../../utils/managerClassNames";
+
 import { Icons } from "../Icons";
-import { handleCheckedChange, onClickInternal } from "./utils";
 
-type PropsNode = {
-  attributes: Record<string, { value: string }>;
-};
-
-interface Props
+interface TCheckboxProps
   extends Omit<
     React.ForwardRefExoticComponent<
       CheckboxRadix.CheckboxProps & React.RefAttributes<HTMLButtonElement>
@@ -30,21 +23,16 @@ interface Props
   disabled?: boolean;
   checkedIcon?: ReactNode;
   indeterminateIcon?: ReactNode;
-  checked?: boolean | "indeterminate";
-  defaultChecked?: boolean | "indeterminate";
+  checked?: CheckedState;
+  defaultChecked?: CheckedState;
   onClick?: (e?: MouseEvent<HTMLButtonElement, Event>) => void;
   id?: string;
   onCheckedChange?: (data: {
-    target: { value: boolean | "indeterminate"; id: string | undefined };
+    target: { value: CheckedState; id: string | undefined };
   }) => void;
   className?: string;
   iserror?: boolean;
 }
-
-type TContainer = DetailedHTMLProps<
-  HTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
->;
 
 const checkboxVariants = tv({
   slots: {
@@ -76,90 +64,66 @@ const checkboxVariants = tv({
   },
 });
 
-export const Container = forwardRef<HTMLDivElement, TContainer>(
-  ({ className, ...rest }, ref) => (
+function Container(
+  props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+) {
+  return (
     <div
-      ref={ref}
-      {...rest}
-      className={managerClassNames([
-        { "p-1 w-full h-full flex items-center justify-center": true },
-        { [className as string]: className },
-      ])}
+      {...props}
+      className="p-1 w-full h-full flex items-center justify-center"
     />
-  )
-);
+  );
+}
 
-export const Checkbox = forwardRef<HTMLButtonElement, Props>(
-  (
-    {
-      checked,
-      onClick,
-      defaultChecked,
-      onCheckedChange,
-      id,
-      checkedIcon,
-      indeterminateIcon,
-      className,
-      iserror,
-      ...rest
-    },
-    ref
-  ) => {
-    const [situation, setSituation] = useState(() => {
-      console.log(`default`, { checked, defaultChecked });
-      if (checked === true || defaultChecked === true) {
-        return "checked";
-      }
-      if (checked === "indeterminate" || defaultChecked === "indeterminate") {
-        return "indeterminate";
-      }
-      return "unchecked";
-    });
-    const { checkboxPropsInternal } = checkboxVariants({
-      color: iserror ? "error" : "primary",
-    });
+export function Checkbox({
+  checked,
+  onClick,
+  defaultChecked,
+  onCheckedChange,
+  id,
+  checkedIcon,
+  indeterminateIcon,
+  className,
+  iserror,
+  ...rest
+}: TCheckboxProps) {
+  const [situation, setSituation] = useState(checked);
 
-    const refInternal = useCallback((node: PropsNode) => {
-      if (node !== null) {
-        const { attributes } = node;
-        setSituation(attributes["data-state"].value);
-      }
-    }, []);
+  const { checkboxPropsInternal } = checkboxVariants({
+    color: iserror ? "error" : "primary",
+  });
 
-    return (
-      <CheckboxRadix.Root
-        ref={
-          ref || (refInternal as unknown as Ref<HTMLButtonElement> | undefined)
-        }
-        onClick={(e) => onClickInternal({ e, setSituation, onClick, ref })}
-        checked={checked}
-        defaultChecked={defaultChecked}
-        onCheckedChange={(e) =>
-          handleCheckedChange({
-            e,
+  return (
+    <CheckboxRadix.Root
+      checked={checked}
+      defaultChecked={defaultChecked}
+      onCheckedChange={(newState) => {
+        setSituation(newState);
+        onCheckedChange?.({
+          target: {
+            value: newState,
             id,
-            onCheckedChange,
-          })
-        }
-        className={checkboxPropsInternal({
-          className,
-        })}
-        id={id}
-        {...rest}
-      >
-        <CheckboxRadix.Indicator>
-          {situation === "indeterminate" && (
-            <Container>
-              {indeterminateIcon || (
-                <Icons nameIcon="indeterminate" color="#fff" />
-              )}
-            </Container>
-          )}
-          {situation === "checked" && (
-            <Container>{checkedIcon || <CheckIcon color="#fff" />}</Container>
-          )}
-        </CheckboxRadix.Indicator>
-      </CheckboxRadix.Root>
-    );
-  }
-);
+          },
+        });
+      }}
+      className={checkboxPropsInternal({
+        className,
+      })}
+      id={id}
+      {...rest}
+    >
+      <CheckboxRadix.Indicator>
+        {situation === "indeterminate" && (
+          <Container>
+            {indeterminateIcon || (
+              <Icons nameIcon="indeterminate" color="#fff" />
+            )}
+          </Container>
+        )}
+        {situation && (
+          <Container>{checkedIcon || <CheckIcon color="#fff" />}</Container>
+        )}
+      </CheckboxRadix.Indicator>
+    </CheckboxRadix.Root>
+  );
+}

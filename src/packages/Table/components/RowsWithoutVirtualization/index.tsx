@@ -23,6 +23,7 @@ export function RowsWithoutVirtualization<T>({
   enableVirtualization,
 }: Props<T>) {
   if (enableVirtualization) return null;
+
   return (
     <>
       {table.getRowModel().rows.map((row) => (

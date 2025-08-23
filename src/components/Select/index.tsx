@@ -22,10 +22,9 @@ function Select(
     <select
       {...props}
       className={managerClassNames([
-        "dark:bg-neutral-900 border border-neutral-700",
-        "dark:text-gray-100 rounded-lg px-3 py-2 pr-10",
-        "focus:outline-none focus:ring-2 focus:ring-indigo-500",
-        "transition-all duration-500 shadow-sm appearance-none w-full",
+        "group outline-none focus:ring-1 border h-11 py-1 px-2 rounded w-full bg-transparent",
+        "transition-all duration-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none",
+        "focus:ring-blue-500 group-hover:border-blue-500 focus:border-blue-500",
       ])}
     />
   );
@@ -34,7 +33,7 @@ function Select(
 function Arrow() {
   return (
     <svg
-      className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400"
+      className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5"
       fill="none"
       stroke="currentColor"
       strokeWidth={2}

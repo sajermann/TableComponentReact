@@ -28,7 +28,6 @@ export function EditablePage() {
   const { columns } = useColumns();
 
   function handleInput(e: ChangeEvent<HTMLInputElement>) {
-    console.log({ e });
     const { id, value } = e.target;
     if (!updateLine) return;
     setUpdateLine((prev) => {
@@ -62,7 +61,6 @@ export function EditablePage() {
               variant="outlined"
               colorStyle="mono"
               onClick={() => {
-                console.log({ info });
                 setUpdateLine({
                   row: info.row.index,
                   data: { ...info.row.original },
@@ -160,12 +158,13 @@ export function EditablePage() {
             const [year, month, day] = updateLine.data.birthday
               .substring(0, 10)
               .split("-");
+            const dateFormatted = `${year}-${month}-${day}`;
 
             return (
               <Datepicker
                 id="birthday"
                 name="birthday"
-                value={`${year}-${month}-${day}`}
+                value={dateFormatted}
                 onChange={handleInput}
               />
             );
@@ -210,7 +209,11 @@ export function EditablePage() {
                 }}
               >
                 {ROLES.map((opt) => (
-                  <Select.Option key={opt.value} value={opt.value}>
+                  <Select.Option
+                    key={opt.value}
+                    value={opt.value}
+                    selected={updateLine?.data.role === opt.value}
+                  >
                     {opt.label}
                   </Select.Option>
                 ))}
@@ -239,15 +242,12 @@ export function EditablePage() {
         meta: {
           align: "center",
           cellEdit: () => {
-            console.log(`fadsfdsa`, updateLine?.data.isActive);
             return (
               <ContainerInput className="items-center">
                 <Checkbox
-                  // defaultChecked={updateLine?.data.isActive}
                   checked={updateLine?.data.isActive}
                   id="isActive"
                   onCheckedChange={(e) => {
-                    console.log(`fdsafdsafads`, { e });
                     handleInput(e as ChangeEvent<HTMLInputElement>);
                   }}
                 />

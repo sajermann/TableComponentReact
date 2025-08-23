@@ -38,6 +38,18 @@ const EditablePage = lazy(() =>
   }))
 );
 
+const EllipsisPage = lazy(() =>
+  import("~/pages/Ellipsis").then(({ EllipsisPage: Ellipsis }) => ({
+    default: Ellipsis,
+  }))
+);
+
+const ExpandedLinePage = lazy(() =>
+  import("~/pages/ExpandedLine").then(({ ExpandedLinePage: ExpandedLine }) => ({
+    default: ExpandedLine,
+  }))
+);
+
 // const FilterPage = lazy(() =>
 //   import("~/pages/Filter").then(({ FilterPage: Filter }) => ({
 //     default: Filter,
@@ -80,12 +92,6 @@ const EditablePage = lazy(() =>
 //   }))
 // );
 
-// const EllipsisPage = lazy(() =>
-//   import("~/pages/Ellipsis").then(({ EllipsisPage: Ellipsis }) => ({
-//     default: Ellipsis,
-//   }))
-// );
-
 // const ResizingPage = lazy(() =>
 //   import("~/pages/Resizing").then(({ ResizingPage: Resizing }) => ({
 //     default: Resizing,
@@ -95,12 +101,6 @@ const EditablePage = lazy(() =>
 // const SelectionPage = lazy(() =>
 //   import("~/pages/Selection").then(({ SelectionPage: Selection }) => ({
 //     default: Selection,
-//   }))
-// );
-
-// const ExpandedLinePage = lazy(() =>
-//   import("~/pages/ExpandedLine").then(({ ExpandedLinePage: ExpandedLine }) => ({
-//     default: ExpandedLine,
 //   }))
 // );
 
@@ -163,6 +163,26 @@ export function useRoutesMenu() {
           element: <EditablePage />,
           label: translate("EDITABLE"),
         },
+        {
+          name: "Ellipsis",
+          path: "/ellipsis",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Ellipsis",
+          element: <EllipsisPage />,
+          label: "Ellipsis",
+        },
+        {
+          name: "ExpandedLine",
+          path: "/expand-line",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/ExpandedLine",
+          element: <ExpandedLinePage />,
+          label: translate("EXPAND_LINE"),
+        },
         // {
         //   name: "Filter",
         //   path: "/table/filter",
@@ -183,16 +203,7 @@ export function useRoutesMenu() {
         //   element: <SelectionPage />,
         //   label: translate("SELECTION"),
         // },
-        // {
-        //   name: "ExpandedLine",
-        //   path: "/table/expand-line",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/ExpandedLine",
-        //   element: <ExpandedLinePage />,
-        //   label: translate("EXPAND_LINE"),
-        // },
+
         // {
         //   name: "Loading",
         //   path: "/table/loading",
@@ -255,16 +266,7 @@ export function useRoutesMenu() {
         //   element: <FavoritesPage />,
         //   label: translate("FAVORITES"),
         // },
-        // {
-        //   name: "Ellipsis",
-        //   path: "/table/ellipsis",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Ellipsis",
-        //   element: <EllipsisPage />,
-        //   label: "Ellipsis",
-        // },
+
         // {
         //   name: "Resizing",
         //   path: "/table/resizing",
