@@ -22,9 +22,10 @@ function Select(
     <select
       {...props}
       className={managerClassNames([
-        "group outline-none focus:ring-1 border h-11 py-1 px-2 rounded w-full bg-transparent",
+        "group outline-none focus:ring-1 border border-black dark:border-white h-11 py-1 px-2 rounded w-full bg-transparent",
         "transition-all duration-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none",
         "focus:ring-blue-500 group-hover:border-blue-500 focus:border-blue-500",
+        "required:invalid:text-gray-400",
       ])}
     />
   );
@@ -52,8 +53,23 @@ function Option(
   >
 ) {
   return (
-    <option {...props} className="dark:bg-neutral-900 dark:text-gray-100" />
+    <option
+      {...props}
+      className={managerClassNames([
+        "dark:bg-neutral-900 dark:text-gray-100 disabled:opacity-5",
+        { [props.className as string]: props.className },
+      ])}
+    />
   );
+}
+
+function Placeholder(
+  props: DetailedHTMLProps<
+    OptionHTMLAttributes<HTMLOptionElement>,
+    HTMLOptionElement
+  >
+) {
+  return <Option {...props} disabled selected className="hidden" value="" />;
 }
 
 export default {
@@ -61,4 +77,5 @@ export default {
   Select,
   Option,
   Arrow,
+  Placeholder,
 };

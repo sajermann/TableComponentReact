@@ -16,3 +16,6 @@ export * from './Checkbox';
 export * from './Button';
 export * from './Select';
 export * from './Datepicker';
+export * from './Modal';
+export * from './Popover';
+export * from './Chip';

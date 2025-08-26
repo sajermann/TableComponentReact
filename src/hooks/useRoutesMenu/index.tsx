@@ -50,17 +50,29 @@ const ExpandedLinePage = lazy(() =>
   }))
 );
 
-// const FilterPage = lazy(() =>
-//   import("~/pages/Filter").then(({ FilterPage: Filter }) => ({
-//     default: Filter,
-//   }))
-// );
+const ExportPage = lazy(() =>
+  import("~/pages/Export").then(({ ExportPage: Export }) => ({
+    default: Export,
+  }))
+);
 
-// const ExportPage = lazy(() =>
-//   import("~/pages/Export").then(({ ExportPage: Export }) => ({
-//     default: Export,
-//   }))
-// );
+const FavoritesPage = lazy(() =>
+  import("~/pages/Favorites").then(({ FavoritesPage: Favorites }) => ({
+    default: Favorites,
+  }))
+);
+
+const FilterPage = lazy(() =>
+  import("~/pages/Filter").then(({ FilterPage: Filter }) => ({
+    default: Filter,
+  }))
+);
+
+const FooterPage = lazy(() =>
+  import("~/pages/Footer").then(({ FooterPage: Footer }) => ({
+    default: Footer,
+  }))
+);
 
 // const SortPage = lazy(() =>
 //   import("~/pages/Sort").then(({ SortPage: Sort }) => ({
@@ -86,12 +98,6 @@ const ExpandedLinePage = lazy(() =>
 //   }))
 // );
 
-// const FavoritesPage = lazy(() =>
-//   import("~/pages/Favorites").then(({ FavoritesPage: Favorites }) => ({
-//     default: Favorites,
-//   }))
-// );
-
 // const ResizingPage = lazy(() =>
 //   import("~/pages/Resizing").then(({ ResizingPage: Resizing }) => ({
 //     default: Resizing,
@@ -107,12 +113,6 @@ const ExpandedLinePage = lazy(() =>
 // const LoadingPage = lazy(() =>
 //   import("~/pages/Loading").then(({ LoadingPage: Loading }) => ({
 //     default: Loading,
-//   }))
-// );
-
-// const FooterPage = lazy(() =>
-//   import("~/pages/Footer").then(({ FooterPage: Footer }) => ({
-//     default: Footer,
 //   }))
 // );
 
@@ -183,16 +183,46 @@ export function useRoutesMenu() {
           element: <ExpandedLinePage />,
           label: translate("EXPAND_LINE"),
         },
-        // {
-        //   name: "Filter",
-        //   path: "/table/filter",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Filter",
-        //   element: <FilterPage />,
-        //   label: translate("FILTER"),
-        // },
+        {
+          name: "Export",
+          path: "/export",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Export",
+          element: <ExportPage />,
+          label: translate("EXPORT"),
+        },
+        {
+          name: "Favorites",
+          path: "/favorites",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Favorites",
+          element: <FavoritesPage />,
+          label: translate("FAVORITES"),
+        },
+        {
+          name: "Filter",
+          path: "/filter",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Filter",
+          element: <FilterPage />,
+          label: translate("FILTER"),
+        },
+        {
+          name: "Footer",
+          path: "footer",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Footer",
+          element: <FooterPage />,
+          label: translate("FOOTER"),
+        },
         // {
         //   name: "Selection",
         //   path: "/table/selection",
@@ -256,16 +286,6 @@ export function useRoutesMenu() {
         //   element: <PaginationTablePage />,
         //   label: translate("PAGINATION"),
         // },
-        // {
-        //   name: "Favorites",
-        //   path: "/table/favorites",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Favorites",
-        //   element: <FavoritesPage />,
-        //   label: translate("FAVORITES"),
-        // },
 
         // {
         //   name: "Resizing",
@@ -278,26 +298,6 @@ export function useRoutesMenu() {
         //   label: translate("RESIZING"),
         // },
 
-        // {
-        //   name: "Export",
-        //   path: "/table/export",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Export",
-        //   element: <ExportPage />,
-        //   label: translate("EXPORT"),
-        // },
-        // {
-        //   name: "Footer",
-        //   path: "/table/footer",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Footer",
-        //   element: <FooterPage />,
-        //   label: translate("FOOTER"),
-        // },
         {
           name: "NotFound",
           path: "*",

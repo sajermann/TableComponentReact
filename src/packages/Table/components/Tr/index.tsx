@@ -29,7 +29,6 @@ export function Tr<T>({
       {...rest}
       className={managerClassNames([
         { [styles.tr]: true },
-        { [styles.isSelected]: selection && row && row.getIsSelected() },
         { [styles.isExpanded]: expandLine && row && row.getIsExpanded() },
         { [rest.className as string]: rest.className },
       ])}

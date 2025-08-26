@@ -4,3 +4,6 @@ export * from './person.type';
 export * from './chat.type';
 export * from './brawler.type';
 export * from './routes-menu.type';
+export * from './export.type';
+export * from './filter-active.type';
+export * from './real-format.type';

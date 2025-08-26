@@ -1,5 +1,6 @@
-import html2canvas from 'html2canvas';
+import html2canvas from 'html2canvas-pro';
 import { jsPDF as JsPdf } from 'jspdf';
+import autoTable, { applyPlugin } from 'jspdf-autotable';
 import { toXML } from 'jstoxml';
 import * as XLSX from 'xlsx-js-style';
 import { TDefCsv, TDefPrintPdfPng, TDefXlsx, TDefXml } from '../../types';
@@ -185,8 +186,9 @@ function print<T>({ data, defColumns = [] }: PropsPrint<T>) {
 }
 
 function pdf<T>({ data, defColumns = [] }: PropsPrint<T>) {
+  // TODO: Fix friends column
   const table = buildTable({ data, defColumns });
-
+  applyPlugin(JsPdf);
   const doc = new JsPdf({
     orientation: 'l',
     unit: 'mm',
@@ -195,13 +197,8 @@ function pdf<T>({ data, defColumns = [] }: PropsPrint<T>) {
     floatPrecision: 16,
   });
 
-  doc.html(table, {
-    callback: docTemp => {
-      docTemp.save(`Data-${new Date().toISOString()}.pdf`);
-    },
-    width: 190,
-    windowWidth: 700,
-  });
+  autoTable(doc, { html: table });
+  doc.save(`Data-${new Date().toISOString()}.pdf`);
 }
 
 function png<T>({ data, defColumns = [] }: PropsPrint<T>) {
