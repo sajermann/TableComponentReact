@@ -1,11 +1,12 @@
 import { Column } from "@tanstack/react-table";
 import { FunnelIcon, SaveIcon, TrashIcon } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button, ContainerInput, Input } from "~/components";
 import { Popover } from "~/components/Popover";
 import Select from "~/components/Select";
 import { useTranslation } from "~/hooks";
 import { TPerson } from "~/types";
+import { managerClassNames } from "~/utils";
 
 type TOptionsProps = {
   value: string;
@@ -17,6 +18,7 @@ export function FilterId({ column }: { column: Column<TPerson, string> }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectType, setSelectType] = useState<TOptionsProps | null>(null);
   const [filterValue, setFilterValue] = useState("");
+
   const OPTIONS: TOptionsProps[] = [
     { value: "equals", label: translate("EQUAL") },
     { value: "bigger", label: translate("BIGGER_THAN") },
@@ -42,11 +44,16 @@ export function FilterId({ column }: { column: Column<TPerson, string> }) {
       onInteractOutside={() => setIsOpen(false)}
       trigger={
         <button
-          className="w-5 h-4 flex items-center justify-center"
+          className="w-5 h-5 flex items-center justify-center"
           type="button"
           onClick={() => setIsOpen(true)}
         >
-          <FunnelIcon className={verifyFillFilter() ? "fill-white" : ""} />
+          <FunnelIcon
+            className={managerClassNames([
+              "h-full w-full",
+              { "fill-white": verifyFillFilter() },
+            ])}
+          />
         </button>
       }
     >
@@ -111,6 +118,7 @@ export function FilterId({ column }: { column: Column<TPerson, string> }) {
             colorStyle="mono"
             variant="outlined"
             onClick={() => {
+              console.log(`sajermann`, [selectType?.value, filterValue]);
               column.setFilterValue([selectType?.value, filterValue]);
               setIsOpen(false);
             }}

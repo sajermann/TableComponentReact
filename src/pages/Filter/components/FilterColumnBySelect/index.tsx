@@ -1,10 +1,9 @@
 import { Column, Table as TTable } from "@tanstack/react-table";
 import { FunnelIcon, SaveIcon, TrashIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button, ContainerInput } from "~/components";
 import { Popover } from "~/components/Popover";
-import Select from "~/components/Select";
-import { useTranslation } from "~/hooks";
+
 import { TPerson } from "~/types";
 
 type Props2 = {
@@ -14,19 +13,30 @@ type Props2 = {
 };
 
 export function FilterColumnBySelect({ column, table, propForFilter }: Props2) {
-  const { translate } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [filterValue, setFilterValue] = useState<
-    { value: string; label: string }[]
-  >([]);
 
-  function getProps() {
-    const myRows = table.getRowModel().rows.map((item) => item.original);
-    return myRows.map((item) => ({
-      value: item[propForFilter],
-      label: item[propForFilter],
-    }));
-  }
+  console.log("sajermann - lindo", column.getFilterValue());
+  const [optionsChecked, setOptionsChecked] = useState<string[]>([]);
+  useEffect(() => {
+    setOptionsChecked((column.getFilterValue() as string[]) || []);
+  }, [isOpen]);
+  const options = useMemo(() => {
+    const myRows = table
+      .getCoreRowModel()
+      .flatRows.map((item) => item.original);
+    return myRows.map((item) => {
+      if (typeof item[propForFilter] === "string") {
+        return {
+          value: item[propForFilter],
+          label: item[propForFilter],
+        };
+      }
+      return {
+        value: "N",
+        label: "N",
+      };
+    });
+  }, [table.getCoreRowModel().flatRows]);
 
   function verifyFillFilter() {
     const filterValueTemp = column.getFilterValue();
@@ -40,6 +50,7 @@ export function FilterColumnBySelect({ column, table, propForFilter }: Props2) {
     <Popover
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
+      onInteractOutside={() => setIsOpen(false)}
       trigger={
         <button
           className="w-5 h-4 flex items-center justify-center"
@@ -50,29 +61,38 @@ export function FilterColumnBySelect({ column, table, propForFilter }: Props2) {
         </button>
       }
     >
-      <ContainerInput>
-        {/* <Select
-					placeholder={translate('FILTER')}
-					menuPosition="fixed"
-					menuPortalTarget={document.body}
-					options={getProps() as { value: string; label: string }[]}
-					isMulti
-					onChange={e => {
-						console.log({ e });
-						setFilterValue(e as { value: string; label: string }[]);
-					}}
-					value={filterValue}
-					id="filter"
-				/> */}
-      </ContainerInput>
+      <div className="grid grid-cols-2 gap-2 items-center justify-center">
+        {options.map((column) => (
+          <div
+            className="w-[50%] text-center col-span-1 flex gap-2"
+            key={column.value}
+          >
+            <input
+              checked={!!optionsChecked.find((opt) => opt === column.value)}
+              id={column.label}
+              type="checkbox"
+              onChange={({ target }) => {
+                setOptionsChecked((prev) => {
+                  if (!target.checked) {
+                    return prev.filter((p) => p !== column.value);
+                  }
+                  return [...prev, column.value];
+                });
+              }}
+            />
+            <label htmlFor={column.label}>{column.label}</label>
+          </div>
+        ))}
+      </div>
 
       <div className="w-full flex justify-center gap-4 mt-4">
         <Button
           iconButton="rounded"
-          colorStyle="secondary"
+          colorStyle="mono"
           variant="outlined"
           onClick={() => {
-            setFilterValue([]);
+            column.setFilterValue(undefined);
+            setIsOpen(false);
           }}
           endIcon={<TrashIcon />}
         />
@@ -80,8 +100,9 @@ export function FilterColumnBySelect({ column, table, propForFilter }: Props2) {
         <Button
           iconButton="rounded"
           variant="outlined"
+          colorStyle="mono"
           onClick={() => {
-            column.setFilterValue(filterValue.map((item) => item.value));
+            column.setFilterValue(optionsChecked);
             setIsOpen(false);
           }}
           endIcon={<SaveIcon />}

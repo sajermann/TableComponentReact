@@ -12,7 +12,7 @@ export function Tfoot<T>({ table, showFooter }: Props<T>) {
     <tfoot
       className={managerClassNames({
         "m-0 bottom-0 sticky z-[1] backdrop-blur-md h-14": true,
-        "shadow-lg shadow-black/25 dark:shadow-white/25": true,
+        "shadow-table-top-lg shadow-black/25 dark:shadow-white/25": true,
       })}
     >
       {table.getFooterGroups().map((footerGroup) => (

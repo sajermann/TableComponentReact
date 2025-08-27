@@ -1,9 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { CheckIcon, XIcon } from "lucide-react";
 import { useMemo } from "react";
 import { TPerson } from "~/types";
-import { useTranslation } from "..";
-import { CheckIcon, XIcon } from "lucide-react";
 import { formatDate, stringToDate } from "~/utils";
+import { useTranslation } from "..";
 
 export function useColumns(columnSizeDefault?: Record<string, number>) {
   const { translate } = useTranslation();

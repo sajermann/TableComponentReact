@@ -26,7 +26,7 @@ export function IsLoading<T>({
   if (!isLoading) return null;
   return (
     <>
-      <Tr className="h-full">
+      <Tr className="!h-full">
         <Td
           colSpan={countColSpan({
             columns,

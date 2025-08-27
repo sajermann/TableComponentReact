@@ -66,7 +66,7 @@ function person(...lens: number[]) {
         id: String(i + 1),
         name,
         lastName,
-        birthday: faker.date.past().toISOString(),
+        birthday: faker.date.past({ years: 70 }).toISOString(),
         email: `${name.split(' ').join('_').toLocaleLowerCase()}_${lastName
           .split(' ')
           .join('_')

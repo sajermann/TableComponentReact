@@ -27,6 +27,7 @@ export function FilterBirthday({
     <Popover
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
+      onInteractOutside={() => setIsOpen(false)}
       trigger={
         <button
           className="w-5 h-4 flex items-center justify-center"
@@ -43,7 +44,7 @@ export function FilterBirthday({
             <ContainerInput>
               <Label htmlFor="from">{translate("FROM")}</Label>
               <Datepicker
-                placeholder={translate("DD/MM/YYYY")}
+                placeholder="DD/MM/YYYY"
                 id="from"
                 value={dates.from}
                 onChange={(e) =>
@@ -56,7 +57,7 @@ export function FilterBirthday({
             <ContainerInput>
               <Label htmlFor="to">{translate("TO")}</Label>
               <Datepicker
-                placeholder={translate("DD/MM/YYYY")}
+                placeholder="DD/MM/YYYY"
                 id="to"
                 value={dates.to}
                 onChange={(e) =>
@@ -70,7 +71,7 @@ export function FilterBirthday({
         <div className="w-full flex justify-center gap-4 mt-4">
           <Button
             iconButton="rounded"
-            colorStyle="secondary"
+            colorStyle="mono"
             variant="outlined"
             onClick={() => setDates({ from: "", to: "" })}
             endIcon={<TrashIcon />}
@@ -79,6 +80,7 @@ export function FilterBirthday({
           <Button
             iconButton="rounded"
             variant="outlined"
+            colorStyle="mono"
             onClick={() => {
               column.setFilterValue(dates);
               setIsOpen(false);

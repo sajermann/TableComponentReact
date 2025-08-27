@@ -1,110 +1,81 @@
-import { ForwardedRef, useEffect, useState } from "react";
-import ReactSelect, { GroupBase, Props } from "react-select";
+import {
+  DetailedHTMLProps,
+  HTMLAttributes,
+  OptionHTMLAttributes,
+  SelectHTMLAttributes,
+} from "react";
+import { managerClassNames } from "~/utils";
 
-import { useDarkMode } from "~/hooks/useDarkMode";
-import { useTranslation } from "~/hooks/useTranslation";
-import { format } from "./utils";
+function Container(
+  props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+) {
+  return <div {...props} className="relative" />;
+}
 
-type TProps = {
-  async?: {
-    callback: (newValue: string) => void;
-    debounce: number;
-    minLength?: number;
-  };
-  iserror?: boolean;
-  id?: string;
-  innerRef?: ForwardedRef<HTMLSelectElement>;
-};
-
-export function Select<
-  Option,
-  IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>
->(props: Props<Option, IsMulti, Group> & TProps) {
-  const { async, iserror, id, innerRef, ...rest } = props;
-  const [inputValue, setInputValue] = useState("");
-  const { translate } = useTranslation();
-  const { darkMode } = useDarkMode();
-
-  function preInputChange(e: string) {
-    if (async?.minLength && async?.minLength > e.length) {
-      return;
-    }
-    setInputValue(e);
-  }
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (async) {
-        async.callback(inputValue);
-      }
-    }, async?.debounce);
-
-    return () => clearTimeout(timer);
-  }, [inputValue]);
-
+function Select(
+  props: DetailedHTMLProps<
+    SelectHTMLAttributes<HTMLSelectElement>,
+    HTMLSelectElement
+  >
+) {
   return (
-    <ReactSelect
-      {...rest}
-      ref={innerRef as any}
-      inputId={id}
-      onInputChange={preInputChange}
-      loadingMessage={() => translate("LOADING...")}
-      noOptionsMessage={() => translate("NO_DATA")}
-      styles={{
-        control: (baseStyles: object, state: { isFocused: boolean }) => ({
-          ...baseStyles,
-          boxShadow: format.stylesControl({
-            isFocused: state.isFocused,
-            iserror,
-          }),
-          background: "transparent",
-          minHeight: "2.75rem",
-          maxHeight: "max-content",
-        }),
-        placeholder: (baseStyles: object) => ({
-          ...baseStyles,
-          color: "rgb(159, 166, 178)",
-        }),
-        menu: (baseStyles: object) => ({
-          ...baseStyles,
-          width: "100%",
-          background: "transparent",
-          border: ".0625rem solid white",
-          backdropFilter: "blur(0.75rem)",
-        }),
-        option: (
-          baseStyles: object,
-          state: { isSelected: boolean; isFocused: boolean }
-        ) => ({
-          ...baseStyles,
-          color: state.isSelected || state.isFocused ? "#fff" : "#6C757D",
-          width: "100%",
-          background: state.isFocused ? "rgba(59, 130, 246, 0.6)" : "",
-          "&:hover": {
-            background: "rgba(59, 130, 246, 0.7)",
-            color: "white",
-          },
-        }),
-        singleValue: (baseStyles: object) => ({
-          ...baseStyles,
-          width: "100%",
-          color: darkMode ? "white" : "black",
-        }),
-        input: (baseStyles: object) => ({
-          ...baseStyles,
-          color: darkMode ? "white" : "black",
-        }),
-      }}
-      classNames={{
-        control: (state: { isFocused: boolean }) =>
-          format.classNamesControl({ isFocused: state.isFocused, iserror }),
-        multiValue: () =>
-          "!bg-transparent border rounded backdrop-blur-md h-7 flex items-center",
-        multiValueLabel: () => "text-black dark:text-white",
-        multiValueRemove: () =>
-          "h-full hover:!bg-transparent hover:!text-blue-500",
-      }}
+    <select
+      {...props}
+      className={managerClassNames([
+        "group outline-none focus:ring-1 border border-black dark:border-white h-11 py-1 px-2 rounded w-full bg-transparent",
+        "transition-all duration-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none",
+        "focus:ring-blue-500 group-hover:border-blue-500 focus:border-blue-500",
+        "required:invalid:text-gray-400 min-w-20",
+      ])}
     />
   );
 }
+
+function Arrow() {
+  return (
+    <svg
+      className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  );
+}
+
+function Option(
+  props: DetailedHTMLProps<
+    OptionHTMLAttributes<HTMLOptionElement>,
+    HTMLOptionElement
+  >
+) {
+  return (
+    <option
+      {...props}
+      className={managerClassNames([
+        "dark:bg-neutral-900 dark:text-gray-100 disabled:opacity-5",
+        { [props.className as string]: props.className },
+      ])}
+    />
+  );
+}
+
+function Placeholder(
+  props: DetailedHTMLProps<
+    OptionHTMLAttributes<HTMLOptionElement>,
+    HTMLOptionElement
+  >
+) {
+  return <Option {...props} disabled selected className="hidden" value="" />;
+}
+
+export default {
+  Container,
+  Select,
+  Option,
+  Arrow,
+  Placeholder,
+};

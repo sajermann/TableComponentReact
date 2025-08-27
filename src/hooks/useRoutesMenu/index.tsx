@@ -74,47 +74,47 @@ const FooterPage = lazy(() =>
   }))
 );
 
-// const SortPage = lazy(() =>
-//   import("~/pages/Sort").then(({ SortPage: Sort }) => ({
-//     default: Sort,
-//   }))
-// );
+const FullEditablePage = lazy(() =>
+  import("~/pages/FullEditable").then(({ FullEditablePage: FullEditable }) => ({
+    default: FullEditable,
+  }))
+);
 
-// const FullEditablePage = lazy(() =>
-//   import("~/pages/FullEditable").then(({ FullEditablePage: FullEditable }) => ({
-//     default: FullEditable,
-//   }))
-// );
+const LoadingPage = lazy(() =>
+  import("~/pages/Loading").then(({ LoadingPage: Loading }) => ({
+    default: Loading,
+  }))
+);
 
-// const VirtualizedPage = lazy(() =>
-//   import("~/pages/Virtualized").then(({ VirtualizedPage: Virtualized }) => ({
-//     default: Virtualized,
-//   }))
-// );
+const PaginationTablePage = lazy(() =>
+  import("~/pages/Pagination").then(({ PaginationPage: Pagination }) => ({
+    default: Pagination,
+  }))
+);
 
-// const PaginationTablePage = lazy(() =>
-//   import("~/pages/Pagination").then(({ PaginationPage: Pagination }) => ({
-//     default: Pagination,
-//   }))
-// );
+const ResizingPage = lazy(() =>
+  import("~/pages/Resizing").then(({ ResizingPage: Resizing }) => ({
+    default: Resizing,
+  }))
+);
 
-// const ResizingPage = lazy(() =>
-//   import("~/pages/Resizing").then(({ ResizingPage: Resizing }) => ({
-//     default: Resizing,
-//   }))
-// );
+const SelectionPage = lazy(() =>
+  import("~/pages/Selection").then(({ SelectionPage: Selection }) => ({
+    default: Selection,
+  }))
+);
 
-// const SelectionPage = lazy(() =>
-//   import("~/pages/Selection").then(({ SelectionPage: Selection }) => ({
-//     default: Selection,
-//   }))
-// );
+const SortPage = lazy(() =>
+  import("~/pages/Sort").then(({ SortPage: Sort }) => ({
+    default: Sort,
+  }))
+);
 
-// const LoadingPage = lazy(() =>
-//   import("~/pages/Loading").then(({ LoadingPage: Loading }) => ({
-//     default: Loading,
-//   }))
-// );
+const VirtualizedPage = lazy(() =>
+  import("~/pages/Virtualized").then(({ VirtualizedPage: Virtualized }) => ({
+    default: Virtualized,
+  }))
+);
 
 export function useRoutesMenu() {
   const { translate, currentLanguage } = useTranslation();
@@ -215,7 +215,7 @@ export function useRoutesMenu() {
         },
         {
           name: "Footer",
-          path: "footer",
+          path: "/footer",
           implements_code:
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
           docs_code:
@@ -223,80 +223,76 @@ export function useRoutesMenu() {
           element: <FooterPage />,
           label: translate("FOOTER"),
         },
-        // {
-        //   name: "Selection",
-        //   path: "/table/selection",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Selection",
-        //   element: <SelectionPage />,
-        //   label: translate("SELECTION"),
-        // },
-
-        // {
-        //   name: "Loading",
-        //   path: "/table/loading",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Loading",
-        //   element: <LoadingPage />,
-        //   label: translate("LOADING"),
-        // },
-
-        // {
-        //   name: "Sort",
-        //   path: "/table/sort",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Sort",
-        //   element: <SortPage />,
-        //   label: translate("SORT"),
-        // },
-
-        // {
-        //   name: "FullEditable",
-        //   path: "/table/full-editable",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/FullEditable",
-        //   element: <FullEditablePage />,
-        //   label: translate("FULL_EDITABLE"),
-        // },
-        // {
-        //   name: "Virtualized",
-        //   path: "/table/virtualized",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-        //   element: <VirtualizedPage />,
-        //   label: translate("VIRTUALIZED"),
-        // },
-        // {
-        //   name: "Pagination",
-        //   path: "/table/pagination",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Pagination",
-        //   element: <PaginationTablePage />,
-        //   label: translate("PAGINATION"),
-        // },
-
-        // {
-        //   name: "Resizing",
-        //   path: "/table/resizing",
-        //   implements_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-        //   docs_code:
-        //     "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Resizing",
-        //   element: <ResizingPage />,
-        //   label: translate("RESIZING"),
-        // },
+        {
+          name: "FullEditable",
+          path: "/full-editable",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/FullEditable",
+          element: <FullEditablePage />,
+          label: translate("FULL_EDITABLE"),
+        },
+        {
+          name: "Loading",
+          path: "/loading",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Loading",
+          element: <LoadingPage />,
+          label: translate("LOADING"),
+        },
+        {
+          name: "Pagination",
+          path: "/pagination",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Pagination",
+          element: <PaginationTablePage />,
+          label: translate("PAGINATION"),
+        },
+        {
+          name: "Resizing",
+          path: "/resizing",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Resizing",
+          element: <ResizingPage />,
+          label: translate("RESIZING"),
+        },
+        {
+          name: "Selection",
+          path: "/selection",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Selection",
+          element: <SelectionPage />,
+          label: translate("SELECTION"),
+        },
+        {
+          name: "Sort",
+          path: "/sort",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Sort",
+          element: <SortPage />,
+          label: translate("SORT"),
+        },
+        {
+          name: "Virtualized",
+          path: "/virtualized",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <VirtualizedPage />,
+          label: translate("VIRTUALIZED"),
+        },
 
         {
           name: "NotFound",

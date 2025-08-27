@@ -12,6 +12,8 @@ import { Button } from "../Button";
 import { ContainerInput } from "../ContainerInput";
 import { Input } from "../Input";
 import { Label } from "../Label";
+import Select from "../Select";
+
 //import { Select } from "../Select";
 
 type Props<T> = {
@@ -41,6 +43,8 @@ function ButtonPagination({
 }: PropsButtonPagination) {
   return (
     <Button
+      variant="outlined"
+      colorStyle="mono"
       iconButton="squared"
       onClick={onClick}
       disabled={disabled}
@@ -153,6 +157,28 @@ export function Pagination<T>({
         {!pagination?.disabledPageSize && (
           <ContainerInput className="w-max flex-row items-center">
             <Label htmlFor="isActive">{translate("ROWS")}</Label>
+            <Select.Container>
+              <Select.Select
+                required
+                id="isActive"
+                onChange={({ target }) =>
+                  table.setPageSize(Number(target?.value))
+                }
+                value={
+                  DEFAULT_OPTIONS.find(
+                    (item) =>
+                      item.value === table.getState().pagination.pageSize
+                  )?.value
+                }
+              >
+                {DEFAULT_OPTIONS.map((opt) => (
+                  <Select.Option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </Select.Option>
+                ))}
+              </Select.Select>
+              <Select.Arrow />
+            </Select.Container>
             {/* <Select
               menuPosition="fixed"
               isSearchable={false}

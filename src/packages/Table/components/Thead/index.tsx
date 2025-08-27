@@ -23,7 +23,7 @@ export function Thead<T>({ table, sorting }: Props<T>) {
         <tr key={headerGroup.id}>
           {headerGroup.headers.map((header) => (
             <th
-              className="p-4 text-left"
+              className="p-4 text-left relative"
               key={header.id}
               colSpan={header.colSpan}
               style={{
@@ -49,7 +49,7 @@ export function Thead<T>({ table, sorting }: Props<T>) {
                         "flex items-center gap-2": true,
                         "cursor-pointer select-none":
                           header.column.getCanSort() && !sorting,
-                        "cursor-default outline-0 tab select-none":
+                        "!cursor-default outline-0 tab select-none":
                           !header.column.getCanSort() || sorting?.disabled,
                       })}
                       tabIndex={header.column.getCanSort() ? undefined : -1}
