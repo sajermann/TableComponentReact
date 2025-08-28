@@ -12,6 +12,11 @@
     "ROLE": "Role",
     "NO_DATA": "Sem Dados",
 
+    "IMPLEMENTS_VIRTUALIZED_MODE": "Implementação do Modo de Virtualização",
+    "VIRTUALIZED": "Virtualizado",
+    "VIRTUALIZED_MODE": "Modo Virtualizado",
+    "ACTIVE_VIRTUALIZATION": "Ativar Virtualização",
+    "DISABLED_VIRTUALIZATION": "Desativar Virtualização",
     "NOTE_FRIENDS_IS_ARRAY_OF_OBJECT": "Obs: Amigos é um array de objetos",
     "SORT": "Ordenação",
     "SORT_MODE": "Modo Ordenação",

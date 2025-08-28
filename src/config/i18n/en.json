@@ -12,6 +12,11 @@
     "ROLE": "Role",
     "NO_DATA": "No Data",
 
+    "IMPLEMENTS_VIRTUALIZED_MODE": "Implements Virtualized Mode",
+    "VIRTUALIZED": "Virtualized",
+    "VIRTUALIZED_MODE": "Virtualized Mode",
+    "ACTIVE_VIRTUALIZATION": "Active Virtualization",
+    "DISABLED_VIRTUALIZATION": "Disabled Virtualization",
     "NOTE_FRIENDS_IS_ARRAY_OF_OBJECT": "Note: Friends is array of object",
     "SORT": "Sort",
     "SORT_MODE": "Sort Mode",
