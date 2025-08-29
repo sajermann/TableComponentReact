@@ -18,18 +18,18 @@ const NotFoundPage = lazy(() =>
   }))
 );
 
+const ColumnOrderPage = lazy(() =>
+  import("~/pages/ColumnOrder").then(({ ColumnOrderPage: ColumnOrder }) => ({
+    default: ColumnOrder,
+  }))
+);
+
 const ColumnVisibilityPage = lazy(() =>
   import("~/pages/ColumnVisibility").then(
     ({ ColumnVisibilityPage: ColumnVisibility }) => ({
       default: ColumnVisibility,
     })
   )
-);
-
-const ColumnOrderPage = lazy(() =>
-  import("~/pages/ColumnOrder").then(({ ColumnOrderPage: ColumnOrder }) => ({
-    default: ColumnOrder,
-  }))
 );
 
 const EditablePage = lazy(() =>
@@ -116,12 +116,28 @@ const VirtualizedPage = lazy(() =>
   }))
 );
 
+const TableMegaPage = lazy(() =>
+  import("~/pages/TableMega").then(({ TableMegaPage: TableMega }) => ({
+    default: TableMega,
+  }))
+);
+
 export function useRoutesMenu() {
   const { translate, currentLanguage } = useTranslation();
   const location = useLocation();
   const globalRoutes: TRoutesMenu[] = useMemo(
     (): TRoutesMenu[] =>
       [
+        {
+          name: "NotFound",
+          path: "*",
+          element: <NotFoundPage />,
+          label: translate("NOT_FOUND"),
+          hide: {
+            home: true,
+            otherComponents: true,
+          },
+        },
         {
           name: "Home",
           path: "/",
@@ -134,16 +150,6 @@ export function useRoutesMenu() {
           order: 0,
         },
         {
-          name: "ColumnVisibility",
-          path: "/column-visibility",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/ColumnVisibility",
-          element: <ColumnVisibilityPage />,
-          label: translate("COLUMN_VISIBILITY"),
-        },
-        {
           name: "ColumnOrder",
           path: "/column-order",
           implements_code:
@@ -152,6 +158,16 @@ export function useRoutesMenu() {
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/ColumnOrder",
           element: <ColumnOrderPage />,
           label: translate("COLUMN_ORDER"),
+        },
+        {
+          name: "ColumnVisibility",
+          path: "/column-visibility",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/ColumnVisibility",
+          element: <ColumnVisibilityPage />,
+          label: translate("COLUMN_VISIBILITY"),
         },
         {
           name: "Editable",
@@ -293,16 +309,15 @@ export function useRoutesMenu() {
           element: <VirtualizedPage />,
           label: translate("VIRTUALIZED"),
         },
-
         {
-          name: "NotFound",
-          path: "*",
-          element: <NotFoundPage />,
-          label: translate("NOT_FOUND"),
-          hide: {
-            home: true,
-            otherComponents: true,
-          },
+          name: "TableMega",
+          path: "/table-mega",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaPage />,
+          label: translate("TABLE_MEGA"),
         },
       ]
         .sort(_sortCustomName)

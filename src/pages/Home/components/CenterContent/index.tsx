@@ -19,7 +19,7 @@ export function CenterContent() {
               ])}
             >
               <header className="h-16 p-2 flex justify-center items-center rounded-t-2xl">
-                {opt.name}
+                {opt.label}
               </header>
 
               <footer className="h-16 flex items-center justify-center">

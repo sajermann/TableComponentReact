@@ -1,21 +1,19 @@
 /**
  * @vitest-environment jsdom
  */
-import { fireEvent, render, waitFor } from '@testing-library/react';
-import { useState } from 'react';
-import { it, describe } from 'vitest';
-import { Button } from '~/Components/Button';
-import { InjectorProviders } from '~/Components/InjectorProviders';
-import { Modal } from '~/Components/Modal';
+import { fireEvent, render, waitFor } from "@testing-library/react";
 
-import { VirtualizedPage } from '.';
+import { describe, it } from "vitest";
 
-describe('Pages/Table/VirtualizedPage', () => {
-	it(`must render `, async () => {
-		const { getAllByText } = render(
-			<InjectorProviders>
-				<VirtualizedPage />
-			</InjectorProviders>
-		);
-	});
+import { InjectorProviders } from "~/components";
+import { VirtualizedPage } from ".";
+
+describe("Pages/Table/VirtualizedPage", () => {
+  it(`must render `, async () => {
+    const { getAllByText } = render(
+      <InjectorProviders>
+        <VirtualizedPage />
+      </InjectorProviders>
+    );
+  });
 });
