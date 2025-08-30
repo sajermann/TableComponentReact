@@ -122,6 +122,20 @@ const TableMegaPage = lazy(() =>
   }))
 );
 
+const TableMegaDefaultPage = lazy(() =>
+  import("~/pages/TableMega/Default").then(
+    ({ TableMegaDefaultPage: Default }) => ({
+      default: Default,
+    })
+  )
+);
+
+const TableMegaSortPage = lazy(() =>
+  import("~/pages/TableMega/Sort").then(({ TableMegaSortPage: Sort }) => ({
+    default: Sort,
+  }))
+);
+
 export function useRoutesMenu() {
   const { translate, currentLanguage } = useTranslation();
   const location = useLocation();
@@ -317,7 +331,27 @@ export function useRoutesMenu() {
           docs_code:
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
           element: <TableMegaPage />,
-          label: translate("TABLE_MEGA"),
+          label: `Table Mega`,
+        },
+        {
+          name: "TableMegaDefault",
+          path: "/table-mega/default",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaDefaultPage />,
+          label: `Table Mega - Default`,
+        },
+        {
+          name: "TableMegaSortPage",
+          path: "/table-mega/sort",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaSortPage />,
+          label: `Table Mega - Sort`,
         },
       ]
         .sort(_sortCustomName)

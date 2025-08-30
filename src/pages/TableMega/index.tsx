@@ -10,18 +10,7 @@ export function TableMegaPage() {
 
   return (
     <Section title="Mega" variant="h1">
-      <TableMega.Root
-        data={data}
-        columns={columns}
-        sorting={{ disabled: false }}
-      >
-        <TableMega.Table>
-          <TableMega.Thead sorting={{ disabled: false }} />
-          <TableMega.Tbody>
-            <TableMega.Rows />
-          </TableMega.Tbody>
-        </TableMega.Table>
-      </TableMega.Root>
+      Root
     </Section>
   );
 }

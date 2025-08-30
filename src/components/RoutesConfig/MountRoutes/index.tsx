@@ -14,7 +14,7 @@ export function _MountRoutes({ routes }: { routes: TRoutesMenu[] }) {
             path={route.path}
             element={<ErrorBoundary>{route.element}</ErrorBoundary>}
           />
-          {route.subs && <_MountRoutes routes={route.subs} />}
+          {/* {route.subs && <_MountRoutes routes={route.subs} />} */}
         </Fragment>
       ))}
     </Routes>
