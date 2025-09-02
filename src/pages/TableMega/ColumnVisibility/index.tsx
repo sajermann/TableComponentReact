@@ -1,13 +1,13 @@
 import { useMemo, useState } from "react";
 import { Section } from "~/components/Section";
 import { useColumns, useTranslation } from "~/hooks";
-import { Table } from "~/packages/Table";
+import * as TableMega from "~/packages/TableMega";
 import { makeData } from "~/utils";
 import { ColumnVisibilitySelector } from "./components/ColumnVisibilitySelector";
 
 const data = makeData.person(5);
 
-export function ColumnVisibilityPage() {
+export function TableMegaColumnVisibilityPage() {
   const { translate } = useTranslation();
   const { columns } = useColumns();
   const [options, setOptions] = useState([
@@ -93,11 +93,18 @@ export function ColumnVisibilityPage() {
             options={options}
             handleCheck={handleCheck}
           />
-          <Table
-            columns={columns}
+          <TableMega.Root
             data={data}
+            columns={columns}
             columnVisibility={columnVisibility}
-          />
+          >
+            <TableMega.Table>
+              <TableMega.Thead />
+              <TableMega.Tbody>
+                <TableMega.Rows />
+              </TableMega.Tbody>
+            </TableMega.Table>
+          </TableMega.Root>
         </div>
       </div>
     </Section>

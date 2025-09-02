@@ -1,4 +1,4 @@
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, SortingState } from "@tanstack/react-table";
 import { useState } from "react";
 import { Section } from "~/components";
 import { useTranslation } from "~/hooks";
@@ -11,30 +11,22 @@ type TAutomaticProps = {
 };
 export function Manual({ columns, data }: TAutomaticProps) {
   const { translate } = useTranslation();
-  const [sortingInternal, setSortingInternal] = useState<
-    Record<string, unknown>[]
-  >([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   return (
     <Section title={translate("MANUAL_SORT")} variant="h2">
       {translate("THIS_IS_USEFUL_IF_YOU_ARE_DOING_SERVER_SIDE_SORTING")}
-      <p>State: {JSON.stringify(sortingInternal)}</p>
+      <p>State: {JSON.stringify(sorting)}</p>
       <TableMega.Root data={data} columns={columns}>
         <TableMega.Table>
           <TableMega.Thead.Sort
-            controlled={{ sort: sortingInternal, setSort: setSortingInternal }}
+            controlled={{ sort: sorting, setSort: setSorting }}
           />
           <TableMega.Tbody>
             <TableMega.Rows />
           </TableMega.Tbody>
         </TableMega.Table>
       </TableMega.Root>
-
-      {/* sorting={{
-          manualSorting: {
-            fn: setSortingInternal,
-          },
-        }} */}
     </Section>
   );
 }

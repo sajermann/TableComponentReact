@@ -1,5 +1,6 @@
 import {
   ColumnDef,
+  ColumnOrderState,
   ColumnSort,
   OnChangeFn,
   SortingState,
@@ -10,6 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import React from "react";
 import {
   Dispatch,
   ReactNode,
@@ -27,22 +29,6 @@ type TContextProviderType<T> = {
   columns: ColumnDef<T, unknown>[];
   meta?: TableMeta<T>;
   table: Table<T>;
-  sorting?: {
-    manualSorting?: {
-      fn: (data: Record<string, unknown>[]) => void;
-    };
-    disabled?: boolean;
-  };
-  setEnableSorting: (data: boolean) => void;
-  setControlledSort: Dispatch<
-    SetStateAction<
-      | {
-          sort: SortingState;
-          setSort: Dispatch<SetStateAction<SortingState>>;
-        }
-      | undefined
-    >
-  >;
 };
 
 export const Context = createContext({} as TContextProviderType<T>);
@@ -52,12 +38,8 @@ type TContextProviderProps<T, U = undefined> = {
   data: T[];
   columns: ColumnDef<T, unknown>[];
   meta?: TableMeta<T>;
-  sorting?: {
-    manualSorting?: {
-      fn: (data: Record<string, unknown>[]) => void;
-    };
-    disabled?: boolean;
-  };
+  columnOrder?: ColumnOrderState;
+  columnVisibility?: Record<string, boolean>;
 };
 
 export function ContextProvider<T>({
@@ -65,20 +47,9 @@ export function ContextProvider<T>({
   children,
   columns,
   meta,
-}: //sorting,
-TContextProviderProps<T>) {
-  const [sortingInternal, setSortingInternal] = useState<SortingState>([]);
-  const [enableSorting, setEnableSorting] = useState(false);
-  const [controlledSort, setControlledSort] = useState<
-    | {
-        sort: SortingState;
-        setSort: Dispatch<SetStateAction<SortingState>>;
-      }
-    | undefined
-  >(undefined);
-
-  console.log({ controlledSort });
-
+  columnOrder,
+  columnVisibility,
+}: TContextProviderProps<T>) {
   const table = useReactTable({
     data,
     columns,
@@ -86,17 +57,17 @@ TContextProviderProps<T>) {
     columnResizeMode: "onChange",
     // getFilteredRowModel: getFilteredRowModel(),
     // pageCount: pagination?.pageCount,
-    // state: {
-    // pagination: {
-    //   pageIndex: pagination?.pageIndex || 0,
-    //   pageSize: pagination?.pageSize || 0,
-    // },
-    // sorting: controlledSort ? controlledSort.sort : undefined,
-    // rowSelection: selection?.rowSelection,
-    // globalFilter: globalFilter?.filter,
-    // columnVisibility,
-    // columnOrder,
-    // },
+    state: {
+      // pagination: {
+      //   pageIndex: pagination?.pageIndex || 0,
+      //   pageSize: pagination?.pageSize || 0,
+      // },
+      // sorting: controlledSort ? controlledSort.sort : sortingInternal,
+      // rowSelection: selection?.rowSelection,
+      // globalFilter: globalFilter?.filter,
+      columnVisibility,
+      columnOrder,
+    },
     // onGlobalFilterChange: globalFilter?.setFilter,
     // onRowSelectionChange: selection?.setRowSelection,
     // enableRowSelection: selection !== undefined,
@@ -114,7 +85,9 @@ TContextProviderProps<T>) {
     //       }
     //       return setSortingInternal(funcUpdater);
     //     },
-    onSortingChange: controlledSort ? controlledSort.setSort : undefined,
+    // onSortingChange: controlledSort
+    //   ? controlledSort.setSort
+    //   : setSortingInternal,
     // onSortingChange: !controlledSort
     //   ? undefined
     //   : (funcUpdater) => {
@@ -130,7 +103,7 @@ TContextProviderProps<T>) {
     //       return controlledSort.setSort(funcUpdater);
     //       // return setSortingInternal(funcUpdater);
     //     },
-    getSortedRowModel: enableSorting ? getSortedRowModel() : undefined,
+    // getSortedRowModel: enableSorting ? getSortedRowModel() : undefined,
     // getRowCanExpand: () => !!expandLine,
     // getExpandedRowModel: getExpandedRowModel(),
     // manualPagination: pagination?.automatic ? undefined : true,
@@ -141,9 +114,18 @@ TContextProviderProps<T>) {
     meta,
     // globalFilterFn: globalFilter?.globalFilterFn || "auto",
     // manualSorting: !!sorting?.manualSorting,
-    enableMultiSort: true,
+    // enableMultiSort: true,
   });
   // console.log(extraFeatures);
+
+  let expandedComponent: React.ReactNode;
+
+  // Identifique filhos do tipo ComponentExpanded
+  // React.Children.forEach(children, child => {
+  //   if (React.isValidElement(child) && child.type === TableMega.ComponentExpanded) {
+  //     expandedComponent = child.props.children;
+  //   }
+  // });
 
   const memoizedValue = useMemo<TContextProviderType<T>>(
     () => ({
@@ -151,16 +133,8 @@ TContextProviderProps<T>) {
       columns,
       data,
       meta,
-      //sorting,
-      setEnableSorting,
     }),
-    [
-      table,
-      columns,
-      data,
-      meta,
-      //  sorting
-    ]
+    [table, columns, data, meta]
   );
 
   return (
@@ -170,9 +144,6 @@ TContextProviderProps<T>) {
         columns,
         data,
         meta,
-        setEnableSorting,
-        setControlledSort,
-        //sorting,
       }}
     >
       {children}

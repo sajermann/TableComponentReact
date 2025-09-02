@@ -6,7 +6,7 @@ import { TPerson } from "~/types";
 import { makeData } from "~/utils";
 import { Automatic, Disabled, Manual } from "./components";
 
-const data = makeData.person(2);
+const data = makeData.person(5);
 
 export function TableMegaSortPage() {
   const { columns } = useColumns();
@@ -31,9 +31,9 @@ export function TableMegaSortPage() {
       variant="h1"
       className="flex flex-col gap-10"
     >
-      {/* <Automatic data={data} columns={[...columns, ...columns2]} /> */}
+      <Automatic data={data} columns={[...columns, ...columns2]} />
       <Manual data={data} columns={[...columns, ...columns2]} />
-      {/* <Disabled data={data} columns={[...columns, ...columns2]} /> */}
+      <Disabled data={data} columns={[...columns, ...columns2]} />
     </Section>
   );
 }

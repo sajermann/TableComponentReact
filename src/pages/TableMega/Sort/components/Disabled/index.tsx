@@ -15,7 +15,7 @@ export function Disabled({ columns, data }: TDisabledProps) {
     <Section title={translate("DISABLED_SORT")} variant="h2">
       <TableMega.Root data={data} columns={columns}>
         <TableMega.Table>
-          <TableMega.Thead.Default />
+          <TableMega.Thead />
           <TableMega.Tbody>
             <TableMega.Rows />
           </TableMega.Tbody>

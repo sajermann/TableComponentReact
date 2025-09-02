@@ -12,7 +12,7 @@ export function TableMegaDefaultPage() {
     <Section title="Table Mega - Default" variant="h1">
       <TableMega.Root data={data} columns={columns}>
         <TableMega.Table>
-          <TableMega.Thead.Default />
+          <TableMega.Thead />
           <TableMega.Tbody>
             <TableMega.Rows />
           </TableMega.Tbody>

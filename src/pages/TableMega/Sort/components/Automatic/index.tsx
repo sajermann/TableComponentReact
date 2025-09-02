@@ -13,7 +13,7 @@ export function Automatic({ columns, data }: TAutomaticProps) {
 
   return (
     <Section title={translate("AUTOMATIC_SORT")} variant="h2">
-      {translate("NOTE_FRIENDS_IS_ARRAY_OF_OBJECT")}
+      {translate("NOTE_FOR_AUTOMATIC_SORT")}
 
       <TableMega.Root data={data} columns={columns}>
         <TableMega.Table>

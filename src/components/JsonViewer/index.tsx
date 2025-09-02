@@ -12,11 +12,10 @@ interface JsonViewerProps {
 export function JsonViewer(data: JsonViewerProps) {
   const { darkMode } = useDarkMode();
   const theme = darkMode ? { ...darkTheme } : { ...lightTheme };
-  if (!data.value) return null;
   return (
     <JsonView
       {...data}
-      value={data.value}
+      value={data.value || []}
       style={{ ...theme, width: "100%" }}
     />
   );

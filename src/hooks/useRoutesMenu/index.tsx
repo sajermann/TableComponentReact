@@ -136,6 +136,46 @@ const TableMegaSortPage = lazy(() =>
   }))
 );
 
+const TableMegaColumnOrderPage = lazy(() =>
+  import("~/pages/TableMega/ColumnOrder").then(
+    ({ TableMegaColumnOrderPage: ColumnOrder }) => ({
+      default: ColumnOrder,
+    })
+  )
+);
+
+const TableMegaColumnVisibilityPage = lazy(() =>
+  import("~/pages/TableMega/ColumnVisibility").then(
+    ({ TableMegaColumnVisibilityPage: ColumnVisibility }) => ({
+      default: ColumnVisibility,
+    })
+  )
+);
+
+const TableMegaEditableRowPage = lazy(() =>
+  import("~/pages/TableMega/EditableRow").then(
+    ({ TableMegaEditableRowPage: EditableRow }) => ({
+      default: EditableRow,
+    })
+  )
+);
+
+const TableMegaEllipsisPage = lazy(() =>
+  import("~/pages/TableMega/Ellipsis").then(
+    ({ TableMegaEllipsisPage: Ellipsis }) => ({
+      default: Ellipsis,
+    })
+  )
+);
+
+const TableMegaExpandedRowPage = lazy(() =>
+  import("~/pages/TableMega/ExpandedRow").then(
+    ({ TableMegaExpandedRowPage: ExpandRow }) => ({
+      default: ExpandRow,
+    })
+  )
+);
+
 export function useRoutesMenu() {
   const { translate, currentLanguage } = useTranslation();
   const location = useLocation();
@@ -352,6 +392,56 @@ export function useRoutesMenu() {
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
           element: <TableMegaSortPage />,
           label: `Table Mega - Sort`,
+        },
+        {
+          name: "TableMegaColumnOrderPage",
+          path: "/table-mega/column-order",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaColumnOrderPage />,
+          label: `Table Mega - Column Order`,
+        },
+        {
+          name: "TableMegaColumnVisibilityPage",
+          path: "/table-mega/column-visibility",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaColumnVisibilityPage />,
+          label: `Table Mega - Column Visibility`,
+        },
+        {
+          name: "TableMegaEditableRowPage",
+          path: "/table-mega/editable-row",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaEditableRowPage />,
+          label: `Table Mega - Editable Row`,
+        },
+        {
+          name: "TableMegaEllipsisPage",
+          path: "/table-mega/ellipsis",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaEllipsisPage />,
+          label: `Table Mega - Ellipsis`,
+        },
+        {
+          name: "TableMegaExpandedLinePage",
+          path: "/table-mega/expand-row",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaExpandedRowPage />,
+          label: `Table Mega - Expand Row`,
         },
       ]
         .sort(_sortCustomName)

@@ -18,7 +18,7 @@ interface TCheckboxProps
     React.ForwardRefExoticComponent<
       CheckboxRadix.CheckboxProps & React.RefAttributes<HTMLButtonElement>
     >,
-    "checked" | "defaultChecked" | "$$typeof" | "onClick" | "id"
+    "$$typeof"
   > {
   disabled?: boolean;
   checkedIcon?: ReactNode;
@@ -26,11 +26,9 @@ interface TCheckboxProps
   checked?: CheckedState;
   defaultChecked?: CheckedState;
   onClick?: (e?: MouseEvent<HTMLButtonElement, Event>) => void;
-  id?: string;
-  onCheckedChange?: (data: {
-    target: { value: CheckedState; id: string | undefined };
-  }) => void;
+  onCheckedChange?: (data: CheckboxRadix.CheckedState) => void;
   className?: string;
+  name?: string;
   iserror?: boolean;
 }
 
@@ -77,19 +75,19 @@ function Container(
 
 export function Checkbox({
   checked,
-  onClick,
   defaultChecked,
   onCheckedChange,
-  id,
   checkedIcon,
   indeterminateIcon,
   className,
   iserror,
+  name,
   ...rest
 }: TCheckboxProps) {
-  const [situation, setSituation] = useState(checked);
+  const [situation, setSituation] = useState(checked || defaultChecked);
 
   const { checkboxPropsInternal } = checkboxVariants({
+    className,
     color: iserror ? "error" : "primary",
   });
 
@@ -97,19 +95,12 @@ export function Checkbox({
     <CheckboxRadix.Root
       checked={checked}
       defaultChecked={defaultChecked}
+      name={name}
       onCheckedChange={(newState) => {
         setSituation(newState);
-        onCheckedChange?.({
-          target: {
-            value: newState,
-            id,
-          },
-        });
+        onCheckedChange?.(newState);
       }}
-      className={checkboxPropsInternal({
-        className,
-      })}
-      id={id}
+      className={checkboxPropsInternal()}
       {...rest}
     >
       <CheckboxRadix.Indicator>
