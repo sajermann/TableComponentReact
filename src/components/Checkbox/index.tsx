@@ -29,6 +29,7 @@ interface TCheckboxProps
   onCheckedChange?: (data: CheckboxRadix.CheckedState) => void;
   className?: string;
   name?: string;
+  id?: string;
   iserror?: boolean;
 }
 
@@ -82,6 +83,7 @@ export function Checkbox({
   className,
   iserror,
   name,
+  id,
   ...rest
 }: TCheckboxProps) {
   const [situation, setSituation] = useState(checked || defaultChecked);
@@ -95,6 +97,7 @@ export function Checkbox({
     <CheckboxRadix.Root
       checked={checked}
       defaultChecked={defaultChecked}
+      id={id}
       name={name}
       onCheckedChange={(newState) => {
         setSituation(newState);

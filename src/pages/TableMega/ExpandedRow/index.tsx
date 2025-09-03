@@ -6,20 +6,13 @@ import { useColumns, useTranslation } from "~/hooks";
 import * as TableMega from "~/packages/TableMega";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
+import { UpdateData } from "./components/UpdateData";
 import { UpdateRowExpanded } from "./components/UpdateRowExpanded";
 
 export function TableMegaExpandedRowPage() {
   const { translate } = useTranslation();
-  const [data, setData] = useState<TPerson[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const { columns } = useColumns();
-  const [expandedRow, setExpandedRow] = useState<null | number>(null);
-
-  useEffect(() => {
-    setIsLoading(true);
-    setData(makeData.person(20));
-    setIsLoading(false);
-  }, []);
+  const [data, setData] = useState<TPerson[]>(makeData.person(5));
 
   const columnExpand = useMemo<ColumnDef<TPerson>[]>(
     () => [
@@ -28,28 +21,16 @@ export function TableMegaExpandedRowPage() {
         header: translate("ACTIONS"),
         minSize: 100,
         size: 100,
-        cell: (info) => (
+        cell: ({ row }) => (
           <div className="flex w-full justify-center">
             <Button
               iconButton="squared"
               colorStyle="mono"
               variant="outlined"
               endIcon={
-                expandedRow === info.row.index ? (
-                  <ChevronUpIcon />
-                ) : (
-                  <ChevronDownIcon />
-                )
+                row.getIsExpanded() ? <ChevronUpIcon /> : <ChevronDownIcon />
               }
-              onClick={() => {
-                setExpandedRow((prev) => {
-                  if (prev === null) {
-                    return info.row.index;
-                  }
-                  return null;
-                });
-                info.row.getToggleExpandedHandler()();
-              }}
+              onClick={row.getToggleExpandedHandler()}
             />
           </div>
         ),
@@ -58,40 +39,38 @@ export function TableMegaExpandedRowPage() {
         },
       },
     ],
-    [translate, expandedRow]
+    [translate]
   );
 
   return (
     <Section title={translate("EXPAND_ROW")} variant="h2">
       {translate("IMPLEMENTS_EXPAND_ROW_MODE")}
-      {JSON.stringify({ expandedRow })}
-      {/* <Table
-        isLoading={isLoading}
-        columns={columns}
-        data={data}
-        expandLine={{
-          render: ({ original, getToggleExpandedHandler, index }) => (
-            <UpdateRowExpanded
-              dataToEdit={original}
-              onSave={(dataUpdate) => {
-                const updateData = [...data];
-                updateData[index] = { ...updateData[index], ...dataUpdate };
-                setData([...updateData]);
-                getToggleExpandedHandler()();
-              }}
-              onCancel={getToggleExpandedHandler}
-            />
-          ),
-        }}
-      /> */}
 
       <TableMega.Root data={data} columns={[...columnExpand, ...columns]}>
         <TableMega.Table>
           <TableMega.Thead />
           <TableMega.Tbody>
-            <TableMega.Rows />
+            <TableMega.Rows.Default.Expand
+              parentTrProps={{ className: "border border-b-0" }}
+              expandedTrProps={{ className: "border border-t-0" }}
+            />
           </TableMega.Tbody>
         </TableMega.Table>
+        <TableMega.OnExpanded>
+          <UpdateData
+            onCancel={({ row }) => row?.getToggleExpandedHandler()()}
+            onSave={({ row, dataToUpdate }) => {
+              if (!row) {
+                return;
+              }
+              const index = row.index;
+              const updateData = [...data];
+              updateData[index] = { ...updateData[index], ...dataToUpdate };
+              setData([...updateData]);
+              row.getToggleExpandedHandler()();
+            }}
+          />
+        </TableMega.OnExpanded>
       </TableMega.Root>
     </Section>
   );

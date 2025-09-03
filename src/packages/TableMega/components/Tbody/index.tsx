@@ -17,7 +17,7 @@ export function Tbody({ isLoading, ...rest }: TTbodyProps) {
     <tbody
       {...rest}
       className={managerClassNames({
-        "[&>*:nth-child(odd)]:bg-dark-500": darkMode,
+        "[&>*:nth-child(odd)]:bg-dark-600": darkMode,
         "[&>*:nth-child(odd)]:bg-[#f2f2f2]": !darkMode,
         "opacity-5": isLoading,
         "opacity-100": !isLoading,

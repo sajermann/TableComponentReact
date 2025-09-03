@@ -3,3 +3,4 @@ export * from './components/Table';
 export * from './components/Thead';
 export * from './components/Tbody';
 export * from './components/Rows';
+export * from './components/OnExpanded';

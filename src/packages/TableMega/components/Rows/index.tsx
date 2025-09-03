@@ -1,11 +1,11 @@
-import { RowsDefault, TRowsDefaultProps } from "./RowsDefault";
-import { RowsVirtualized } from "./RowsVirtualized";
+import { Default, TDefaultProps } from "./Default";
+import { Virtualized } from "./Virtualized";
 
-function Rows<T>(props: TRowsDefaultProps<T>) {
-  return <RowsDefault {...props} />;
+function Rows(props: TDefaultProps) {
+  return <Default {...props} />;
 }
 
-Rows.Virtualized = RowsVirtualized;
-Rows.Default = RowsDefault;
+Rows.Virtualized = Virtualized;
+Rows.Default = Default;
 
 export { Rows };

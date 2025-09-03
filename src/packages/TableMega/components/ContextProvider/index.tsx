@@ -8,10 +8,11 @@ import {
   TableMeta,
   TableOptions,
   getCoreRowModel,
+  getExpandedRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import React from "react";
+import React, { JSX } from "react";
 import {
   Dispatch,
   ReactNode,
@@ -23,12 +24,14 @@ import {
   useRef,
   useState,
 } from "react";
+import { OnExpanded } from "../OnExpanded";
 
 type TContextProviderType<T> = {
   data: T[];
   columns: ColumnDef<T, unknown>[];
   meta?: TableMeta<T>;
   table: Table<T>;
+  expandedComponent?: React.ReactNode;
 };
 
 export const Context = createContext({} as TContextProviderType<T>);
@@ -104,7 +107,7 @@ export function ContextProvider<T>({
     //       // return setSortingInternal(funcUpdater);
     //     },
     // getSortedRowModel: enableSorting ? getSortedRowModel() : undefined,
-    // getRowCanExpand: () => !!expandLine,
+    // getRowCanExpand: () => true,
     // getExpandedRowModel: getExpandedRowModel(),
     // manualPagination: pagination?.automatic ? undefined : true,
     // getPaginationRowModel: pagination?.automatic
@@ -118,8 +121,14 @@ export function ContextProvider<T>({
   });
   // console.log(extraFeatures);
 
-  let expandedComponent: React.ReactNode;
+  let expandedComponent: JSX.Element | null = null;
 
+  React.Children.forEach(children, (child) => {
+    // console.log(`sajermann`, children, child);
+    if (React.isValidElement(child) && child.type === OnExpanded) {
+      expandedComponent = (child?.props as any)?.children;
+    }
+  });
   // Identifique filhos do tipo ComponentExpanded
   // React.Children.forEach(children, child => {
   //   if (React.isValidElement(child) && child.type === TableMega.ComponentExpanded) {
@@ -144,6 +153,7 @@ export function ContextProvider<T>({
         columns,
         data,
         meta,
+        expandedComponent,
       }}
     >
       {children}
