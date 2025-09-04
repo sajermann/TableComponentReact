@@ -12,6 +12,8 @@
     "ROLE": "Role",
     "NO_DATA": "Sem Dados",
 
+    "SIMPLE": "Simples",
+    "COMPLEX": "Complexo",
     "IMPLEMENTS_VIRTUALIZED_MODE": "Implementação do Modo de Virtualização",
     "VIRTUALIZED": "Virtualizado",
     "VIRTUALIZED_MODE": "Modo Virtualizado",

@@ -38,7 +38,7 @@ type PropsPrint<T> = {
   defColumns?: TDefPrintPdfPng<T>[];
 };
 
-function excel<T>({ data, defColumns = [] }: PropsXlsx<T>) {
+function xls<T>({ data, defColumns = [] }: PropsXlsx<T>) {
   const headerTemp: Record<string, unknown>[] = [];
   const dataTemp: Record<string, unknown>[][] = [];
 
@@ -213,4 +213,4 @@ function png<T>({ data, defColumns = [] }: PropsPrint<T>) {
   });
 }
 
-export const exportTo = { excel, csv, xml, print, pdf, png };
+export const exportTo = { xls, csv, xml, print, pdf, png };

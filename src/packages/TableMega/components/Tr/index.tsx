@@ -4,7 +4,6 @@ import { DetailedHTMLProps, HTMLAttributes } from "react";
 import { tv } from "tailwind-variants";
 
 import { TSelection } from "../../types";
-import { onClickRow } from "../../utils";
 
 const trVariant = tv({
   base: "h-17 max-h-17 min-h-17",
@@ -14,17 +13,17 @@ type Props<T> = DetailedHTMLProps<
   HTMLAttributes<HTMLTableRowElement>,
   HTMLTableRowElement
 > & {
-  row?: Row<T>;
-  selection?: Omit<TSelection<T>, "disableCheckbox">;
+  row: Row<T>;
+  onClickRow?: ({ row }: { row: Row<T> }) => void;
 };
-export function Tr<T>({ row, selection, ...rest }: Props<T>) {
+export function Tr<T>({ row, onClickRow, ...rest }: Props<T>) {
   return (
     <tr
       {...rest}
       className={trVariant({
         className: rest.className,
       })}
-      onClick={() => onClickRow({ row, selection })}
+      onClick={() => onClickRow?.({ row })}
     />
   );
 }

@@ -1,7 +1,7 @@
 import { Default as DefaultInternal, TDefaultProps } from "./Default";
 import { Expand } from "./Expand";
 
-function Default(props: TDefaultProps) {
+function Default<T>(props: TDefaultProps<T>) {
   return <DefaultInternal {...props} />;
 }
 

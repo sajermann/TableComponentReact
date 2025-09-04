@@ -2,6 +2,7 @@ import {
   ColumnDef,
   ColumnOrderState,
   ColumnSort,
+  FilterFnOption,
   OnChangeFn,
   SortingState,
   Table,
@@ -9,6 +10,7 @@ import {
   TableOptions,
   getCoreRowModel,
   getExpandedRowModel,
+  getFilteredRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -26,6 +28,16 @@ import {
 } from "react";
 import { OnExpanded } from "../OnExpanded";
 
+function getExpandComponent(children: ReactNode) {
+  let expandedComponent: JSX.Element | null = null;
+  React.Children.forEach(children, (child) => {
+    if (React.isValidElement(child) && child.type === OnExpanded) {
+      expandedComponent = (child?.props as any)?.children;
+    }
+  });
+  return expandedComponent;
+}
+
 type TContextProviderType<T> = {
   data: T[];
   columns: ColumnDef<T, unknown>[];
@@ -36,29 +48,37 @@ type TContextProviderType<T> = {
 
 export const Context = createContext({} as TContextProviderType<T>);
 
-type TContextProviderProps<T, U = undefined> = {
+export type TContextProviderProps<T, U = undefined> = {
   children: ReactNode;
   data: T[];
   columns: ColumnDef<T, unknown>[];
   meta?: TableMeta<T>;
   columnOrder?: ColumnOrderState;
   columnVisibility?: Record<string, boolean>;
+  globalFilter?: {
+    filter: U;
+    onChange: (data: U) => void;
+    globalFilterFn?: FilterFnOption<T>;
+  };
 };
 
-export function ContextProvider<T>({
+export function ContextProvider<T, U>({
   data,
   children,
   columns,
   meta,
   columnOrder,
   columnVisibility,
-}: TContextProviderProps<T>) {
+  globalFilter,
+}: TContextProviderProps<T, U>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     columnResizeMode: "onChange",
-    // getFilteredRowModel: getFilteredRowModel(),
+    ...((columns.some((col) => col.filterFn) || !!globalFilter) && {
+      getFilteredRowModel: getFilteredRowModel(),
+    }),
     // pageCount: pagination?.pageCount,
     state: {
       // pagination: {
@@ -67,11 +87,22 @@ export function ContextProvider<T>({
       // },
       // sorting: controlledSort ? controlledSort.sort : sortingInternal,
       // rowSelection: selection?.rowSelection,
-      // globalFilter: globalFilter?.filter,
+      ...(!!globalFilter && {
+        globalFilter: globalFilter.filter,
+      }),
+
       columnVisibility,
       columnOrder,
     },
-    // onGlobalFilterChange: globalFilter?.setFilter,
+
+    ...(!!globalFilter?.onChange && {
+      onGlobalFilterChange: globalFilter.onChange,
+    }),
+
+    ...(!!globalFilter && {
+      globalFilterFn: globalFilter.globalFilterFn || "auto",
+    }),
+
     // onRowSelectionChange: selection?.setRowSelection,
     // enableRowSelection: selection !== undefined,
     // enableMultiRowSelection: selection?.type === "multi",
@@ -115,26 +146,12 @@ export function ContextProvider<T>({
     //   : undefined,
     // onPaginationChange: pagination?.setPagination,
     meta,
-    // globalFilterFn: globalFilter?.globalFilterFn || "auto",
+
     // manualSorting: !!sorting?.manualSorting,
     // enableMultiSort: true,
   });
-  // console.log(extraFeatures);
 
-  let expandedComponent: JSX.Element | null = null;
-
-  React.Children.forEach(children, (child) => {
-    // console.log(`sajermann`, children, child);
-    if (React.isValidElement(child) && child.type === OnExpanded) {
-      expandedComponent = (child?.props as any)?.children;
-    }
-  });
-  // Identifique filhos do tipo ComponentExpanded
-  // React.Children.forEach(children, child => {
-  //   if (React.isValidElement(child) && child.type === TableMega.ComponentExpanded) {
-  //     expandedComponent = child.props.children;
-  //   }
-  // });
+  const expandedComponent = getExpandComponent(children);
 
   const memoizedValue = useMemo<TContextProviderType<T>>(
     () => ({

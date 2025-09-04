@@ -3,6 +3,8 @@ import { managerClassNames } from "~/packages/TableMega/utils/managerClassNames"
 import { SortIcon } from "../SortIcon";
 import { ThWithoutSort } from "../ThWithoutSort";
 
+// TODO: Remover button
+
 export function ThWithSort<T>({ header }: { header: Header<T, unknown> }) {
   if (!header.column.getCanSort()) {
     return <ThWithoutSort header={header} />;

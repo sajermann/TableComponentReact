@@ -1,16 +1,7 @@
-import { ColumnDef, ColumnOrderState, TableMeta } from "@tanstack/react-table";
-import { ReactNode } from "react";
-import { ContextProvider } from "../ContextProvider";
+import { ContextProvider, TContextProviderProps } from "../ContextProvider";
 
-type TRootProps<T, U = undefined> = {
-  children: ReactNode;
-  data: T[];
-  columns: ColumnDef<T, unknown>[];
-  meta?: TableMeta<T>;
-  columnOrder?: ColumnOrderState;
-  columnVisibility?: Record<string, boolean>;
-};
+type TRootProps<T, U = undefined> = TContextProviderProps<T, U>;
 
-export function Root<T>(props: TRootProps<T>) {
+export function Root<T, U = undefined>(props: TRootProps<T, U>) {
   return <ContextProvider {...props} />;
 }

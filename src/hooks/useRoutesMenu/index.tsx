@@ -176,6 +176,30 @@ const TableMegaExpandedRowPage = lazy(() =>
   )
 );
 
+const TableMegaExportPage = lazy(() =>
+  import("~/pages/TableMega/Export").then(
+    ({ TableMegaExportPage: Export }) => ({
+      default: Export,
+    })
+  )
+);
+
+const TableMegaFavoritesPage = lazy(() =>
+  import("~/pages/TableMega/Favorites").then(
+    ({ TableMegaFavoritesPage: Favorites }) => ({
+      default: Favorites,
+    })
+  )
+);
+
+const TableMegaFilterPage = lazy(() =>
+  import("~/pages/TableMega/Filter").then(
+    ({ TableMegaFilterPage: Filter }) => ({
+      default: Filter,
+    })
+  )
+);
+
 export function useRoutesMenu() {
   const { translate, currentLanguage } = useTranslation();
   const location = useLocation();
@@ -434,7 +458,7 @@ export function useRoutesMenu() {
           label: `Table Mega - Ellipsis`,
         },
         {
-          name: "TableMegaExpandedLinePage",
+          name: "TableMegaExpandedRowPage",
           path: "/table-mega/expand-row",
           implements_code:
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
@@ -442,6 +466,36 @@ export function useRoutesMenu() {
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
           element: <TableMegaExpandedRowPage />,
           label: `Table Mega - Expand Row`,
+        },
+        {
+          name: "TableMegaExportPage",
+          path: "/table-mega/export",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaExportPage />,
+          label: `Table Mega - Export`,
+        },
+        {
+          name: "TableMegaFavoritesPage",
+          path: "/table-mega/favorites",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaFavoritesPage />,
+          label: `Table Mega - Favorites`,
+        },
+        {
+          name: "TableMegaFilterPage",
+          path: "/table-mega/filter",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaFilterPage />,
+          label: `Table Mega - Filter`,
         },
       ]
         .sort(_sortCustomName)

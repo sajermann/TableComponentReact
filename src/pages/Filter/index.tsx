@@ -1,6 +1,6 @@
 import { Column, ColumnDef, Table as TTable } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
-import { Section } from "~/components";
+import { JsonViewer, Section } from "~/components";
 import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TFilterActive, TPerson } from "~/types";
@@ -153,15 +153,16 @@ export function FilterPage() {
           globalFilter={{
             filter: globalFilter,
             setFilter: setGlobalFilter,
-            globalFilterFn: (rows, columnId, filters) => {
+            globalFilterFn: (row, columnId, filters) => {
               if (filters.length === 0) return true;
 
-              return globalFilterFnCustom(rows, columnId, filters);
+              return globalFilterFnCustom(row, columnId, filters);
             },
             disableInput: true,
           }}
         />
       </div>
+      <JsonViewer value={globalFilter} />
     </Section>
   );
 }

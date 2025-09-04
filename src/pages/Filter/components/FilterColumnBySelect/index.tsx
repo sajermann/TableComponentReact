@@ -15,7 +15,6 @@ type Props2 = {
 export function FilterColumnBySelect({ column, table, propForFilter }: Props2) {
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log("sajermann - lindo", column.getFilterValue());
   const [optionsChecked, setOptionsChecked] = useState<string[]>([]);
   useEffect(() => {
     setOptionsChecked((column.getFilterValue() as string[]) || []);

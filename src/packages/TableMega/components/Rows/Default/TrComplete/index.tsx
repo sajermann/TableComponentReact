@@ -7,19 +7,17 @@ type TTrCompleteProps<T> = {
   row: Row<T>;
   enableEllipsis?: boolean;
   parentTrProps?: TCommonProps;
+  onClickRow?: ({ row }: { row: Row<T> }) => void;
 };
 
 export function TrComplete<T>({
   row,
   enableEllipsis,
   parentTrProps,
+  onClickRow,
 }: TTrCompleteProps<T>) {
   return (
-    <Tr
-      row={row}
-      //selection={selection}
-      {...parentTrProps}
-    >
+    <Tr row={row} onClickRow={onClickRow} {...parentTrProps}>
       {row.getVisibleCells().map((cell) => (
         <Td
           key={cell.id}
