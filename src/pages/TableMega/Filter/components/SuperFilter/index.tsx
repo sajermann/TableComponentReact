@@ -11,6 +11,7 @@ import Select from "~/components/Select";
 import { useTranslation } from "~/hooks";
 import { TFilterActive } from "~/types";
 import { showInDevelopment } from "~/utils";
+import { QueryBuilder } from "../QueryBuilder";
 
 type TSuperFilterProps = {
   onChange: (data: TFilterActive[]) => void;
