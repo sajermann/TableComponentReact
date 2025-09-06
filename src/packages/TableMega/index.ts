@@ -6,3 +6,5 @@ export * from './components/Rows';
 export * from './components/OnExpanded';
 export * from './components/Export';
 export * from './components/Search';
+export * from './components/Tfoot';
+export * from './components/LoadingBar';

@@ -12,6 +12,12 @@
     "ROLE": "Role",
     "NO_DATA": "No Data",
 
+    "VIEW_MODE": "View Mode",
+    "WITH_DATA": "With Data",
+    "WITHOUT_DATA": "Without Data",
+    "ACTIVE_LOADING": "Active Loading",
+    "NOTE_UPDATED_AFTER_SAVE_SUBMIT": "Note: Data updated after save (Submit Form).",
+    "SEARCH_ON_EMAIL_AND_FRIENDS": "Search on Email and Friends",
     "SIMPLE": "Simple",
     "COMPLEX": "Complex",
     "IMPLEMENTS_VIRTUALIZED_MODE": "Implements Virtualized Mode",

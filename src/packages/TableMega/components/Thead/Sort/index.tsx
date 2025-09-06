@@ -3,18 +3,23 @@ import {
   SortingState,
   getSortedRowModel,
 } from "@tanstack/react-table";
-import { useEffect } from "react";
+import { DetailedHTMLProps, HTMLAttributes, useEffect } from "react";
 import { useTableMega } from "~/packages/TableMega/hooks";
+import { RowsWithSort } from "../RowsWithSort";
 import { THeadDefaultInternal } from "../THeadDefaultInternal";
 import { ThWithSort } from "../ThWithSort";
 
-type TSortProps = {
+export type TSortProps = DetailedHTMLProps<
+  HTMLAttributes<HTMLTableSectionElement>,
+  HTMLTableSectionElement
+> & {
   controlled?: {
     sort: SortingState;
     setSort: OnChangeFn<SortingState>;
   };
+  children?: React.ReactNode;
 };
-export function Sort({ controlled }: TSortProps) {
+export function Sort({ controlled, children, ...rest }: TSortProps) {
   const { table } = useTableMega();
 
   useEffect(() => {
@@ -39,14 +44,9 @@ export function Sort({ controlled }: TSortProps) {
   }, [controlled]);
 
   return (
-    <THeadDefaultInternal>
-      {table.getHeaderGroups().map((headerGroup) => (
-        <tr key={headerGroup.id}>
-          {headerGroup.headers.map((header) => (
-            <ThWithSort key={header.id} header={header} />
-          ))}
-        </tr>
-      ))}
+    <THeadDefaultInternal {...rest}>
+      <RowsWithSort />
+      {children}
     </THeadDefaultInternal>
   );
 }

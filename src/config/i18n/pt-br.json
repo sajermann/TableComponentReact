@@ -12,6 +12,12 @@
     "ROLE": "Role",
     "NO_DATA": "Sem Dados",
 
+    "VIEW_MODE": "Modo de Visualização",
+    "WITH_DATA": "Com Dados",
+    "WITHOUT_DATA": "Sem Dados",
+    "ACTIVE_LOADING": "Carregamento Ativo",
+    "NOTE_UPDATED_AFTER_SAVE_SUBMIT": "Obs: Dados atualizados após salvar (Submeter Formulário).",
+    "SEARCH_ON_EMAIL_AND_FRIENDS": "Pesquise por email e amigos",
     "SIMPLE": "Simples",
     "COMPLEX": "Complexo",
     "IMPLEMENTS_VIRTUALIZED_MODE": "Implementação do Modo de Virtualização",

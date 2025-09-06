@@ -20,7 +20,7 @@ function vehicles(quantity = 0) {
         id: String(i),
         value: result,
         label: result,
-        price: faker.number.float(),
+        price: faker.number.float({ min: 10000, max: 50000 }),
       };
     });
 

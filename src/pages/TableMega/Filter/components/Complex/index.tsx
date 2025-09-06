@@ -1,25 +1,19 @@
-import { Column, ColumnDef, Table as TTable } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 import jsonLogic from "json-logic-js";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Input, Section } from "~/components";
 import { useColumns, useTranslation } from "~/hooks";
-import { Table } from "~/packages/Table";
 import * as TableMega from "~/packages/TableMega";
 import { TFilterActive, TPerson } from "~/types";
-import {
-  filterRangeDate,
-  formatDate,
-  globalFilterFnCustom,
-  makeData,
-  stringToDate,
-} from "~/utils";
-import { globalFilterFnInput } from "~/utils/globalFilterFnInput";
+import { filterRangeDate, formatDate, makeData, stringToDate } from "~/utils";
 import {
   FilterBirthday,
   FilterColumnBySelect,
   FilterId,
   SuperFilter,
 } from "../";
+
+// TODO: Olhar console log e ver erro de rerender
 
 jsonLogic.add_operation("startsWith", (str, prefix) => {
   if (typeof str !== "string" || typeof prefix !== "string") return false;
@@ -31,96 +25,45 @@ jsonLogic.add_operation("endsWith", (str, prefix) => {
   return str.endsWith(prefix);
 });
 
-// const DATA = makeData.person(5);
-// console.log({ DATA });
-const DATA = [
-  {
-    id: "1",
-    name: "Mafalda",
-    lastName: "Fisher",
-    birthday: "2018-01-03T09:51:08.522Z",
-    email: "mafalda_fisher@gmail.com",
-    avatar: "https://avatars.githubusercontent.com/u/77633550",
-    role: "Dev",
-    isActive: true,
-    friends: [
-      {
-        id: "1",
-        name: "Cantabrian Water Dog",
-      },
+const convertComplexFilterToJsonLogic = (filter: TComplexFilter) => {
+  const filterRule: jsonLogic.RulesLogic<jsonLogic.AdditionalOperation> = {
+    and: [],
+  };
+
+  const config = {
+    different: "!=",
+    equals: "==",
+    bigger: ">",
+    smaller: "<",
+    starts: "startsWith",
+    ends: "endsWith",
+    contains: "in",
+  };
+
+  for (const item of filter.custom) {
+    if (item.type === "contains") {
+      filterRule.and.push({
+        [config[item.type]]: [item.value, { var: item.column }],
+      });
+    } else {
+      filterRule.and.push({
+        [config[item.type]]: [{ var: item.column }, item.value],
+      });
+    }
+  }
+
+  filterRule.and.push({
+    or: [
+      { in: [filter.input, { var: "email" }] },
+      { in: [filter.input, { var: "friends" }] },
     ],
-  },
-  {
-    id: "2",
-    name: "Vincenza",
-    lastName: "Kemmer",
-    birthday: "2015-03-08T02:19:42.111Z",
-    email: "vincenza_kemmer@gmail.com",
-    avatar:
-      "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/95.jpg",
-    role: "Admin",
-    isActive: true,
-    friends: [
-      {
-        id: "1",
-        name: "Schweizer Laufhund",
-      },
-    ],
-  },
-  {
-    id: "3",
-    name: "Linda",
-    lastName: "Paucek",
-    birthday: "2011-01-29T16:33:55.738Z",
-    email: "linda_paucek@hotmail.com",
-    avatar:
-      "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/71.jpg",
-    role: "Admin",
-    isActive: true,
-    friends: [
-      {
-        id: "1",
-        name: "Hammond's Flycatcher",
-      },
-      {
-        id: "2",
-        name: "Sabueso Español",
-      },
-    ],
-  },
-  {
-    id: "4",
-    name: "Kaleigh",
-    lastName: "Feest",
-    birthday: "1976-10-05T02:02:06.788Z",
-    email: "kaleigh_feest@hotmail.com",
-    avatar: "https://avatars.githubusercontent.com/u/15297843",
-    role: "Dev",
-    isActive: false,
-    friends: [
-      {
-        id: "1",
-        name: "Groove-billed Ani",
-      },
-    ],
-  },
-  {
-    id: "5",
-    name: "Maximus",
-    lastName: "Hackett",
-    birthday: "1985-10-16T06:17:25.127Z",
-    email: "maximus_hackett@outlook.com",
-    avatar: "https://avatars.githubusercontent.com/u/77998924",
-    role: "User",
-    isActive: false,
-    friends: [
-      {
-        id: "1",
-        name: "Pug",
-      },
-    ],
-  },
-];
+  });
+
+  return filterRule;
+};
+
+const DATA = makeData.person(10);
+
 type TComplexFilter = {
   input: string;
   custom: TFilterActive[];
@@ -248,58 +191,21 @@ export function Complex() {
     [translate]
   );
 
-  const convertComplexFilterToJsonLogic = (filter: TComplexFilter) => {
-    //  const filterRule = {
-    //           and: [
-    //             { ">": [{ var: "id" }, 1] },
-    //             { "<": [{ var: "id" }, 5] },
-    //             { "==": [{ var: "name" }, "Linda"] },
-    //           ],
-    //         };
-    const filterRule: jsonLogic.RulesLogic<jsonLogic.AdditionalOperation> = {
-      and: [],
-      or: [
-        // or dentro do and
-      ],
-    };
-
-    const config = {
-      different: "!=",
-      equals: "==",
-      bigger: ">",
-      smaller: "<",
-      starts: "startsWith",
-      ends: "endsWith",
-      contains: "in",
-    };
-
-    for (const item of filter.custom) {
-      if (item.type === "contains") {
-        filterRule.and.push({
-          [config[item.type]]: [item.value, { var: item.column }],
-        });
-      } else {
-        filterRule.and.push({
-          [config[item.type]]: [{ var: item.column }, item.value],
-        });
-      }
-    }
-
-    return filterRule;
-  };
-
   return (
     <Section title={translate("COMPLEX")} variant="h2">
       <TableMega.Root
         data={DATA}
-        columns={[...columns2] as any}
+        columns={[...columns2]}
         globalFilter={{
           filter: globalFilter,
           onChange: setGlobalFilter,
           globalFilterFn: (row, _, filters) => {
             try {
               const filterRule = convertComplexFilterToJsonLogic(filters);
-              const result = jsonLogic.apply(filterRule, { ...row.original });
+              const result = jsonLogic.apply(filterRule, {
+                ...row.original,
+                friends: row.original.friends.map((f) => f.name).join(" | "),
+              });
               return result === undefined || result === true;
             } catch (error) {
               console.log({ error });
@@ -312,7 +218,7 @@ export function Complex() {
           <Input
             type="search"
             value={globalFilter.input}
-            placeholder={translate("SEARCH")}
+            placeholder={translate("SEARCH_ON_EMAIL_AND_FRIENDS")}
             onChange={(e) =>
               setGlobalFilter((prev) => ({ ...prev, input: e.target.value }))
             }
@@ -333,14 +239,3 @@ export function Complex() {
     </Section>
   );
 }
-
-// globalFilterFn={(row, columnId, filters) => {
-//   console.log(`sajermann`, { row, columnId, filters });
-//   return false;
-//   // const value = row.getValue(columnId);
-//   // return (
-//   //   typeof value === "string" &&
-//   //   value.toLocaleLowerCase().indexOf(filters.toLocaleLowerCase()) >
-//   //     -1
-//   // );
-// }}

@@ -200,6 +200,30 @@ const TableMegaFilterPage = lazy(() =>
   )
 );
 
+const TableMegaFullEditablePage = lazy(() =>
+  import("~/pages/TableMega/FullEditable").then(
+    ({ TableMegaFullEditablePage: FullEditable }) => ({
+      default: FullEditable,
+    })
+  )
+);
+
+const TableMegaFooterPage = lazy(() =>
+  import("~/pages/TableMega/Footer").then(
+    ({ TableMegaFooterPage: Footer }) => ({
+      default: Footer,
+    })
+  )
+);
+
+const TableMegaLoadingPage = lazy(() =>
+  import("~/pages/TableMega/Loading").then(
+    ({ TableMegaLoadingPage: Loading }) => ({
+      default: Loading,
+    })
+  )
+);
+
 export function useRoutesMenu() {
   const { translate, currentLanguage } = useTranslation();
   const location = useLocation();
@@ -496,6 +520,36 @@ export function useRoutesMenu() {
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
           element: <TableMegaFilterPage />,
           label: `Table Mega - Filter`,
+        },
+        {
+          name: "TableMegaFooterPage",
+          path: "/table-mega/footer",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaFooterPage />,
+          label: `Table Mega - Footer`,
+        },
+        {
+          name: "TableMegaFullEditablePage",
+          path: "/table-mega/full-editable",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaFullEditablePage />,
+          label: `Table Mega - Full Editable`,
+        },
+        {
+          name: "TableMegaLoadingPage",
+          path: "/table-mega/loading",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaLoadingPage />,
+          label: `Table Mega - Loading`,
         },
       ]
         .sort(_sortCustomName)

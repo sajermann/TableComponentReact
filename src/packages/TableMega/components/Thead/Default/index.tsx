@@ -1,24 +1,16 @@
 import { DetailedHTMLProps, HTMLAttributes } from "react";
-import { useTableMega } from "~/packages/TableMega/hooks";
+import { RowsWithoutSort } from "../RowsWithoutSort";
 import { THeadDefaultInternal } from "../THeadDefaultInternal";
-import { ThWithoutSort } from "../ThWithoutSort";
 
 export type TDefaultProps = DetailedHTMLProps<
   HTMLAttributes<HTMLTableSectionElement>,
   HTMLTableSectionElement
 >;
-export function Default(props: TDefaultProps) {
-  const { table } = useTableMega();
-
+export function Default({ children, ...rest }: TDefaultProps) {
   return (
-    <THeadDefaultInternal {...props}>
-      {table.getHeaderGroups().map((headerGroup) => (
-        <tr key={headerGroup.id}>
-          {headerGroup.headers.map((header) => (
-            <ThWithoutSort key={header.id} header={header} />
-          ))}
-        </tr>
-      ))}
+    <THeadDefaultInternal {...rest}>
+      <RowsWithoutSort />
+      {children}
     </THeadDefaultInternal>
   );
 }
