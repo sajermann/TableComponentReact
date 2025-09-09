@@ -1,8 +1,6 @@
-import { Row, flexRender } from "@tanstack/react-table";
+import { Row } from "@tanstack/react-table";
 import { Fragment } from "react";
 import { useTableMega } from "~/packages/TableMega/hooks";
-import { Td } from "../../../Td";
-import { Tr } from "../../../Tr";
 import { TrComplete } from "../TrComplete";
 
 export type TDefaultProps<T> = {

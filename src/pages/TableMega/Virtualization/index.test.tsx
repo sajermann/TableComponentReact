@@ -6,13 +6,13 @@ import { fireEvent, render, waitFor } from "@testing-library/react";
 import { describe, it } from "vitest";
 
 import { InjectorProviders } from "~/components";
-import { FavoritesPage } from ".";
+import { VirtualizedPage } from ".";
 
-describe("Pages/Table/FavoritesPage", () => {
+describe("Pages/Table/VirtualizedPage", () => {
   it(`must render `, async () => {
     const { getAllByText } = render(
       <InjectorProviders>
-        <FavoritesPage />
+        <VirtualizedPage />
       </InjectorProviders>
     );
   });

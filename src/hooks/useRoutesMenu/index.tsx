@@ -184,14 +184,6 @@ const TableMegaExportPage = lazy(() =>
   )
 );
 
-const TableMegaFavoritesPage = lazy(() =>
-  import("~/pages/TableMega/Favorites").then(
-    ({ TableMegaFavoritesPage: Favorites }) => ({
-      default: Favorites,
-    })
-  )
-);
-
 const TableMegaFilterPage = lazy(() =>
   import("~/pages/TableMega/Filter").then(
     ({ TableMegaFilterPage: Filter }) => ({
@@ -244,6 +236,14 @@ const TableMegaSelectionPage = lazy(() =>
   import("~/pages/TableMega/Selection").then(
     ({ TableMegaSelectionPage: Selection }) => ({
       default: Selection,
+    })
+  )
+);
+
+const TableMegaVirtualizationPage = lazy(() =>
+  import("~/pages/TableMega/Virtualization").then(
+    ({ TableMegaVirtualizationPage: Virtualization }) => ({
+      default: Virtualization,
     })
   )
 );
@@ -526,16 +526,6 @@ export function useRoutesMenu() {
           label: `Table Mega - Export`,
         },
         {
-          name: "TableMegaFavoritesPage",
-          path: "/table-mega/favorites",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaFavoritesPage />,
-          label: `Table Mega - Favorites`,
-        },
-        {
           name: "TableMegaFilterPage",
           path: "/table-mega/filter",
           implements_code:
@@ -604,6 +594,16 @@ export function useRoutesMenu() {
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
           element: <TableMegaSelectionPage />,
           label: `Table Mega - Selection`,
+        },
+        {
+          name: "TableMegaVirtualizationPage",
+          path: "/table-mega/virtualization",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaVirtualizationPage />,
+          label: `Table Mega - Virtualization`,
         },
       ]
         .sort(_sortCustomName)
