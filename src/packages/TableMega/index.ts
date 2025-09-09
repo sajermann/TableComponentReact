@@ -8,3 +8,4 @@ export * from './components/Export';
 export * from './components/Search';
 export * from './components/Tfoot';
 export * from './components/LoadingBar';
+export * from './components/Pagination';

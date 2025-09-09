@@ -1,23 +1,29 @@
 import { FilterFnOption, getFilteredRowModel } from "@tanstack/react-table";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  DetailedHTMLProps,
+  InputHTMLAttributes,
+  useEffect,
+  useState,
+} from "react";
 import { useTranslation } from "~/hooks/useTranslation";
 import { useTableMega } from "~/packages/TableMega/hooks";
 import { Input } from "../../Input";
-import { TInput } from "../../Input/types";
 
-type TInputProps<T> = {
+type TInputProps<T> = DetailedHTMLProps<
+  InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+> & {
   controlled?: {
     filter: string;
     setFilter: (data: string) => void;
   };
   globalFilterFn?: FilterFnOption<T>;
-  inputProps?: TInput;
 };
 
 export function SearchInput<T>({
   controlled,
-  inputProps,
   globalFilterFn,
+  ...rest
 }: TInputProps<T>) {
   const { translate } = useTranslation();
   const { table } = useTableMega();
@@ -50,7 +56,7 @@ export function SearchInput<T>({
       onChange={(e) => setFilterInternal(e.target.value)}
       placeholder={translate("SEARCH")}
       type="search"
-      {...inputProps}
+      {...rest}
     />
   );
 }

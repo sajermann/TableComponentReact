@@ -1,5 +1,6 @@
 import { Header, flexRender } from "@tanstack/react-table";
 import { managerClassNames } from "~/packages/TableMega/utils/managerClassNames";
+import { ResizingElement } from "../ResizingElement";
 import { SortIcon } from "../SortIcon";
 import { ThWithoutSort } from "../ThWithoutSort";
 
@@ -11,7 +12,7 @@ export function ThWithSort<T>({ header }: { header: Header<T, unknown> }) {
   }
   return (
     <th
-      className="p-4"
+      className="p-4 relative"
       key={header.id}
       colSpan={header.colSpan}
       style={{
@@ -37,6 +38,7 @@ export function ThWithSort<T>({ header }: { header: Header<T, unknown> }) {
           <SortIcon header={header} />
         </button>
       )}
+      <ResizingElement header={header} />
     </th>
   );
 }

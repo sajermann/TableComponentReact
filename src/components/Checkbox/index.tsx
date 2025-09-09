@@ -86,13 +86,14 @@ export function Checkbox({
   id,
   ...rest
 }: TCheckboxProps) {
-  const [situation, setSituation] = useState(checked || defaultChecked);
+  const [situation, setSituation] = useState(
+    checked !== undefined ? checked : defaultChecked
+  );
 
   const { checkboxPropsInternal } = checkboxVariants({
     className,
     color: iserror ? "error" : "primary",
   });
-
   return (
     <CheckboxRadix.Root
       checked={checked}
@@ -110,11 +111,11 @@ export function Checkbox({
         {situation === "indeterminate" && (
           <Container>
             {indeterminateIcon || (
-              <Icons nameIcon="indeterminate" color="#fff" />
+              <Icons nameIcon="indeterminate" color="#fff" className="h-1" />
             )}
           </Container>
         )}
-        {situation && (
+        {situation !== "indeterminate" && (
           <Container>{checkedIcon || <CheckIcon color="#fff" />}</Container>
         )}
       </CheckboxRadix.Indicator>

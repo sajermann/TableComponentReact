@@ -1,5 +1,6 @@
 import { Header, flexRender } from "@tanstack/react-table";
 import { managerClassNames } from "~/packages/TableMega/utils/managerClassNames";
+import { ResizingElement } from "../ResizingElement";
 
 export function ThWithoutSort<T>({ header }: { header: Header<T, unknown> }) {
   return (
@@ -23,6 +24,7 @@ export function ThWithoutSort<T>({ header }: { header: Header<T, unknown> }) {
       {header.isPlaceholder
         ? null
         : flexRender(header.column.columnDef.header, header.getContext())}
+      <ResizingElement header={header} />
     </th>
   );
 }

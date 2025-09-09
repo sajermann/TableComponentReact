@@ -19,3 +19,6 @@ export * from './Datepicker';
 export * from './Modal';
 export * from './Popover';
 export * from './Chip';
+export * from './Tooltip';
+export * from './Switch';
+export * from './Radio';

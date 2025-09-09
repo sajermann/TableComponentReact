@@ -224,6 +224,30 @@ const TableMegaLoadingPage = lazy(() =>
   )
 );
 
+const TableMegaPaginationPage = lazy(() =>
+  import("~/pages/TableMega/Pagination").then(
+    ({ TableMegaPaginationPage: Pagination }) => ({
+      default: Pagination,
+    })
+  )
+);
+
+const TableMegaResizingPage = lazy(() =>
+  import("~/pages/TableMega/Resizing").then(
+    ({ TableMegaResizingPage: Resizing }) => ({
+      default: Resizing,
+    })
+  )
+);
+
+const TableMegaSelectionPage = lazy(() =>
+  import("~/pages/TableMega/Selection").then(
+    ({ TableMegaSelectionPage: Selection }) => ({
+      default: Selection,
+    })
+  )
+);
+
 export function useRoutesMenu() {
   const { translate, currentLanguage } = useTranslation();
   const location = useLocation();
@@ -550,6 +574,36 @@ export function useRoutesMenu() {
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
           element: <TableMegaLoadingPage />,
           label: `Table Mega - Loading`,
+        },
+        {
+          name: "TableMegaPaginationPage",
+          path: "/table-mega/pagination",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaPaginationPage />,
+          label: `Table Mega - Pagination - Under Construction`,
+        },
+        {
+          name: "TableMegaResizingPage",
+          path: "/table-mega/resizing",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaResizingPage />,
+          label: `Table Mega - Resizing`,
+        },
+        {
+          name: "TableMegaSelectionPage",
+          path: "/table-mega/selection",
+          implements_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+          docs_code:
+            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+          element: <TableMegaSelectionPage />,
+          label: `Table Mega - Selection`,
         },
       ]
         .sort(_sortCustomName)

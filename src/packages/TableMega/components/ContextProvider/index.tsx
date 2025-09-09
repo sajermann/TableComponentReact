@@ -4,6 +4,7 @@ import {
   ColumnSort,
   FilterFnOption,
   OnChangeFn,
+  RowSelectionState,
   SortingState,
   Table,
   TableMeta,
@@ -60,6 +61,11 @@ export type TContextProviderProps<T, U = undefined> = {
     onChange: (data: U) => void;
     globalFilterFn?: FilterFnOption<T>;
   };
+  selection?: {
+    type: "multi" | "single";
+    rowSelection: { [index: number]: boolean };
+    setRowSelection: OnChangeFn<RowSelectionState>;
+  };
 };
 
 export function ContextProvider<T, U>({
@@ -70,12 +76,15 @@ export function ContextProvider<T, U>({
   columnOrder,
   columnVisibility,
   globalFilter,
+  selection,
 }: TContextProviderProps<T, U>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    columnResizeMode: "onChange",
+    ...(columns.some((col) => col.meta?.resizingElement) && {
+      columnResizeMode: "onChange",
+    }),
     ...((columns.some((col) => col.filterFn) || !!globalFilter) && {
       getFilteredRowModel: getFilteredRowModel(),
     }),
@@ -85,8 +94,9 @@ export function ContextProvider<T, U>({
       //   pageIndex: pagination?.pageIndex || 0,
       //   pageSize: pagination?.pageSize || 0,
       // },
-      // sorting: controlledSort ? controlledSort.sort : sortingInternal,
-      // rowSelection: selection?.rowSelection,
+      ...(!!selection && {
+        rowSelection: selection.rowSelection,
+      }),
       ...(!!globalFilter && {
         globalFilter: globalFilter.filter,
       }),
@@ -103,52 +113,18 @@ export function ContextProvider<T, U>({
       globalFilterFn: globalFilter.globalFilterFn || "auto",
     }),
 
-    // onRowSelectionChange: selection?.setRowSelection,
-    // enableRowSelection: selection !== undefined,
-    // enableMultiRowSelection: selection?.type === "multi",
-    // onSortingChange: sorting?.disabled
-    //   ? undefined
-    //   : (funcUpdater) => {
-    //       if (sorting?.manualSorting) {
-    //         const resultSorts = (
-    //           funcUpdater as unknown as (
-    //             dataTempOldSort: SortingState
-    //           ) => Record<string, unknown>[]
-    //         )(sortingInternal);
-    //         sorting.manualSorting.fn(resultSorts);
-    //       }
-    //       return setSortingInternal(funcUpdater);
-    //     },
-    // onSortingChange: controlledSort
-    //   ? controlledSort.setSort
-    //   : setSortingInternal,
-    // onSortingChange: !controlledSort
-    //   ? undefined
-    //   : (funcUpdater) => {
-    //       if (controlledSort?.sort) {
-    //         const resultSorts = (
-    //           funcUpdater as unknown as (
-    //             dataTempOldSort: SortingState
-    //           ) => Record<string, unknown>[]
-    //         )(controlledSort.sort);
-    //         console.log({ resultSorts });
-    //         controlledSort.setSort(resultSorts as any);
-    //       }
-    //       return controlledSort.setSort(funcUpdater);
-    //       // return setSortingInternal(funcUpdater);
-    //     },
-    // getSortedRowModel: enableSorting ? getSortedRowModel() : undefined,
-    // getRowCanExpand: () => true,
-    // getExpandedRowModel: getExpandedRowModel(),
+    ...(!!selection && {
+      onRowSelectionChange: selection.setRowSelection,
+      enableRowSelection: true,
+      enableMultiRowSelection: selection?.type === "multi",
+    }),
+
     // manualPagination: pagination?.automatic ? undefined : true,
     // getPaginationRowModel: pagination?.automatic
     //   ? getPaginationRowModel()
     //   : undefined,
     // onPaginationChange: pagination?.setPagination,
     meta,
-
-    // manualSorting: !!sorting?.manualSorting,
-    // enableMultiSort: true,
   });
 
   const expandedComponent = getExpandComponent(children);

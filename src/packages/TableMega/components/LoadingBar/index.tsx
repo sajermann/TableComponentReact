@@ -30,10 +30,8 @@ export function LoadingBar({ show, external, internal }: TProps) {
   useEffect(() => {
     let timerId: NodeJS.Timeout | null = null;
     if (show) {
-      console.log(`iniciando`, customWidth);
       timerId = setInterval(frame, 0.01);
     } else {
-      console.log(`limpando`, customWidth);
       clearInterval(timerId || 0);
     }
     return () => clearInterval(timerId || 0);

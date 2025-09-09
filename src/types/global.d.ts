@@ -12,5 +12,6 @@ declare module '@tanstack/react-table' {
     align?: TextAlign;
     filterElement?: (data: any, dataB: any) => React.ReactNode;
     cellEdit?: (data: any) => React.ReactNode;
+    resizingElement?: (data: any) => React.ReactNode;
   }
 }
