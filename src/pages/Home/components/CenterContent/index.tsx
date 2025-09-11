@@ -1,10 +1,12 @@
+import { Link, useRouter } from "@tanstack/react-router";
 import { EyeIcon } from "lucide-react";
-import { Link } from "react-router";
 import { useRoutesMenu } from "~/hooks/useRoutesMenu";
 import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
 
 export function CenterContent() {
   const { globalRoutes: options } = useRoutesMenu();
+  const router = useRouter();
+  console.log({ router }, router.flatRoutes);
   return (
     <div className="flex flex-wrap items-center justify-center gap-2">
       {options.map(

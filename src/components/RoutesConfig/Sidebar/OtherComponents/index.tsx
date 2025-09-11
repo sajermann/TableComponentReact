@@ -1,12 +1,14 @@
-import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
-import { Link } from 'react-router';
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+// import { Link } from "react-router";
 
-import { useRoutesMenu } from '~/hooks/useRoutesMenu';
-import { useTranslation } from '~/hooks/useTranslation';
+import { useRoutesMenu } from "~/hooks/useRoutesMenu";
+import { useTranslation } from "~/hooks/useTranslation";
 
 export function OtherComponents() {
   const { globalRoutes: options, triRoutes } = useRoutesMenu();
   const { translate } = useTranslation();
+
+  return null;
 
   if (!options.length || (triRoutes.next === null && triRoutes.prev === null)) {
     return null;
@@ -14,7 +16,7 @@ export function OtherComponents() {
 
   return (
     <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2">
-      <p>{translate('OTHERS_COMPONENTS')}</p>
+      <p>{translate("OTHERS_COMPONENTS")}</p>
       <div className="flex justify-between items-center">
         <div>
           {triRoutes.prev && (

@@ -1,5 +1,6 @@
 import * as path from 'path';
 import tailwindcss from '@tailwindcss/vite';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
 import Pages from 'vite-plugin-pages';
@@ -10,7 +11,7 @@ export default defineConfig(({ mode }) => {
   console.log({ VITE_URL_BASENAME, mode });
 
   return {
-    base: `/${VITE_URL_BASENAME}`,
+    // base: `/${VITE_URL_BASENAME}`,
 
     server: {
       port: 5000,
@@ -20,7 +21,15 @@ export default defineConfig(({ mode }) => {
       port: 8080,
       host: true,
     },
-    plugins: [react(), tailwindcss(), Pages()],
+    plugins: [
+      tanstackRouter({
+        target: 'react',
+        autoCodeSplitting: true,
+      }),
+      react(),
+      tailwindcss(),
+      Pages(),
+    ],
     resolve: {
       alias: {
         '~': path.resolve(__dirname, 'src'),

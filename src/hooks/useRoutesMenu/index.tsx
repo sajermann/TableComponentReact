@@ -1,5 +1,230 @@
+import {
+  Link,
+  Outlet,
+  createRootRoute,
+  createRoute,
+  createRouter,
+  lazyRouteComponent,
+  useChildMatches,
+  useLocation,
+  useRouterState,
+} from "@tanstack/react-router";
 import { lazy, useMemo } from "react";
-import { useLocation } from "react-router";
+import { Home } from "~/pages/Home";
+
+const rootRoute = createRootRoute({
+  component: () => (
+    <InjectorProviders>
+      <RoutesConfig />
+    </InjectorProviders>
+  ),
+  // notFoundComponent: lazyRouteComponent(() => import("~/pages/NotFound")),
+  loader: () => <span>Carregando</span>,
+  notFoundComponent: lazyRouteComponent(
+    () => import("~/pages/NotFound"),
+    "NotFoundPage"
+  ),
+});
+
+const homeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/",
+  component: () => <Home />,
+});
+
+const tableTraditionalRootRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/traditional-pattern",
+  loader: () => {
+    return "Hello World";
+  },
+  component: Outlet,
+});
+
+const tableTraditionalOptionsRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/",
+  context: (...a) => {
+    console.log({ a });
+  },
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern"),
+    "TraditionalPattern"
+  ),
+  staticData: {
+    // <--- use esta propriedade!
+    dataPegarDepois: [{ id: 1, path: "bataforte" }],
+  },
+});
+
+const tableTraditionalColumnOrderRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/column-order",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/ColumnOrder"),
+    "ColumnOrderPage"
+  ),
+});
+
+const tableTraditionalColumnVisibilityRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/column-visibility",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/ColumnVisibility"),
+    "ColumnVisibilityPage"
+  ),
+});
+
+const tableTraditionalEditableRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/editable",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/Editable"),
+    "EditablePage"
+  ),
+});
+
+const tableTraditionalEllipsisRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/ellipsis",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/Ellipsis"),
+    "EllipsisPage"
+  ),
+});
+
+const tableTraditionalExpandLineRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/expand-line",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/ExpandedLine"),
+    "ExpandedLinePage"
+  ),
+});
+
+const tableTraditionalExportRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/export",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/Export"),
+    "ExportPage"
+  ),
+});
+
+const tableTraditionalFavoritesRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/favorites",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/Favorites"),
+    "FavoritesPage"
+  ),
+});
+
+const tableTraditionalFilterRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/filter",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/Filter"),
+    "FilterPage"
+  ),
+});
+
+const tableTraditionalFooterRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/footer",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/Footer"),
+    "FooterPage"
+  ),
+});
+
+const tableTraditionalFullEditableRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/full-editable",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/FullEditable"),
+    "FullEditablePage"
+  ),
+});
+
+const tableTraditionalLoadingRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/loading",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/Loading"),
+    "LoadingPage"
+  ),
+});
+
+const tableTraditionalPaginationRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/pagination",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/Pagination"),
+    "PaginationPage"
+  ),
+});
+
+const tableTraditionalResizingRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/resizing",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/Resizing"),
+    "ResizingPage"
+  ),
+});
+
+const tableTraditionalSelectionRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/selection",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/Selection"),
+    "SelectionPage"
+  ),
+});
+
+const tableTraditionalSortRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/sort",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/Sort"),
+    "SortPage"
+  ),
+});
+
+const tableTraditionalVirtualizedRoute = createRoute({
+  getParentRoute: () => tableTraditionalRootRoute,
+  path: "/virtualized",
+  component: lazyRouteComponent(
+    () => import("~/pages/TraditionalPattern/Virtualized"),
+    "VirtualizedPage"
+  ),
+});
+
+const routeTree = rootRoute.addChildren([
+  homeRoute,
+  tableTraditionalRootRoute.addChildren([
+    tableTraditionalOptionsRoute,
+    tableTraditionalColumnOrderRoute,
+    tableTraditionalColumnVisibilityRoute,
+    tableTraditionalEditableRoute,
+    tableTraditionalEllipsisRoute,
+    tableTraditionalExpandLineRoute,
+    tableTraditionalExportRoute,
+    tableTraditionalFavoritesRoute,
+    tableTraditionalFilterRoute,
+    tableTraditionalFooterRoute,
+    tableTraditionalFullEditableRoute,
+    tableTraditionalLoadingRoute,
+    tableTraditionalPaginationRoute,
+    tableTraditionalResizingRoute,
+    tableTraditionalSelectionRoute,
+    tableTraditionalSortRoute,
+    tableTraditionalVirtualizedRoute,
+  ]),
+]);
+
+export const router = createRouter({ routeTree });
 
 import {
   _getMenus,
@@ -8,113 +233,12 @@ import {
   getTriRoutes,
 } from "~/hooks/useRoutesMenu/utils";
 import { useTranslation } from "~/hooks/useTranslation";
-import { Home } from "~/pages/Home";
+
+import { InjectorProviders, RoutesConfig } from "~/components";
+
+import { TraditionalPattern } from "~/pages/TraditionalPattern";
 import { TRoutesMenu } from "~/types";
 import { TTriRoutes } from "./types";
-
-const NotFoundPage = lazy(() =>
-  import("~/pages/NotFound").then(({ NotFoundPage: NotFound }) => ({
-    default: NotFound,
-  }))
-);
-
-const ColumnOrderPage = lazy(() =>
-  import("~/pages/ColumnOrder").then(({ ColumnOrderPage: ColumnOrder }) => ({
-    default: ColumnOrder,
-  }))
-);
-
-const ColumnVisibilityPage = lazy(() =>
-  import("~/pages/ColumnVisibility").then(
-    ({ ColumnVisibilityPage: ColumnVisibility }) => ({
-      default: ColumnVisibility,
-    })
-  )
-);
-
-const EditablePage = lazy(() =>
-  import("~/pages/Editable").then(({ EditablePage: Editable }) => ({
-    default: Editable,
-  }))
-);
-
-const EllipsisPage = lazy(() =>
-  import("~/pages/Ellipsis").then(({ EllipsisPage: Ellipsis }) => ({
-    default: Ellipsis,
-  }))
-);
-
-const ExpandedLinePage = lazy(() =>
-  import("~/pages/ExpandedLine").then(({ ExpandedLinePage: ExpandedLine }) => ({
-    default: ExpandedLine,
-  }))
-);
-
-const ExportPage = lazy(() =>
-  import("~/pages/Export").then(({ ExportPage: Export }) => ({
-    default: Export,
-  }))
-);
-
-const FavoritesPage = lazy(() =>
-  import("~/pages/Favorites").then(({ FavoritesPage: Favorites }) => ({
-    default: Favorites,
-  }))
-);
-
-const FilterPage = lazy(() =>
-  import("~/pages/Filter").then(({ FilterPage: Filter }) => ({
-    default: Filter,
-  }))
-);
-
-const FooterPage = lazy(() =>
-  import("~/pages/Footer").then(({ FooterPage: Footer }) => ({
-    default: Footer,
-  }))
-);
-
-const FullEditablePage = lazy(() =>
-  import("~/pages/FullEditable").then(({ FullEditablePage: FullEditable }) => ({
-    default: FullEditable,
-  }))
-);
-
-const LoadingPage = lazy(() =>
-  import("~/pages/Loading").then(({ LoadingPage: Loading }) => ({
-    default: Loading,
-  }))
-);
-
-const PaginationTablePage = lazy(() =>
-  import("~/pages/Pagination").then(({ PaginationPage: Pagination }) => ({
-    default: Pagination,
-  }))
-);
-
-const ResizingPage = lazy(() =>
-  import("~/pages/Resizing").then(({ ResizingPage: Resizing }) => ({
-    default: Resizing,
-  }))
-);
-
-const SelectionPage = lazy(() =>
-  import("~/pages/Selection").then(({ SelectionPage: Selection }) => ({
-    default: Selection,
-  }))
-);
-
-const SortPage = lazy(() =>
-  import("~/pages/Sort").then(({ SortPage: Sort }) => ({
-    default: Sort,
-  }))
-);
-
-const VirtualizedPage = lazy(() =>
-  import("~/pages/Virtualized").then(({ VirtualizedPage: Virtualized }) => ({
-    default: Virtualized,
-  }))
-);
 
 const TableMegaPage = lazy(() =>
   import("~/pages/TableMega").then(({ TableMegaPage: TableMega }) => ({
@@ -255,16 +379,6 @@ export function useRoutesMenu() {
     (): TRoutesMenu[] =>
       [
         {
-          name: "NotFound",
-          path: "*",
-          element: <NotFoundPage />,
-          label: translate("NOT_FOUND"),
-          hide: {
-            home: true,
-            otherComponents: true,
-          },
-        },
-        {
           name: "Home",
           path: "/",
           element: <Home />,
@@ -275,166 +389,7 @@ export function useRoutesMenu() {
           },
           order: 0,
         },
-        {
-          name: "ColumnOrder",
-          path: "/column-order",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/ColumnOrder",
-          element: <ColumnOrderPage />,
-          label: translate("COLUMN_ORDER"),
-        },
-        {
-          name: "ColumnVisibility",
-          path: "/column-visibility",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/ColumnVisibility",
-          element: <ColumnVisibilityPage />,
-          label: translate("COLUMN_VISIBILITY"),
-        },
-        {
-          name: "Editable",
-          path: "/editable",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Editable",
-          element: <EditablePage />,
-          label: translate("EDITABLE"),
-        },
-        {
-          name: "Ellipsis",
-          path: "/ellipsis",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Ellipsis",
-          element: <EllipsisPage />,
-          label: "Ellipsis",
-        },
-        {
-          name: "ExpandedLine",
-          path: "/expand-line",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/ExpandedLine",
-          element: <ExpandedLinePage />,
-          label: translate("EXPAND_LINE"),
-        },
-        {
-          name: "Export",
-          path: "/export",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Export",
-          element: <ExportPage />,
-          label: translate("EXPORT"),
-        },
-        {
-          name: "Favorites",
-          path: "/favorites",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Favorites",
-          element: <FavoritesPage />,
-          label: translate("FAVORITES"),
-        },
-        {
-          name: "Filter",
-          path: "/filter",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Filter",
-          element: <FilterPage />,
-          label: translate("FILTER"),
-        },
-        {
-          name: "Footer",
-          path: "/footer",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Footer",
-          element: <FooterPage />,
-          label: translate("FOOTER"),
-        },
-        {
-          name: "FullEditable",
-          path: "/full-editable",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/FullEditable",
-          element: <FullEditablePage />,
-          label: translate("FULL_EDITABLE"),
-        },
-        {
-          name: "Loading",
-          path: "/loading",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Loading",
-          element: <LoadingPage />,
-          label: translate("LOADING"),
-        },
-        {
-          name: "Pagination",
-          path: "/pagination",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Pagination",
-          element: <PaginationTablePage />,
-          label: translate("PAGINATION"),
-        },
-        {
-          name: "Resizing",
-          path: "/resizing",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Resizing",
-          element: <ResizingPage />,
-          label: translate("RESIZING"),
-        },
-        {
-          name: "Selection",
-          path: "/selection",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Selection",
-          element: <SelectionPage />,
-          label: translate("SELECTION"),
-        },
-        {
-          name: "Sort",
-          path: "/sort",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Sort",
-          element: <SortPage />,
-          label: translate("SORT"),
-        },
-        {
-          name: "Virtualized",
-          path: "/virtualized",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <VirtualizedPage />,
-          label: translate("VIRTUALIZED"),
-        },
+
         {
           name: "TableMega",
           path: "/table-mega",
@@ -594,16 +549,18 @@ export function useRoutesMenu() {
             "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
           element: <TableMegaSelectionPage />,
           label: `Table Mega - Selection`,
-        },
-        {
-          name: "TableMegaVirtualizationPage",
-          path: "/table-mega/virtualization",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaVirtualizationPage />,
-          label: `Table Mega - Virtualization`,
+          subs: [
+            {
+              name: "TableMegaVirtualizationPage",
+              path: "virtualization",
+              implements_code:
+                "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
+              docs_code:
+                "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
+              element: <TableMegaVirtualizationPage />,
+              label: `Table Mega - Virtualization`,
+            },
+          ],
         },
       ]
         .sort(_sortCustomName)

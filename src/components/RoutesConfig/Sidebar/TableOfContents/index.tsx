@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+// import { useLocation } from "react-router";
 
 import { useLoadingLazy } from "~/hooks/useLoadingLazy";
 import { useTranslation } from "~/hooks/useTranslation";
@@ -17,7 +17,8 @@ type TMenu = {
 export function TableOfContents() {
   const { isLoadingLazy } = useLoadingLazy();
   const [optionsMenu, setOptionsMenu] = useState<TMenu[]>([]);
-  const location = useLocation();
+  return null;
+  // const location = useLocation();
   const { scrollPosition } = useWindow();
   const { translate, currentLanguage } = useTranslation();
 

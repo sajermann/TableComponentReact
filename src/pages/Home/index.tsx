@@ -1,13 +1,18 @@
+import { Link } from "@tanstack/react-router";
 import { useTranslation } from "~/hooks/useTranslation";
 import { CenterContent } from "./components/CenterContent";
 
 const APPLICATION_NAME = import.meta.env.VITE_APPLICATION_NAME;
 
 export function Home() {
+  console.log(`home`);
   const { translate } = useTranslation();
 
   return (
     <main className="h-full gap-5 flex flex-col">
+      <Link to="/traditional-pattern" className="[&.active]:font-bold">
+        Traditional Root
+      </Link>
       <div className="flex flex-col items-center justify-center gap-2">
         <h1 className="text-3xl">
           <strong>{`${translate("WELCOME")} - ${APPLICATION_NAME}`}</strong>

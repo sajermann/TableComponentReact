@@ -1,11 +1,13 @@
-import { Link, useLocation } from 'react-router';
-import { useBreadcrumbs } from '~/hooks/useBreadcrumbs';
+// import { Link, useLocation } from 'react-router';
+import { useBreadcrumbs } from "~/hooks/useBreadcrumbs";
 
 export default function _Breadcrumbs() {
   const { breadcrumbs } = useBreadcrumbs();
-  const location = useLocation();
+  // const location = useLocation();
 
-  if (!breadcrumbs || location.pathname === '/') {
+  return null;
+
+  if (!breadcrumbs || location.pathname === "/") {
     return null;
   }
 
@@ -14,14 +16,14 @@ export default function _Breadcrumbs() {
       {breadcrumbs.map((item, index) =>
         item.link && breadcrumbs[index + 1] ? (
           <ol key={`${item.link}-${breadcrumbs[index + 1]}`}>
-            <Link to={item.link} className="hover:underline !text-primary-500">
+            {/* <Link to={item.link} className="hover:underline !text-primary-500">
               {item.label}
-            </Link>
-            {breadcrumbs[index + 1].label && ' / '}
+            </Link> */}
+            {breadcrumbs[index + 1].label && " / "}
           </ol>
         ) : (
           <ol key={`${item.label}-${index}`}>{item.label}</ol>
-        ),
+        )
       )}
     </div>
   );

@@ -3,11 +3,14 @@ import { Section } from "~/components/Section";
 import { useColumns, useTranslation } from "~/hooks";
 import { TPerson } from "~/types";
 
+import { useChildMatches } from "@tanstack/react-router";
 import { Table } from "~/packages/Table";
 import { makeData } from "~/utils";
 import { ColumnOrderSelector } from "./components/ColumnOrderSelector";
 
 export function ColumnOrderPage() {
+  const childMatches = useChildMatches();
+  console.log({ childMatches });
   const { translate } = useTranslation();
   const [data, setData] = useState<TPerson[]>([]);
   const [columnOrder, setColumnOrder] = useState([
