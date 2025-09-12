@@ -1,13 +1,11 @@
-// import { Link, useLocation } from 'react-router';
+import { Link, useLocation } from "@tanstack/react-router";
 import { useBreadcrumbs } from "~/hooks/useBreadcrumbs";
 
 export default function _Breadcrumbs() {
   const { breadcrumbs } = useBreadcrumbs();
-  // const location = useLocation();
+  const location = useLocation();
 
-  return null;
-
-  if (!breadcrumbs || location.pathname === "/") {
+  if (!breadcrumbs || !breadcrumbs.length || location.pathname === "/") {
     return null;
   }
 
@@ -16,9 +14,9 @@ export default function _Breadcrumbs() {
       {breadcrumbs.map((item, index) =>
         item.link && breadcrumbs[index + 1] ? (
           <ol key={`${item.link}-${breadcrumbs[index + 1]}`}>
-            {/* <Link to={item.link} className="hover:underline !text-primary-500">
+            <Link to={item.link} className="hover:underline !text-primary-500">
               {item.label}
-            </Link> */}
+            </Link>
             {breadcrumbs[index + 1].label && " / "}
           </ol>
         ) : (

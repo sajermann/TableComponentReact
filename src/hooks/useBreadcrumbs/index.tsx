@@ -22,17 +22,6 @@ export function useBreadcrumbs() {
 
 export function BreadcrumbsProvider({ children }: { children: ReactNode }) {
   const [breadcrumbs, setBreadcrumbs] = useState<TBreadcrumb[]>([]);
-  const { currentLanguage } = useTranslation();
-  // const location = useLocation();
-
-  const { globalRoutes: options } = useRoutesMenu();
-
-  // useEffect(() => {
-  //   const results = location.pathname.split("/");
-  //   const final = _getBreadcrumbs(results, options);
-  //   setBreadcrumbs(final);
-  // }, [location.pathname, currentLanguage]);
-
   const memoizedValue = useMemo(
     () => ({
       breadcrumbs,

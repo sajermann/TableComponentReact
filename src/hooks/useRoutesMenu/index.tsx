@@ -9,6 +9,7 @@ import {
   useLocation,
   useRouterState,
 } from "@tanstack/react-router";
+import i18next from "i18next";
 import { lazy, useMemo } from "react";
 import { Home } from "~/pages/Home";
 
@@ -18,8 +19,6 @@ const rootRoute = createRootRoute({
       <RoutesConfig />
     </InjectorProviders>
   ),
-  // notFoundComponent: lazyRouteComponent(() => import("~/pages/NotFound")),
-  loader: () => <span>Carregando</span>,
   notFoundComponent: lazyRouteComponent(
     () => import("~/pages/NotFound"),
     "NotFoundPage"
@@ -29,45 +28,151 @@ const rootRoute = createRootRoute({
 const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
+  loader: async () => {
+    return {
+      pageTitle: "Table Component React",
+      breadcrumbs: [],
+      options: [
+        {
+          label: "TRADITIONAL_PATTERN",
+          path: "/traditional-pattern",
+        },
+      ],
+    };
+  },
+  pendingComponent: LoadingPage,
+  errorComponent: () => <span>Quebrou</span>,
   component: () => <Home />,
 });
 
-const tableTraditionalRootRoute = createRoute({
+const tableTraditionalOutletRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/traditional-pattern",
-  loader: () => {
-    return "Hello World";
-  },
   component: Outlet,
 });
 
-const tableTraditionalOptionsRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+const tableTraditionalRootRoute = createRoute({
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/",
-  context: (...a) => {
-    console.log({ a });
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("TRADITIONAL_PATTERN"),
+      breadcrumbs: [
+        {
+          label: "Home",
+          link: "/",
+        },
+        {
+          label: i18next.t("TRADITIONAL_PATTERN"),
+        },
+      ],
+      options: [
+        {
+          label: "COLUMN_ORDER",
+          path: "column-order/",
+        },
+        {
+          label: "COLUMN_VISIBILITY",
+          path: "column-visibility",
+        },
+        {
+          label: "EDITABLE",
+          path: "editable",
+        },
+        {
+          label: "ELLIPSIS",
+          path: "ellipsis",
+        },
+        {
+          label: "EXPAND_LINE",
+          path: "expand-line",
+        },
+        {
+          label: "EXPORT",
+          path: "export",
+        },
+        {
+          label: "FAVORITES",
+          path: "favorites",
+        },
+        {
+          label: "FILTER",
+          path: "filter",
+        },
+        {
+          label: "FOOTER",
+          path: "footer",
+        },
+        {
+          label: "FULL_EDITABLE",
+          path: "full-editable",
+        },
+        {
+          label: "LOADING",
+          path: "loading",
+        },
+        {
+          label: "PAGINATION",
+          path: "pagination",
+        },
+        {
+          label: "RESIZING",
+          path: "resizing",
+        },
+        {
+          label: "SELECTION",
+          path: "selection",
+        },
+        {
+          label: "SORT",
+          path: "sort",
+        },
+        {
+          label: "VIRTUALIZED",
+          path: "virtualized",
+        },
+      ],
+    };
   },
+  pendingComponent: LoadingPage,
+  errorComponent: () => <span>Quebrou</span>,
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern"),
     "TraditionalPattern"
   ),
-  staticData: {
-    // <--- use esta propriedade!
-    dataPegarDepois: [{ id: 1, path: "bataforte" }],
-  },
 });
 
 const tableTraditionalColumnOrderRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/column-order",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/ColumnOrder"),
     "ColumnOrderPage"
   ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("COLUMN_ORDER"),
+      breadcrumbs: [
+        {
+          label: "Home",
+          link: "/",
+        },
+        {
+          label: i18next.t("TRADITIONAL_PATTERN"),
+          link: "/traditional-pattern",
+        },
+        {
+          label: i18next.t("COLUMN_ORDER"),
+        },
+      ],
+    };
+  },
 });
 
 const tableTraditionalColumnVisibilityRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/column-visibility",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/ColumnVisibility"),
@@ -76,7 +181,7 @@ const tableTraditionalColumnVisibilityRoute = createRoute({
 });
 
 const tableTraditionalEditableRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/editable",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/Editable"),
@@ -85,7 +190,7 @@ const tableTraditionalEditableRoute = createRoute({
 });
 
 const tableTraditionalEllipsisRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/ellipsis",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/Ellipsis"),
@@ -94,7 +199,7 @@ const tableTraditionalEllipsisRoute = createRoute({
 });
 
 const tableTraditionalExpandLineRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/expand-line",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/ExpandedLine"),
@@ -103,7 +208,7 @@ const tableTraditionalExpandLineRoute = createRoute({
 });
 
 const tableTraditionalExportRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/export",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/Export"),
@@ -112,7 +217,7 @@ const tableTraditionalExportRoute = createRoute({
 });
 
 const tableTraditionalFavoritesRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/favorites",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/Favorites"),
@@ -121,7 +226,7 @@ const tableTraditionalFavoritesRoute = createRoute({
 });
 
 const tableTraditionalFilterRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/filter",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/Filter"),
@@ -130,7 +235,7 @@ const tableTraditionalFilterRoute = createRoute({
 });
 
 const tableTraditionalFooterRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/footer",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/Footer"),
@@ -139,7 +244,7 @@ const tableTraditionalFooterRoute = createRoute({
 });
 
 const tableTraditionalFullEditableRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/full-editable",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/FullEditable"),
@@ -148,7 +253,7 @@ const tableTraditionalFullEditableRoute = createRoute({
 });
 
 const tableTraditionalLoadingRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/loading",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/Loading"),
@@ -157,7 +262,7 @@ const tableTraditionalLoadingRoute = createRoute({
 });
 
 const tableTraditionalPaginationRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/pagination",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/Pagination"),
@@ -166,7 +271,7 @@ const tableTraditionalPaginationRoute = createRoute({
 });
 
 const tableTraditionalResizingRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/resizing",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/Resizing"),
@@ -175,7 +280,7 @@ const tableTraditionalResizingRoute = createRoute({
 });
 
 const tableTraditionalSelectionRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/selection",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/Selection"),
@@ -184,7 +289,7 @@ const tableTraditionalSelectionRoute = createRoute({
 });
 
 const tableTraditionalSortRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/sort",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/Sort"),
@@ -193,7 +298,7 @@ const tableTraditionalSortRoute = createRoute({
 });
 
 const tableTraditionalVirtualizedRoute = createRoute({
-  getParentRoute: () => tableTraditionalRootRoute,
+  getParentRoute: () => tableTraditionalOutletRoute,
   path: "/virtualized",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern/Virtualized"),
@@ -203,8 +308,8 @@ const tableTraditionalVirtualizedRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
   homeRoute,
-  tableTraditionalRootRoute.addChildren([
-    tableTraditionalOptionsRoute,
+  tableTraditionalOutletRoute.addChildren([
+    tableTraditionalRootRoute,
     tableTraditionalColumnOrderRoute,
     tableTraditionalColumnVisibilityRoute,
     tableTraditionalEditableRoute,
@@ -236,8 +341,10 @@ import { useTranslation } from "~/hooks/useTranslation";
 
 import { InjectorProviders, RoutesConfig } from "~/components";
 
+import { LoadingPage } from "~/components/LoadingForPage";
 import { TraditionalPattern } from "~/pages/TraditionalPattern";
 import { TRoutesMenu } from "~/types";
+import { delay } from "~/utils";
 import { TTriRoutes } from "./types";
 
 const TableMegaPage = lazy(() =>

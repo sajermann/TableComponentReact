@@ -10,7 +10,11 @@ import { router } from "./hooks";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider
+      router={router}
+      defaultPendingMs={0}
+      defaultPendingMinMs={0}
+    />
     {/* <InjectorProviders>
       <Layout>
         <RoutesConfig />

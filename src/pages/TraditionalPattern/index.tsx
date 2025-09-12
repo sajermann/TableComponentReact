@@ -2,35 +2,45 @@ import {
   Link,
   Outlet,
   useChildMatches,
+  useLoaderData,
   useMatches,
   useRouterState,
 } from "@tanstack/react-router";
+import { useMemo } from "react";
 import { JsonViewer } from "~/components";
+import { CenterOptions } from "~/components/CenterOptions";
+import { usePagesConfig, useTranslation } from "~/hooks";
 
 export function TraditionalPattern() {
-  const childMatches = useChildMatches();
-  const routerState = useRouterState();
-  const matches = useMatches();
-  // Encontra o match da rota atual
-  const thisMatch = matches.find(
-    (match) => match.routeId === "tableTraditionalOptionsRoute"
-  ); // ajuste o id conforme gerado ajusta arui
+  const { translate } = useTranslation();
+  const data = useLoaderData({ from: "/traditional-pattern/" });
 
-  const opcoes = thisMatch?.staticData?.dataPegarDepois ?? [];
-  console.log(`TraditionalPattern`, { opcoes, matches });
-  // const posts = useLoaderData({ from: "/traditional-pattern" });
+  usePagesConfig({
+    breadcrumbs: data?.breadcrumbs || [],
+    pageTitle: data?.pageTitle,
+  });
 
   return (
-    <div className="p-2">
-      Traditional Root
-      <Link
-        to="/traditional-pattern/column-order"
-        className="[&.active]:font-bold"
-      >
-        Column Order
-      </Link>
-      <JsonViewer value={{ routerState, childMatches }} />
-      <Outlet />
-    </div>
+    <main className="h-full gap-5 flex flex-col">
+      <div className="flex flex-col items-center justify-center gap-2">
+        <h1 className="text-3xl">
+          <strong>{translate("TRADITIONAL_PATTERN")}</strong>
+        </h1>
+        <p>{translate("TRADITIONAL_PATTERN_MESSAGE_PRESENTATION")}</p>
+        <a
+          href="https://github.com/sajermann/BoilerplateComponentReact/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"
+            alt="github"
+            height="18"
+            style={{ borderRadius: 5, marginRight: 5 }}
+          />
+        </a>
+      </div>
+      <CenterOptions options={data?.options || []} />
+    </main>
   );
 }

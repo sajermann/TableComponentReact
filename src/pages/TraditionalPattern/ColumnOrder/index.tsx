@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { Section } from "~/components/Section";
-import { useColumns, useTranslation } from "~/hooks";
+import { useColumns, usePagesConfig, useTranslation } from "~/hooks";
 import { TPerson } from "~/types";
 
-import { useChildMatches } from "@tanstack/react-router";
+import { useChildMatches, useLoaderData } from "@tanstack/react-router";
 import { Table } from "~/packages/Table";
 import { makeData } from "~/utils";
 import { ColumnOrderSelector } from "./components/ColumnOrderSelector";
 
+const DATA = makeData.person(50);
+
 export function ColumnOrderPage() {
-  const childMatches = useChildMatches();
-  console.log({ childMatches });
   const { translate } = useTranslation();
-  const [data, setData] = useState<TPerson[]>([]);
   const [columnOrder, setColumnOrder] = useState([
     { id: "avatar", content: "Avatar" },
     { id: "id", content: "Id" },
@@ -23,12 +22,16 @@ export function ColumnOrderPage() {
     { id: "role", content: "Role" },
     { id: "isActive", content: translate("ACTIVE") },
   ]);
-
   const { columns } = useColumns();
 
-  useEffect(() => {
-    setData(makeData.person(50));
-  }, []);
+  const loaderData = useLoaderData({
+    from: "/traditional-pattern/column-order",
+  });
+
+  usePagesConfig({
+    breadcrumbs: loaderData?.breadcrumbs || [],
+    pageTitle: loaderData?.pageTitle,
+  });
 
   return (
     <Section title={translate("COLUMNS_ORDER")} variant="h2">
@@ -41,8 +44,9 @@ export function ColumnOrderPage() {
       </div>
       <Table
         columns={columns}
-        data={data}
+        data={DATA}
         columnOrder={columnOrder.map((item) => item.id)}
+        maxHeight="70vh"
       />
     </Section>
   );

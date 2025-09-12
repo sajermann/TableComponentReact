@@ -12,6 +12,10 @@
     "ROLE": "Role",
     "NO_DATA": "No Data",
 
+    "DATA_IS_LOADING_PLEASE_WAITING": "Data is loading, please wait",
+    "TRADITIONAL_PATTERN_MESSAGE_PRESENTATION": "Table component using the traditional pattern, where there is a component that receives all the necessary properties.",
+    "COMPOSITION_PATTERN": "Composition Pattern",
+    "TRADITIONAL_PATTERN": "Traditional Pattern",
     "FAVORITE": "Favorite",
     "VIEW_MODE": "View Mode",
     "WITH_DATA": "With Data",

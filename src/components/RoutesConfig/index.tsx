@@ -13,11 +13,8 @@ export function RoutesConfig() {
   // const location = useLocation();
 
   return (
-    <div className="w-full 2xl:max-w-[1330px] p-2 gap-5 flex  my-0 mx-auto">
-      <div
-        data-bruno="sajermann"
-        className="w-full flex flex-col h-full gap-2 flex-1"
-      >
+    <div className="w-full 2xl:max-w-[1330px] p-2 py-5 gap-5 flex my-0 mx-auto">
+      <div className="w-full flex flex-col h-full gap-2 flex-1">
         {/* <Suspense
           //key={location.key}
           fallback={<IsLoading />}
