@@ -110,9 +110,15 @@ export function UpdateRowExpanded({ dataToEdit, onSave, onCancel }: Props) {
           <Checkbox
             checked={formData.isActive}
             id="isActive"
-            onCheckedChange={(e) =>
-              handleChange(e as ChangeEvent<HTMLInputElement>)
-            }
+            onCheckedChange={(e) => {
+              const value = e === true;
+              handleChange({
+                target: {
+                  value: value as unknown as string,
+                  id: "isActive",
+                },
+              } as ChangeEvent<HTMLInputElement>);
+            }}
           />
         </ContainerInput>
 

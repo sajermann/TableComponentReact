@@ -12,8 +12,9 @@
     "ROLE": "Role",
     "NO_DATA": "Sem Dados",
 
+    "COMPOSITION_PATTERN_MESSAGE_PRESENTATION": "Componente de tabela construído segundo o padrão de composição, onde o desenvolvedor seleciona apenas os componentes essenciais para o caso de uso específico.",
     "DATA_IS_LOADING_PLEASE_WAITING": "Carregando dados, por favor aguarde",
-    "TRADITIONAL_PATTERN_MESSAGE_PRESENTATION": "Componente de tabela utilizando o padrão tradicional, onde existe um componente que recebe todas as propriedades necessárias.",
+    "TRADITIONAL_PATTERN_MESSAGE_PRESENTATION": "Componente de tabela baseado no padrão tradicional, em que um único componente recebe todas as propriedades necessárias para funcionar.",
     "COMPOSITION_PATTERN": "Padrão Composição",
     "TRADITIONAL_PATTERN": "Padrão Tradicional",
     "FAVORITE": "Favorito",
@@ -138,7 +139,6 @@
     "IMPLEMENTS_COLUMN_VISIBILITY_MODE": "Implementação do Modo Visibilidade da Coluna",
     "COLUMN_VISIBILITY": "Visibilidade da Coluna",
     "VISIBILITY": "Visibilidade",
-    "COLUMNS_VISIBLED": "Colunas Visíveis",
     "COLUMN_VISIBILITY_WITH_STATE_FULLY_CONTROLLED": "Visibilidade da coluna com estado completamente controlado",
     "NOT_FOUND_PAGE ": "Página não Encontrado",
     "NOT_FOUND": "Não Encontrado",

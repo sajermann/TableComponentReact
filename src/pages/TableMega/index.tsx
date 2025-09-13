@@ -1,16 +1,37 @@
-import { Section } from "~/components";
-import { useColumns } from "~/hooks";
-import * as TableMega from "~/packages/TableMega";
-import { makeData } from "~/utils";
-
-const data = makeData.person(50);
+import { useLoaderData } from "@tanstack/react-router";
+import { CenterOptions } from "~/components/CenterOptions";
+import { usePagesConfig, useTranslation } from "~/hooks";
 
 export function TableMegaPage() {
-  const { columns } = useColumns();
+  const { translate } = useTranslation();
+  const data = useLoaderData({ from: "/composition-pattern/" });
+
+  usePagesConfig({
+    breadcrumbs: data?.breadcrumbs || [],
+    pageTitle: data?.pageTitle,
+  });
 
   return (
-    <Section title="Mega" variant="h1">
-      Root
-    </Section>
+    <main className="h-full gap-5 flex flex-col">
+      <div className="flex flex-col items-center justify-center gap-2">
+        <h1 className="text-3xl">
+          <strong>{translate("COMPOSITION_PATTERN")}</strong>
+        </h1>
+        <p>{translate("COMPOSITION_PATTERN_MESSAGE_PRESENTATION")}</p>
+        <a
+          href="https://github.com/sajermann/BoilerplateComponentReact/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"
+            alt="github"
+            height="18"
+            style={{ borderRadius: 5, marginRight: 5 }}
+          />
+        </a>
+      </div>
+      <CenterOptions options={data?.options || []} />
+    </main>
   );
 }

@@ -1,7 +1,7 @@
 import { Column, ColumnDef, Table as TTable } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import { JsonViewer, Section } from "~/components";
-import { useColumns, useTranslation } from "~/hooks";
+import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TFilterActive, TPerson } from "~/types";
 import {
@@ -18,9 +18,11 @@ import {
   SuperFilter,
 } from "./components";
 
+const DATA = makeData.person(10);
+
 export function FilterPage() {
   const { translate } = useTranslation();
-  const [data, setData] = useState<TPerson[]>([]);
+
   const [globalFilter, setGlobalFilter] = useState<TFilterActive[]>([]);
 
   const { columns } = useColumns();
@@ -134,9 +136,9 @@ export function FilterPage() {
     [translate]
   );
 
-  useEffect(() => {
-    setData(makeData.person(10));
-  }, []);
+  useLoaderAndConfig({
+    from: "/traditional-pattern/filter",
+  });
 
   return (
     <Section title={translate("FILTER")} variant="h1">
@@ -149,7 +151,7 @@ export function FilterPage() {
 
         <Table
           columns={[...columns2]}
-          data={data}
+          data={DATA}
           globalFilter={{
             filter: globalFilter,
             setFilter: setGlobalFilter,

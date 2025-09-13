@@ -1,17 +1,16 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import { Section } from "~/components";
-import { useColumns, useTranslation } from "~/hooks";
+import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
 
+const DATA = makeData.person(5);
+
 export function EllipsisPage() {
   const { translate } = useTranslation();
-  const [data, setData] = useState<TPerson[]>([]);
-
   const { columns } = useColumns();
-
   const columns2 = useMemo<ColumnDef<TPerson>[]>(
     () => [
       {
@@ -26,9 +25,9 @@ export function EllipsisPage() {
     [translate]
   );
 
-  useEffect(() => {
-    setData(makeData.person(5));
-  }, []);
+  useLoaderAndConfig({
+    from: "/traditional-pattern/ellipsis",
+  });
 
   return (
     <Section title={translate("ELLIPSIS")} variant="h1">
@@ -36,7 +35,7 @@ export function EllipsisPage() {
 
       <div className="flex flex-col gap-2">
         {translate("DISPLAY_TITLE_ONLY_HOVER_ON_ELLIPSIS")}
-        <Table columns={[...columns2, ...columns]} data={data} />
+        <Table columns={[...columns2, ...columns]} data={DATA} />
       </div>
     </Section>
   );

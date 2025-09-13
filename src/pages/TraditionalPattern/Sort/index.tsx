@@ -1,13 +1,13 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { Section } from "~/components";
-import { useColumns, useTranslation } from "~/hooks";
+import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
 import { Automatic, Disabled, Manual } from "./components";
 
-const data = makeData.person(10);
+const DATA = makeData.person(10);
 
 export function SortPage() {
   const { translate } = useTranslation();
@@ -28,16 +28,18 @@ export function SortPage() {
     [translate]
   );
 
+  useLoaderAndConfig({
+    from: "/traditional-pattern/sort",
+  });
+
   return (
-    <Section
-      title={translate("SORT")}
-      variant="h1"
-      className="flex flex-col gap-10"
-    >
+    <Section title={translate("SORT")} variant="h1">
       {translate("IMPLEMENTS_SORT_MODE")}
-      <Automatic data={data} columns={[...columns, ...columns2]} />
-      <Manual data={data} columns={[...columns, ...columns2]} />
-      <Disabled data={data} columns={[...columns, ...columns2]} />
+      <div className="flex flex-col gap-10">
+        <Automatic data={DATA} columns={[...columns, ...columns2]} />
+        <Manual data={DATA} columns={[...columns, ...columns2]} />
+        <Disabled data={DATA} columns={[...columns, ...columns2]} />
+      </div>
     </Section>
   );
 }

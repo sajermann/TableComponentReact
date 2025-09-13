@@ -1,6 +1,12 @@
+import { useLoaderData } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Section } from "~/components/Section";
-import { useColumns, useTranslation } from "~/hooks";
+import {
+  useColumns,
+  useLoaderAndConfig,
+  usePagesConfig,
+  useTranslation,
+} from "~/hooks";
 import { Table } from "~/packages/Table";
 import { makeData } from "~/utils";
 import { ColumnVisibilitySelector } from "./components/ColumnVisibilitySelector";
@@ -53,14 +59,17 @@ export function ColumnVisibilityPage() {
     },
   ]);
 
-  function handleCheck(e: {
-    target: {
-      value: boolean | "indeterminate";
-      id: string | undefined;
-    };
-  }) {
-    const { value, id } = e.target;
+  useLoaderAndConfig({
+    from: "/traditional-pattern/column-visibility",
+  });
 
+  function handleCheck({
+    value,
+    id,
+  }: {
+    value: boolean | "indeterminate";
+    id: string;
+  }) {
     setOptions((prev) => {
       return prev.map((item) => {
         if (item.id === id) {

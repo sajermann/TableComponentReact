@@ -1,6 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
-
+import { ChangeEvent, useMemo, useState } from "react";
 import {
   Checkbox,
   ContainerInput,
@@ -10,7 +9,7 @@ import {
   Section,
 } from "~/components";
 import Select from "~/components/Select";
-import { useTranslation } from "~/hooks";
+import { useLoaderAndConfig, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData, showInDevelopment } from "~/utils";
@@ -32,8 +31,11 @@ const DEFAULT_OPTIONS = [
 
 export function FullEditablePage() {
   const { translate } = useTranslation();
-  const [data, setData] = useState<TPerson[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<TPerson[]>(makeData.person(5));
+
+  useLoaderAndConfig({
+    from: "/traditional-pattern/full-editable",
+  });
 
   function handleInput(e: ChangeEvent<HTMLInputElement>, indexRow: number) {
     const { id, value } = e.target;
@@ -212,7 +214,16 @@ export function FullEditablePage() {
               checked={info.getValue() as boolean}
               id="isActive"
               onCheckedChange={(e) => {
-                handleInput(e as ChangeEvent<HTMLInputElement>, info.row.index);
+                const value = e === true;
+                handleInput(
+                  {
+                    target: {
+                      value: value as unknown as string,
+                      id: "isActive",
+                    },
+                  } as ChangeEvent<HTMLInputElement>,
+                  info.row.index
+                );
               }}
             />
           </ContainerInput>
@@ -222,21 +233,11 @@ export function FullEditablePage() {
     []
   );
 
-  async function load() {
-    setIsLoading(true);
-    setData(makeData.person(5));
-    setIsLoading(false);
-  }
-
-  useEffect(() => {
-    load();
-  }, []);
-
   return (
     <Section title={translate("FULL_EDITABLE")} variant="h1">
       {translate("IMPLEMENTS_FULL_EDITABLE_MODE")}
 
-      <Table isLoading={isLoading} columns={columns} data={data} />
+      <Table columns={columns} data={data} />
       <JsonViewer value={data} />
     </Section>
   );

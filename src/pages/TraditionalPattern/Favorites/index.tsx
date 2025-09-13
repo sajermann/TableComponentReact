@@ -2,14 +2,15 @@ import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import { Icons, Section } from "~/components";
 import { Main } from "~/components/RoutesConfig/Sidebar/Main";
-import { useColumns, useTranslation } from "~/hooks";
+import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
 
+const DATA = makeData.person(3);
+
 export function FavoritesPage() {
   const { translate } = useTranslation();
-  const [data, setData] = useState<TPerson[]>([]);
   const [selectedItems, setSelectedItems] = useState({});
   const { columns } = useColumns();
 
@@ -43,16 +44,16 @@ export function FavoritesPage() {
     [translate]
   );
 
-  useEffect(() => {
-    setData(makeData.person(3));
-  }, []);
+  useLoaderAndConfig({
+    from: "/traditional-pattern/favorites",
+  });
 
   return (
     <Section title={translate("FAVORITES")} variant="h1">
       {translate("IMPLEMENTS_FAVORITES_MODE")}
       <Table
         columns={columnsInternal}
-        data={data}
+        data={DATA}
         selection={{
           rowSelection: selectedItems,
           setRowSelection: setSelectedItems,

@@ -14,7 +14,6 @@ export function ColumnOrderSelector({
   items: TItem[];
   onChange: (data: TItem[]) => void;
 }) {
-  const { translate } = useTranslation();
   function handleChangeOrder({
     currentIndex,
     oldIndex,
@@ -35,8 +34,7 @@ export function ColumnOrderSelector({
   }
 
   return (
-    <div className="flex flex-col gap-2 border rounded-2xl p-2">
-      <span>{translate("COLUMNS")}</span>
+    <div className="flex flex-col gap-2 rounded-2xl p-2">
       <div className="flex gap-2 items-center">
         {items.map((item, index) => (
           <Select.Container key={item.id}>

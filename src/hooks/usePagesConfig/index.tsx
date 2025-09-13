@@ -20,7 +20,6 @@ export function usePagesConfig({
 }: TUsePagesConfigProps) {
   const { setBreadcrumbs } = useBreadcrumbs();
   useEffect(() => {
-    console.log(`vai entrar`, { breadcrumbs });
     setBreadcrumbs(breadcrumbs || []);
   }, [JSON.stringify(breadcrumbs)]);
 

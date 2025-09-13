@@ -1,10 +1,14 @@
 import { Section } from "~/components";
-import { useTranslation } from "~/hooks";
+import { useLoaderAndConfig, useTranslation } from "~/hooks";
 import { Backend } from "./components";
 import { Frontend } from "./components/Frontend";
 
 export function PaginationPage() {
   const { translate } = useTranslation();
+  useLoaderAndConfig({
+    from: "/traditional-pattern/pagination",
+  });
+
   return (
     <Section title={translate("PAGINATION")} variant="h1">
       {translate("IMPLEMENTS_PAGINATION_MODE")}

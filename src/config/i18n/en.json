@@ -12,8 +12,9 @@
     "ROLE": "Role",
     "NO_DATA": "No Data",
 
+    "COMPOSITION_PATTERN_MESSAGE_PRESENTATION": "A table component built with the composition pattern, where developers assemble only the components they need for their specific use case.",
     "DATA_IS_LOADING_PLEASE_WAITING": "Data is loading, please wait",
-    "TRADITIONAL_PATTERN_MESSAGE_PRESENTATION": "Table component using the traditional pattern, where there is a component that receives all the necessary properties.",
+    "TRADITIONAL_PATTERN_MESSAGE_PRESENTATION": "A table component built with the traditional pattern, where a single component receives all the necessary properties.",
     "COMPOSITION_PATTERN": "Composition Pattern",
     "TRADITIONAL_PATTERN": "Traditional Pattern",
     "FAVORITE": "Favorite",
@@ -139,7 +140,6 @@
     "IMPLEMENTS_COLUMN_VISIBILITY_MODE": "Implements Column Visibility Mode",
     "COLUMN_VISIBILITY": "Column Visibility",
     "VISIBILITY": "Visibility",
-    "COLUMNS_VISIBLED": "Columns Visibled",
     "COLUMN_VISIBILITY_WITH_STATE_FULLY_CONTROLLED": "Column visibility with state fully controlled",
     "NOT_FOUND_PAGE": "Not Found Page",
     "NOT_FOUND": "Not Found",

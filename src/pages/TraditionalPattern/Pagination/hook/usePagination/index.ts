@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DEFAULT_PAG } from '~/constants';
-
-import { objectToQuery } from '~/pages/Pagination/utils/objectToQuery';
+import { objectToQuery } from '../../utils';
 
 export function usePagination() {
   const [backQuery, setBackQuery] = useState('');

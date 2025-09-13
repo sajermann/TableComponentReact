@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Section } from "~/components";
-import { useColumns, useTranslation } from "~/hooks";
+import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
-import { TPerson } from "~/types";
 import { makeData } from "~/utils";
+
+const DATA = makeData.person(5);
 
 type TResizingProps = {
   columnSizing: {
@@ -27,7 +28,7 @@ const DEFAULT = {
 
 export function ResizingPage() {
   const { translate } = useTranslation();
-  const [data, setData] = useState<TPerson[]>([]);
+
   const [columnSize] = useState<Record<string, number>>(() => {
     const saveds = localStorage.getItem(IDENTIFIER);
 
@@ -59,9 +60,9 @@ export function ResizingPage() {
     window.location.reload();
   }
 
-  useEffect(() => {
-    setData(makeData.person(5));
-  }, []);
+  useLoaderAndConfig({
+    from: "/traditional-pattern/resizing",
+  });
 
   return (
     <Section title={translate("RESIZING")} variant="h1">
@@ -73,7 +74,7 @@ export function ResizingPage() {
             {translate("RESET")}
           </Button>
         </div>
-        <Table columns={columns} data={data} onResizing={onResizing} />
+        <Table columns={columns} data={DATA} onResizing={onResizing} />
       </div>
     </Section>
   );

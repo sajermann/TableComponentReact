@@ -1,27 +1,20 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Section } from "~/components";
-import { useColumns, useTranslation } from "~/hooks";
+import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TDefCsv, TDefPrintPdfPng, TDefXlsx, TPerson } from "~/types";
 import { formatDate, makeData } from "~/utils";
 
+const DATA = makeData.person(100);
+
 export function ExportPage() {
   const { translate } = useTranslation();
-  const [data, setData] = useState<TPerson[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [globalFilter, setGlobalFilter] = useState("");
-
   const { columns } = useColumns();
 
-  async function load() {
-    setIsLoading(true);
-    setData(makeData.person(100));
-    setIsLoading(false);
-  }
-
-  useEffect(() => {
-    load();
-  }, []);
+  useLoaderAndConfig({
+    from: "/traditional-pattern/export",
+  });
 
   const headerStyles = {
     font: {
@@ -211,9 +204,8 @@ export function ExportPage() {
       {translate("IMPLEMENTS_EXPORT_MODE")}
       <span className="text-xs">{translate("PDF_EXPORT_IS_BUGGED")}</span>
       <Table
-        isLoading={isLoading}
         columns={columns}
-        data={data}
+        data={DATA}
         globalFilter={{
           filter: globalFilter,
           setFilter: setGlobalFilter,

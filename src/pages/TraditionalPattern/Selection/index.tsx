@@ -1,11 +1,13 @@
 import { Row } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ContainerInput, Input, Label, Section } from "~/components";
 import Select from "~/components/Select";
-import { useColumns, useTranslation } from "~/hooks";
+import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
+
+const DATA = makeData.person(50);
 
 type TOptions<T> = {
   value: T;
@@ -14,7 +16,7 @@ type TOptions<T> = {
 
 export function SelectionPage() {
   const { translate } = useTranslation();
-  const [data, setData] = useState<TPerson[]>([]);
+
   const [selectedItems, setSelectedItems] = useState({});
   const [selectionType, setSelectionType] = useState("single");
   const [singleRadio, setSingleRadio] = useState(false);
@@ -22,9 +24,9 @@ export function SelectionPage() {
   const [globalFilter, setGlobalFilter] = useState("");
   const { columns } = useColumns();
 
-  useEffect(() => {
-    setData(makeData.person(50));
-  }, []);
+  useLoaderAndConfig({
+    from: "/traditional-pattern/selection",
+  });
 
   function verifyForDisable(row: Row<TPerson>) {
     if (Number(row.original.id) > Number(disableSelectionForId)) {
@@ -121,7 +123,7 @@ export function SelectionPage() {
         </div>
         <Table
           columns={columns}
-          data={data}
+          data={DATA}
           selection={{
             rowSelection: selectedItems,
             setRowSelection: setSelectedItems,

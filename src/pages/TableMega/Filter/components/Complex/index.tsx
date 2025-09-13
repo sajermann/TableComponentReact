@@ -89,7 +89,6 @@ export function Complex() {
             <FilterId column={column} />
           </div>
         ),
-
         minSize: 100,
         size: 100,
         meta: {

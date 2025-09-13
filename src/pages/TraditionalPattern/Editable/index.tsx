@@ -11,7 +11,7 @@ import {
 } from "~/components";
 import Select from "~/components/Select";
 import { ROLES } from "~/constants";
-import { useColumns, useTranslation } from "~/hooks";
+import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { formatDate, makeData, showInDevelopment } from "~/utils";
@@ -26,6 +26,10 @@ export function EditablePage() {
   }>(null);
 
   const { columns } = useColumns();
+
+  useLoaderAndConfig({
+    from: "/traditional-pattern/editable",
+  });
 
   function handleInput(e: ChangeEvent<HTMLInputElement>) {
     const { id, value } = e.target;
@@ -248,7 +252,13 @@ export function EditablePage() {
                   checked={updateLine?.data.isActive}
                   id="isActive"
                   onCheckedChange={(e) => {
-                    handleInput(e as ChangeEvent<HTMLInputElement>);
+                    const value = e === true;
+                    handleInput({
+                      target: {
+                        value: value as unknown as string,
+                        id: "isActive",
+                      },
+                    } as ChangeEvent<HTMLInputElement>);
                   }}
                 />
               </ContainerInput>
