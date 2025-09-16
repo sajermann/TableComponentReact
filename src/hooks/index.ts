@@ -9,4 +9,3 @@ export * from './useTranslation';
 export * from './useWindow';
 export * from './useWindowSize';
 export * from './usePagesConfig';
-export * from './useLoaderAndConfig';

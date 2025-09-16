@@ -5,25 +5,12 @@ import * as TableMega from "~/packages/TableMega";
 import { TDefCsv, TDefPrintPdfPng, TDefXlsx, TPerson } from "~/types";
 import { formatDate, makeData } from "~/utils";
 
-// TODO: Colocar o filtro aqui para exportar com filtro - Nesse momento filtro global nao implementado
+const DATA = makeData.person(100);
 
 export function TableMegaExportPage() {
   const { translate } = useTranslation();
-  const [data, setData] = useState<TPerson[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [globalFilter, setGlobalFilter] = useState("");
 
   const { columns } = useColumns();
-
-  async function load() {
-    setIsLoading(true);
-    setData(makeData.person(100));
-    setIsLoading(false);
-  }
-
-  useEffect(() => {
-    load();
-  }, []);
 
   const headerStyles = {
     font: {
@@ -213,8 +200,9 @@ export function TableMegaExportPage() {
       {translate("IMPLEMENTS_EXPORT_MODE")}
       <span className="text-xs">{translate("PDF_EXPORT_IS_BUGGED")}</span>
 
-      <TableMega.Root data={data} columns={columns}>
+      <TableMega.Root data={DATA} columns={columns}>
         <div className="w-full flex gap-2 justify-end">
+          <TableMega.Search.Input />
           <TableMega.Export.Printer defColumns={defForPrintAndPdfAndPng} />
           <TableMega.Export.Pdf defColumns={defForPrintAndPdfAndPng} />
           <TableMega.Export.Png defColumns={defForPrintAndPdfAndPng} />

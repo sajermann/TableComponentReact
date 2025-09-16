@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Section } from "~/components";
-import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
+import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
@@ -25,10 +25,6 @@ export function LoadingPage() {
     setData(withData ? makeData.person(1000) : []);
     setIsLoading(true);
   }
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/loading",
-  });
 
   return (
     <Section title={translate("LOADING")} variant="h1">

@@ -1,12 +1,6 @@
-import { useLoaderData } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Section } from "~/components/Section";
-import {
-  useColumns,
-  useLoaderAndConfig,
-  usePagesConfig,
-  useTranslation,
-} from "~/hooks";
+import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { makeData } from "~/utils";
 import { ColumnVisibilitySelector } from "./components/ColumnVisibilitySelector";
@@ -58,10 +52,6 @@ export function ColumnVisibilityPage() {
       show: true,
     },
   ]);
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/column-visibility",
-  });
 
   function handleCheck({
     value,

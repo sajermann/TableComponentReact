@@ -1,15 +1,10 @@
 import { useLoaderData } from "@tanstack/react-router";
 import { CenterOptions } from "~/components/CenterOptions";
-import { usePagesConfig, useTranslation } from "~/hooks";
+import { useTranslation } from "~/hooks";
 
 export function TableMegaPage() {
   const { translate } = useTranslation();
   const data = useLoaderData({ from: "/composition-pattern/" });
-
-  usePagesConfig({
-    breadcrumbs: data?.breadcrumbs || [],
-    pageTitle: data?.pageTitle,
-  });
 
   return (
     <main className="h-full gap-5 flex flex-col">

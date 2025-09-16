@@ -1,16 +1,5 @@
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-// import { useLocation } from 'react-router';
-import { useRoutesMenu } from "../useRoutesMenu";
-import { useTranslation } from "../useTranslation";
+import { ReactNode, createContext, useContext, useMemo, useState } from "react";
 import { TBreadcrumb, TBreadcrumbsContextType } from "./types";
-import { _getBreadcrumbs } from "./utils";
 
 const BreadcrumbsContext = createContext<TBreadcrumbsContextType>(
   {} as TBreadcrumbsContextType

@@ -1,9 +1,7 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Button, Section } from "~/components";
 import { useColumns, useTranslation } from "~/hooks";
-import { Table } from "~/packages/Table";
 import * as TableMega from "~/packages/TableMega";
-import { TPerson } from "~/types";
 import { makeData } from "~/utils";
 
 const DATA = makeData.person(10000);
@@ -13,6 +11,7 @@ export function TableMegaVirtualizationPage() {
   const [virtualized, setVirtualized] = useState(true);
   const { columns } = useColumns();
   const containerRef = useRef<HTMLDivElement>(null);
+
   return (
     <Section title={translate("VIRTUALIZED")} variant="h1">
       {translate("IMPLEMENTS_VIRTUALIZED_MODE")}
@@ -29,12 +28,6 @@ export function TableMegaVirtualizationPage() {
           )}
         </Button>
 
-        {/* <Table
-          isLoading={isLoading}
-          columns={[...columns]}
-          data={data}
-          enableVirtualization={virtualized}
-        /> */}
         <div ref={containerRef} className="h-200 overflow-auto">
           <TableMega.Root data={DATA} columns={columns}>
             <TableMega.Table>

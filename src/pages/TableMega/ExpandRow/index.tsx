@@ -8,7 +8,7 @@ import { TPerson } from "~/types";
 import { makeData } from "~/utils";
 import { UpdateData } from "./components/UpdateData";
 
-export function TableMegaExpandedRowPage() {
+export function TableMegaExpandRowPage() {
   const { translate } = useTranslation();
   const { columns } = useColumns();
   const [data, setData] = useState<TPerson[]>(makeData.person(5));

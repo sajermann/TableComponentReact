@@ -9,7 +9,7 @@ import {
   Section,
 } from "~/components";
 import Select from "~/components/Select";
-import { useLoaderAndConfig, useTranslation } from "~/hooks";
+import { useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData, showInDevelopment } from "~/utils";
@@ -32,10 +32,6 @@ const DEFAULT_OPTIONS = [
 export function FullEditablePage() {
   const { translate } = useTranslation();
   const [data, setData] = useState<TPerson[]>(makeData.person(5));
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/full-editable",
-  });
 
   function handleInput(e: ChangeEvent<HTMLInputElement>, indexRow: number) {
     const { id, value } = e.target;

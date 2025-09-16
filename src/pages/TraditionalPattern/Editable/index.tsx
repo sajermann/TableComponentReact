@@ -11,7 +11,7 @@ import {
 } from "~/components";
 import Select from "~/components/Select";
 import { ROLES } from "~/constants";
-import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
+import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { formatDate, makeData, showInDevelopment } from "~/utils";
@@ -26,10 +26,6 @@ export function EditablePage() {
   }>(null);
 
   const { columns } = useColumns();
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/editable",
-  });
 
   function handleInput(e: ChangeEvent<HTMLInputElement>) {
     const { id, value } = e.target;

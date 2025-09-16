@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { Section } from "~/components/Section";
-import {
-  useColumns,
-  useLoaderAndConfig,
-  usePagesConfig,
-  useTranslation,
-} from "~/hooks";
-
-import { useLoaderData } from "@tanstack/react-router";
+import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { makeData } from "~/utils";
 import { ColumnOrderSelector } from "./components/ColumnOrderSelector";
@@ -26,10 +19,6 @@ export function ColumnOrderPage() {
     { id: "role", content: "Role" },
     { id: "isActive", content: translate("ACTIVE") },
   ]);
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/column-order",
-  });
 
   const { columns } = useColumns();
 

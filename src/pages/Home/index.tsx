@@ -1,7 +1,6 @@
 import { useLoaderData } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { CenterOptions } from "~/components/CenterOptions";
-import { usePagesConfig } from "~/hooks";
 import { useTranslation } from "~/hooks/useTranslation";
 
 const APPLICATION_NAME = import.meta.env.VITE_APPLICATION_NAME;
@@ -9,10 +8,6 @@ const APPLICATION_NAME = import.meta.env.VITE_APPLICATION_NAME;
 export function Home() {
   const { translate } = useTranslation();
   const data = useLoaderData({ from: "/" });
-
-  usePagesConfig({
-    pageTitle: APPLICATION_NAME,
-  });
 
   const options = useMemo(() => {
     return data?.options || [];

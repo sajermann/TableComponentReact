@@ -53,14 +53,13 @@ export function TableMegaColumnVisibilityPage() {
     },
   ]);
 
-  function handleCheck(e: {
-    target: {
-      value: boolean | "indeterminate";
-      id: string | undefined;
-    };
+  function handleCheck({
+    value,
+    id,
+  }: {
+    value: boolean | "indeterminate";
+    id: string;
   }) {
-    const { value, id } = e.target;
-
     setOptions((prev) => {
       return prev.map((item) => {
         if (item.id === id) {
@@ -87,25 +86,19 @@ export function TableMegaColumnVisibilityPage() {
       {translate("IMPLEMENTS_COLUMN_VISIBILITY_MODE")}
 
       <div className="flex flex-col gap-2">
-        {translate("COLUMN_VISIBILITY_WITH_STATE_FULLY_CONTROLLED")}
-        <div className="flex flex-col gap-2">
-          <ColumnVisibilitySelector
-            options={options}
-            handleCheck={handleCheck}
-          />
-          <TableMega.Root
-            data={data}
-            columns={columns}
-            columnVisibility={columnVisibility}
-          >
-            <TableMega.Table>
-              <TableMega.Thead />
-              <TableMega.Tbody>
-                <TableMega.Rows />
-              </TableMega.Tbody>
-            </TableMega.Table>
-          </TableMega.Root>
-        </div>
+        <ColumnVisibilitySelector options={options} handleCheck={handleCheck} />
+        <TableMega.Root
+          data={data}
+          columns={columns}
+          columnVisibility={columnVisibility}
+        >
+          <TableMega.Table>
+            <TableMega.Thead />
+            <TableMega.Tbody>
+              <TableMega.Rows />
+            </TableMega.Tbody>
+          </TableMega.Table>
+        </TableMega.Root>
       </div>
     </Section>
   );

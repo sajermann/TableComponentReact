@@ -1,6 +1,7 @@
 import {
   Link,
   Outlet,
+  createHashHistory,
   createRootRoute,
   createRoute,
   createRouter,
@@ -12,6 +13,17 @@ import {
 import i18next from "i18next";
 import { lazy, useMemo } from "react";
 import { Home } from "~/pages/Home";
+
+const OPTIONS = [
+  {
+    label: "TRADITIONAL_PATTERN",
+    path: "/traditional-pattern",
+  },
+  {
+    label: "COMPOSITION_PATTERN",
+    path: "/composition-pattern",
+  },
+];
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -53,6 +65,9 @@ const tableTraditionalOutletRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/traditional-pattern",
   component: Outlet,
+  staticData: {
+    routerName: i18next.t("TRADITIONAL_PATTERN"),
+  },
 });
 
 const tableTraditionalRootRoute = createRoute({
@@ -62,15 +77,6 @@ const tableTraditionalRootRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("TRADITIONAL_PATTERN"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-        },
-      ],
       options: [
         {
           label: "COLUMN_ORDER",
@@ -158,20 +164,10 @@ const tableTraditionalColumnOrderRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("COLUMN_ORDER"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("COLUMN_ORDER"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("COLUMN_ORDER"),
   },
 });
 
@@ -186,20 +182,10 @@ const tableTraditionalColumnVisibilityRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("COLUMN_VISIBILITY"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("COLUMN_VISIBILITY"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("COLUMN_VISIBILITY"),
   },
 });
 
@@ -229,6 +215,9 @@ const tableTraditionalEditableRoute = createRoute({
       ],
     };
   },
+  staticData: {
+    routerName: i18next.t("EDITABLE"),
+  },
 });
 
 const tableTraditionalEllipsisRoute = createRoute({
@@ -241,21 +230,11 @@ const tableTraditionalEllipsisRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: "Ellipisis",
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: "Ellipsis",
-        },
-      ],
+      pageTitle: "Ellipsis",
     };
+  },
+  staticData: {
+    routerName: "Ellipsis",
   },
 });
 
@@ -270,20 +249,10 @@ const tableTraditionalExpandLineRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("EXPAND_LINE"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("EXPAND_LINE"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("EXPAND_LINE"),
   },
 });
 
@@ -298,20 +267,10 @@ const tableTraditionalExportRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("EXPORT"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("EXPORT"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("EXPORT"),
   },
 });
 
@@ -326,20 +285,10 @@ const tableTraditionalFavoritesRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("FAVORITES"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("FAVORITES"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("FAVORITES"),
   },
 });
 
@@ -354,20 +303,10 @@ const tableTraditionalFilterRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("FILTER"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("FILTER"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("FILTER"),
   },
 });
 
@@ -382,20 +321,10 @@ const tableTraditionalFooterRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("FOOTER"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("FOOTER"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("FOOTER"),
   },
 });
 
@@ -410,20 +339,10 @@ const tableTraditionalFullEditableRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("FULL_EDITABLE"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("FULL_EDITABLE"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("FULL_EDITABLE"),
   },
 });
 
@@ -438,20 +357,10 @@ const tableTraditionalLoadingRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("LOADING"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("LOADING"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("LOADING"),
   },
 });
 
@@ -466,20 +375,10 @@ const tableTraditionalPaginationRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("PAGINATION"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("PAGINATION"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("PAGINATION"),
   },
 });
 
@@ -494,20 +393,10 @@ const tableTraditionalResizingRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("RESIZING"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("RESIZING"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("RESIZING"),
   },
 });
 
@@ -522,20 +411,10 @@ const tableTraditionalSelectionRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("SELECTION"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("SELECTION"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("SELECTION"),
   },
 });
 
@@ -550,20 +429,10 @@ const tableTraditionalSortRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("SORT"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("SORT"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("SORT"),
   },
 });
 
@@ -578,20 +447,10 @@ const tableTraditionalVirtualizedRoute = createRoute({
     // await delay(2000); // View Loader :)
     return {
       pageTitle: i18next.t("VIRTUALIZED"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("VIRTUALIZED"),
-        },
-      ],
     };
+  },
+  staticData: {
+    routerName: i18next.t("VIRTUALIZED"),
   },
   pendingComponent: LoadingPage,
 });
@@ -600,6 +459,9 @@ const tableCompositionOutletRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/composition-pattern",
   component: Outlet,
+  staticData: {
+    routerName: i18next.t("COMPOSITION_PATTERN"),
+  },
 });
 
 const tableCompositionRootRoute = createRoute({
@@ -628,24 +490,24 @@ const tableCompositionRootRoute = createRoute({
           path: "column-visibility",
         },
         {
-          label: "EDITABLE",
-          path: "editable",
+          label: "DEFAULT",
+          path: "default",
+        },
+        {
+          label: "EDITABLE_BY_ROW",
+          path: "editable-by-row",
         },
         {
           label: "ELLIPSIS",
           path: "ellipsis",
         },
         {
-          label: "EXPAND_LINE",
-          path: "expand-line",
+          label: "EXPAND_ROW",
+          path: "expand-row",
         },
         {
           label: "EXPORT",
           path: "export",
-        },
-        {
-          label: "FAVORITES",
-          path: "favorites",
         },
         {
           label: "FILTER",
@@ -680,8 +542,8 @@ const tableCompositionRootRoute = createRoute({
           path: "sort",
         },
         {
-          label: "VIRTUALIZED",
-          path: "virtualized",
+          label: "VIRTUALIZATION",
+          path: "virtualization",
         },
       ],
     };
@@ -703,22 +565,281 @@ const tableCompositionColumnOrderRoute = createRoute({
   ),
   loader: async () => {
     // await delay(2000); // View Loader :)
+    return {};
+  },
+  staticData: {
+    routerName: i18next.t("COLUMN_ORDER"),
+  },
+});
+
+const tableCompositionColumnVisibilityRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/column-visibility",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/ColumnVisibility"),
+    "TableMegaColumnVisibilityPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("COLUMN_ORDER"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("COMPOSITION_PATTERN"),
-          link: "/composition-pattern",
-        },
-        {
-          label: i18next.t("COLUMN_ORDER"),
-        },
-      ],
+      pageTitle: i18next.t("COLUMN_VISIBILITY"),
     };
+  },
+  staticData: {
+    routerName: i18next.t("COLUMN_VISIBILITY"),
+  },
+});
+
+const tableCompositionDefaultRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/default",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/Default"),
+    "TableMegaDefaultPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("DEFAULT"),
+    };
+  },
+  staticData: {
+    routerName: i18next.t("DEFAULT"),
+  },
+});
+
+const tableCompositionEditableByRowRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/editable-by-row",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/EditableByRow"),
+    "TableMegaEditableByRowPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("EDITABLE_BY_ROW"),
+    };
+  },
+  staticData: {
+    routerName: i18next.t("EDITABLE_BY_ROW"),
+  },
+});
+
+const tableCompositionEllipsisRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/ellipsis",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/Ellipsis"),
+    "TableMegaEllipsisPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: "Ellipsis",
+    };
+  },
+  staticData: {
+    routerName: "Ellipsis",
+  },
+});
+
+const tableCompositionExpandRowRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/expand-row",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/ExpandRow"),
+    "TableMegaExpandRowPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("EXPAND_ROW"),
+    };
+  },
+  staticData: {
+    routerName: i18next.t("EXPAND_ROW"),
+  },
+});
+
+const tableCompositionExportRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/export",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/Export"),
+    "TableMegaExportPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("EXPORT"),
+    };
+  },
+  staticData: {
+    routerName: i18next.t("EXPORT"),
+  },
+});
+
+const tableCompositionFilterRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/filter",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/Filter"),
+    "TableMegaFilterPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("FILTER"),
+    };
+  },
+  staticData: {
+    routerName: i18next.t("FILTER"),
+  },
+});
+
+const tableCompositionFooterRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/footer",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/Footer"),
+    "TableMegaFooterPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("FOOTER"),
+    };
+  },
+  staticData: {
+    routerName: i18next.t("FOOTER"),
+  },
+});
+
+const tableCompositionFullEditableRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/full-editable",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/FullEditable"),
+    "TableMegaFullEditablePage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("FULL_EDITABLE"),
+    };
+  },
+  staticData: {
+    routerName: i18next.t("FULL_EDITABLE"),
+  },
+});
+
+const tableCompositionLoadingRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/loading",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/Loading"),
+    "TableMegaLoadingPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("LOADING"),
+    };
+  },
+
+  staticData: {
+    routerName: i18next.t("LOADING"),
+  },
+});
+
+const tableCompositionPaginationRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/pagination",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/Pagination"),
+    "TableMegaPaginationPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("PAGINATION"),
+    };
+  },
+  staticData: {
+    routerName: i18next.t("PAGINATION"),
+  },
+});
+
+const tableCompositionResizingRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/resizing",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/Resizing"),
+    "TableMegaResizingPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("RESIZING"),
+    };
+  },
+  staticData: {
+    routerName: i18next.t("RESIZING"),
+  },
+});
+
+const tableCompositionSelectionRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/selection",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/Selection"),
+    "TableMegaSelectionPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("SELECTION"),
+    };
+  },
+  staticData: {
+    routerName: i18next.t("SELECTION"),
+  },
+});
+
+const tableCompositionSortRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/sort",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/Sort"),
+    "TableMegaSortPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("SORT"),
+    };
+  },
+  staticData: {
+    routerName: i18next.t("SORT"),
+  },
+});
+
+const tableCompositionVirtualizationRoute = createRoute({
+  getParentRoute: () => tableCompositionOutletRoute,
+  path: "/virtualization",
+  component: lazyRouteComponent(
+    () => import("~/pages/TableMega/Virtualization"),
+    "TableMegaVirtualizationPage"
+  ),
+  loader: async () => {
+    // await delay(2000); // View Loader :)
+    return {
+      pageTitle: i18next.t("VIRTUALIZATION"),
+    };
+  },
+  staticData: {
+    routerName: i18next.t("VIRTUALIZATION"),
   },
 });
 
@@ -746,10 +867,27 @@ const routeTree = rootRoute.addChildren([
   tableCompositionOutletRoute.addChildren([
     tableCompositionRootRoute,
     tableCompositionColumnOrderRoute,
+    tableCompositionColumnVisibilityRoute,
+    tableCompositionEditableByRowRoute,
+    tableCompositionDefaultRoute,
+    tableCompositionEllipsisRoute,
+    tableCompositionExpandRowRoute,
+    tableCompositionExportRoute,
+    tableCompositionFilterRoute,
+    tableCompositionFooterRoute,
+    tableCompositionFullEditableRoute,
+    tableCompositionLoadingRoute,
+    tableCompositionPaginationRoute,
+    tableCompositionResizingRoute,
+    tableCompositionSelectionRoute,
+    tableCompositionSortRoute,
+    tableCompositionVirtualizationRoute,
   ]),
 ]);
 
-export const router = createRouter({ routeTree });
+const hashHistory = createHashHistory();
+
+export const router = createRouter({ routeTree, history: hashHistory });
 
 import {
   _getMenus,
@@ -767,342 +905,13 @@ import { TRoutesMenu } from "~/types";
 import { delay } from "~/utils";
 import { TTriRoutes } from "./types";
 
-const TableMegaPage = lazy(() =>
-  import("~/pages/TableMega").then(({ TableMegaPage: TableMega }) => ({
-    default: TableMega,
-  }))
-);
-
-const TableMegaDefaultPage = lazy(() =>
-  import("~/pages/TableMega/Default").then(
-    ({ TableMegaDefaultPage: Default }) => ({
-      default: Default,
-    })
-  )
-);
-
-const TableMegaSortPage = lazy(() =>
-  import("~/pages/TableMega/Sort").then(({ TableMegaSortPage: Sort }) => ({
-    default: Sort,
-  }))
-);
-
-const TableMegaColumnOrderPage = lazy(() =>
-  import("~/pages/TableMega/ColumnOrder").then(
-    ({ TableMegaColumnOrderPage: ColumnOrder }) => ({
-      default: ColumnOrder,
-    })
-  )
-);
-
-const TableMegaColumnVisibilityPage = lazy(() =>
-  import("~/pages/TableMega/ColumnVisibility").then(
-    ({ TableMegaColumnVisibilityPage: ColumnVisibility }) => ({
-      default: ColumnVisibility,
-    })
-  )
-);
-
-const TableMegaEditableRowPage = lazy(() =>
-  import("~/pages/TableMega/EditableRow").then(
-    ({ TableMegaEditableRowPage: EditableRow }) => ({
-      default: EditableRow,
-    })
-  )
-);
-
-const TableMegaEllipsisPage = lazy(() =>
-  import("~/pages/TableMega/Ellipsis").then(
-    ({ TableMegaEllipsisPage: Ellipsis }) => ({
-      default: Ellipsis,
-    })
-  )
-);
-
-const TableMegaExpandedRowPage = lazy(() =>
-  import("~/pages/TableMega/ExpandedRow").then(
-    ({ TableMegaExpandedRowPage: ExpandRow }) => ({
-      default: ExpandRow,
-    })
-  )
-);
-
-const TableMegaExportPage = lazy(() =>
-  import("~/pages/TableMega/Export").then(
-    ({ TableMegaExportPage: Export }) => ({
-      default: Export,
-    })
-  )
-);
-
-const TableMegaFilterPage = lazy(() =>
-  import("~/pages/TableMega/Filter").then(
-    ({ TableMegaFilterPage: Filter }) => ({
-      default: Filter,
-    })
-  )
-);
-
-const TableMegaFullEditablePage = lazy(() =>
-  import("~/pages/TableMega/FullEditable").then(
-    ({ TableMegaFullEditablePage: FullEditable }) => ({
-      default: FullEditable,
-    })
-  )
-);
-
-const TableMegaFooterPage = lazy(() =>
-  import("~/pages/TableMega/Footer").then(
-    ({ TableMegaFooterPage: Footer }) => ({
-      default: Footer,
-    })
-  )
-);
-
-const TableMegaLoadingPage = lazy(() =>
-  import("~/pages/TableMega/Loading").then(
-    ({ TableMegaLoadingPage: Loading }) => ({
-      default: Loading,
-    })
-  )
-);
-
-const TableMegaPaginationPage = lazy(() =>
-  import("~/pages/TableMega/Pagination").then(
-    ({ TableMegaPaginationPage: Pagination }) => ({
-      default: Pagination,
-    })
-  )
-);
-
-const TableMegaResizingPage = lazy(() =>
-  import("~/pages/TableMega/Resizing").then(
-    ({ TableMegaResizingPage: Resizing }) => ({
-      default: Resizing,
-    })
-  )
-);
-
-const TableMegaSelectionPage = lazy(() =>
-  import("~/pages/TableMega/Selection").then(
-    ({ TableMegaSelectionPage: Selection }) => ({
-      default: Selection,
-    })
-  )
-);
-
-const TableMegaVirtualizationPage = lazy(() =>
-  import("~/pages/TableMega/Virtualization").then(
-    ({ TableMegaVirtualizationPage: Virtualization }) => ({
-      default: Virtualization,
-    })
-  )
-);
-
 export function useRoutesMenu() {
   const { translate, currentLanguage } = useTranslation();
   const location = useLocation();
-  const globalRoutes: TRoutesMenu[] = useMemo(
-    (): TRoutesMenu[] =>
-      [
-        {
-          name: "Home",
-          path: "/",
-          element: <Home />,
-          label: "Home",
-          hide: {
-            home: true,
-            otherComponents: true,
-          },
-          order: 0,
-        },
-
-        {
-          name: "TableMega",
-          path: "/table-mega",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaPage />,
-          label: `Table Mega`,
-        },
-        {
-          name: "TableMegaDefault",
-          path: "/table-mega/default",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaDefaultPage />,
-          label: `Table Mega - Default`,
-        },
-        {
-          name: "TableMegaSortPage",
-          path: "/table-mega/sort",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaSortPage />,
-          label: `Table Mega - Sort`,
-        },
-        {
-          name: "TableMegaColumnOrderPage",
-          path: "/table-mega/column-order",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaColumnOrderPage />,
-          label: `Table Mega - Column Order`,
-        },
-        {
-          name: "TableMegaColumnVisibilityPage",
-          path: "/table-mega/column-visibility",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaColumnVisibilityPage />,
-          label: `Table Mega - Column Visibility`,
-        },
-        {
-          name: "TableMegaEditableRowPage",
-          path: "/table-mega/editable-row",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaEditableRowPage />,
-          label: `Table Mega - Editable Row`,
-        },
-        {
-          name: "TableMegaEllipsisPage",
-          path: "/table-mega/ellipsis",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaEllipsisPage />,
-          label: `Table Mega - Ellipsis`,
-        },
-        {
-          name: "TableMegaExpandedRowPage",
-          path: "/table-mega/expand-row",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaExpandedRowPage />,
-          label: `Table Mega - Expand Row`,
-        },
-        {
-          name: "TableMegaExportPage",
-          path: "/table-mega/export",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaExportPage />,
-          label: `Table Mega - Export`,
-        },
-        {
-          name: "TableMegaFilterPage",
-          path: "/table-mega/filter",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaFilterPage />,
-          label: `Table Mega - Filter`,
-        },
-        {
-          name: "TableMegaFooterPage",
-          path: "/table-mega/footer",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaFooterPage />,
-          label: `Table Mega - Footer`,
-        },
-        {
-          name: "TableMegaFullEditablePage",
-          path: "/table-mega/full-editable",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaFullEditablePage />,
-          label: `Table Mega - Full Editable`,
-        },
-        {
-          name: "TableMegaLoadingPage",
-          path: "/table-mega/loading",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaLoadingPage />,
-          label: `Table Mega - Loading`,
-        },
-        {
-          name: "TableMegaPaginationPage",
-          path: "/table-mega/pagination",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaPaginationPage />,
-          label: `Table Mega - Pagination - Under Construction`,
-        },
-        {
-          name: "TableMegaResizingPage",
-          path: "/table-mega/resizing",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaResizingPage />,
-          label: `Table Mega - Resizing`,
-        },
-        {
-          name: "TableMegaSelectionPage",
-          path: "/table-mega/selection",
-          implements_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-          docs_code:
-            "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-          element: <TableMegaSelectionPage />,
-          label: `Table Mega - Selection`,
-          subs: [
-            {
-              name: "TableMegaVirtualizationPage",
-              path: "virtualization",
-              implements_code:
-                "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Components/Table",
-              docs_code:
-                "https://github.com/sajermann/MyImplementationsInReact/tree/main/src/Pages/Table/Virtualized",
-              element: <TableMegaVirtualizationPage />,
-              label: `Table Mega - Virtualization`,
-            },
-          ],
-        },
-      ]
-        .sort(_sortCustomName)
-        .sort(_sortCustomOrder),
-    [currentLanguage]
-  );
-
-  const triRoutes: TTriRoutes = useMemo(
-    () => getTriRoutes(globalRoutes, location.pathname),
-    [currentLanguage, location.pathname]
-  );
 
   return {
-    globalRoutes,
-    triRoutes,
-    globalMenus: (filterValue: string) => _getMenus(globalRoutes, filterValue),
+    globalRoutes: [],
+    triRoutes: [],
+    globalMenus: [],
   };
 }

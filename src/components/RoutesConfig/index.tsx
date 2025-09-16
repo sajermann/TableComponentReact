@@ -2,15 +2,12 @@ import { Suspense } from "react";
 // import { useLocation } from "react-router";
 
 import { Outlet } from "@tanstack/react-router";
-import { useRoutesMenu } from "~/hooks/useRoutesMenu";
-import _Breadcrumbs from "./Breadcumbs";
-import { IsLoading } from "./IsLoading";
-import { _MountRoutes } from "./MountRoutes";
-import { _Sidebar } from "./Sidebar";
+import { usePagesConfig } from "~/hooks";
+import { Breadcrumbs } from "./Breadcumbs";
+import { Sidebar } from "./Sidebar";
 
 export function RoutesConfig() {
-  const { globalRoutes } = useRoutesMenu();
-  // const location = useLocation();
+  usePagesConfig();
 
   return (
     <div className="w-full 2xl:max-w-[1330px] p-2 py-5 gap-5 flex my-0 mx-auto">
@@ -19,11 +16,11 @@ export function RoutesConfig() {
           //key={location.key}
           fallback={<IsLoading />}
         > */}
-        <_Breadcrumbs />
+        <Breadcrumbs />
         <Outlet />
         {/* </Suspense> */}
       </div>
-      <_Sidebar />
+      <Sidebar />
     </div>
   );
 }

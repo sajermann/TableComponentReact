@@ -1,8 +1,7 @@
 import { CellContext, ColumnDef } from "@tanstack/react-table";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Icons, Section } from "~/components";
-import { Main } from "~/components/RoutesConfig/Sidebar/Main";
-import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
+import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
@@ -43,10 +42,6 @@ export function FavoritesPage() {
     ],
     [translate]
   );
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/favorites",
-  });
 
   return (
     <Section title={translate("FAVORITES")} variant="h1">

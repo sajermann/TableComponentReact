@@ -11,18 +11,20 @@ import {
 } from "~/components";
 import Select from "~/components/Select";
 import { ROLES } from "~/constants";
-import { useTranslation } from "~/hooks";
+import { useColumns, useTranslation } from "~/hooks";
 import * as TableMega from "~/packages/TableMega";
 import { TPerson } from "~/types";
-import { formatDate, makeData, showInDevelopment } from "~/utils";
+import { makeData, showInDevelopment } from "~/utils";
 
-export function TableMegaEditableRowPage() {
+export function TableMegaEditableByRowPage() {
   const { translate } = useTranslation();
   const [data, setData] = useState<TPerson[]>(makeData.person(10));
   const [updateLine, setUpdateLine] = useState<null | {
     row: number;
     data: TPerson;
   }>(null);
+
+  const { columns } = useColumns();
 
   const columnsInternal = useMemo<ColumnDef<TPerson>[]>(
     () => [
@@ -79,43 +81,10 @@ export function TableMegaEditableRowPage() {
           align: "center",
         },
       },
+      { ...columns[0] },
+      { ...columns[1] },
       {
-        accessorKey: "id",
-        accessorFn: (e) => Number(e.id),
-        header: "Id",
-        minSize: 100,
-        size: 100,
-        meta: {
-          align: "center",
-        },
-        enableResizing: false,
-        enableMultiSort: true,
-      },
-      {
-        accessorKey: "avatar",
-        header: "Avatar",
-        minSize: 60,
-        size: 60,
-        meta: {
-          align: "center",
-        },
-        cell: ({ getValue }) => (
-          <div className="w-full flex items-center justify-center">
-            <div className="w-14 h-full">
-              <img className="rounded-full" src={getValue() as string} alt="" />
-            </div>
-          </div>
-        ),
-        enableResizing: false,
-        enableSorting: false,
-        enableGlobalFilter: false,
-      },
-      {
-        accessorKey: "name",
-        header: translate("NAME"),
-        minSize: 100,
-        size: 100,
-        enableSorting: true,
+        ...columns[2],
         cell: (info) =>
           updateLine?.row === info.row.index ? (
             <Input
@@ -129,15 +98,9 @@ export function TableMegaEditableRowPage() {
           ) : (
             info.cell.getValue()
           ),
-        meta: {
-          align: "center",
-        },
       },
       {
-        accessorKey: "lastName",
-        header: translate("LAST_NAME"),
-        minSize: 100,
-        size: 100,
+        ...columns[3],
         cell: ({ row, cell }) =>
           updateLine?.row === row.index ? (
             <Input
@@ -151,17 +114,11 @@ export function TableMegaEditableRowPage() {
           ) : (
             cell.getValue()
           ),
-        meta: {
-          align: "center",
-        },
       },
       {
-        accessorKey: "birthday",
-        header: translate("BIRTHDAY"),
-        minSize: 100,
-        size: 100,
-        cell: (info) => {
-          if (updateLine?.row === info.row.index && updateLine?.data.birthday) {
+        ...columns[4],
+        cell: ({ row, getValue }) => {
+          if (updateLine?.row === row.index && updateLine?.data.birthday) {
             const [year, month, day] = updateLine.data.birthday
               .substring(0, 10)
               .split("-");
@@ -174,17 +131,11 @@ export function TableMegaEditableRowPage() {
               />
             );
           }
-          return <div>{formatDate(new Date(info.getValue() as string))}</div>;
-        },
-        meta: {
-          align: "center",
+          return <div>{getValue<string>()}</div>;
         },
       },
       {
-        accessorKey: "email",
-        header: "Email",
-        minSize: 100,
-        size: 100,
+        ...columns[5],
         cell: ({ row, cell }) =>
           updateLine?.row === row.index ? (
             <Input
@@ -198,15 +149,9 @@ export function TableMegaEditableRowPage() {
           ) : (
             cell.getValue()
           ),
-        meta: {
-          align: "center",
-        },
       },
       {
-        accessorKey: "role",
-        header: "Role",
-        minSize: 100,
-        size: 100,
+        ...columns[6],
         cell: (info) =>
           updateLine?.row === info.row.index ? (
             <Select.Container>
@@ -227,15 +172,9 @@ export function TableMegaEditableRowPage() {
           ) : (
             info.cell.getValue()
           ),
-        meta: {
-          align: "center",
-        },
       },
       {
-        accessorKey: "isActive",
-        header: translate("ACTIVE"),
-        minSize: 100,
-        size: 100,
+        ...columns[7],
         cell: ({ row }) => {
           if (updateLine?.row === row.index) {
             return (
@@ -260,9 +199,6 @@ export function TableMegaEditableRowPage() {
               </div>
             );
           }
-        },
-        meta: {
-          align: "center",
         },
       },
     ],

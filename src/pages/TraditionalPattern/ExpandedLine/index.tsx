@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Section } from "~/components";
-import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
+import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
@@ -10,10 +10,6 @@ export function ExpandedLinePage() {
   const { translate } = useTranslation();
   const [data, setData] = useState<TPerson[]>(makeData.person(5));
   const { columns } = useColumns();
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/expand-line",
-  });
 
   return (
     <Section title={translate("EXPAND_LINE")} variant="h2">

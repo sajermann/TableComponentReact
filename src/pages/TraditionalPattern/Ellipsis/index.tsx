@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Section } from "~/components";
-import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
+import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
@@ -24,10 +24,6 @@ export function EllipsisPage() {
     ],
     [translate]
   );
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/ellipsis",
-  });
 
   return (
     <Section title={translate("ELLIPSIS")} variant="h1">

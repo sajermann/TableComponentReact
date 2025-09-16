@@ -1,15 +1,16 @@
 import { Section } from "~/components";
-import { useColumns } from "~/hooks";
+import { useColumns, useTranslation } from "~/hooks";
 import * as TableMega from "~/packages/TableMega";
 import { makeData } from "~/utils";
 
 const data = makeData.person(10);
 
 export function TableMegaDefaultPage() {
+  const { translate } = useTranslation();
   const { columns } = useColumns();
 
   return (
-    <Section title="Table Mega - Default" variant="h1">
+    <Section title={translate("Default")} variant="h1">
       <TableMega.Root data={data} columns={columns}>
         <TableMega.Table>
           <TableMega.Thead />

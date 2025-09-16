@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { Section } from "~/components";
-import { useLoaderAndConfig, useTranslation } from "~/hooks";
+import { useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TVehicle } from "~/types";
 import { makeData, mask } from "~/utils";
@@ -11,9 +11,6 @@ const DATA = makeData.vehicles(50);
 export function FooterPage() {
   const { translate, currentLanguage } = useTranslation();
   const [globalFilter, setGlobalFilter] = useState("");
-  useLoaderAndConfig({
-    from: "/traditional-pattern/footer",
-  });
 
   const columns = useMemo<ColumnDef<TVehicle>[]>(
     () => [

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Section } from "~/components";
-import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
+import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { makeData } from "~/utils";
 
@@ -10,10 +10,6 @@ export function VirtualizedPage() {
   const { translate } = useTranslation();
   const [virtualized, setVirtualized] = useState(true);
   const { columns } = useColumns();
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/virtualized",
-  });
 
   return (
     <Section title={translate("VIRTUALIZED")} variant="h1">

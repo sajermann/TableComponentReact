@@ -1,32 +1,31 @@
 /**
  * @vitest-environment jsdom
  */
-import { render } from '@testing-library/react';
-import * as useLocationMock from 'react-router';
-import { afterEach, describe, expect, it, vi } from 'vitest';
-import { InjectorProviders } from '~/components/InjectorProviders';
-import * as useBreadcrumbsMock from '~/hooks/useBreadcrumbs';
+import { render } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { InjectorProviders } from "~/components/InjectorProviders";
+import * as useBreadcrumbsMock from "~/hooks/useBreadcrumbs";
 
-import Breadcrumbs from '.';
+import { Breadcrumbs } from ".";
 
-describe('Components/Breadcrumbs', () => {
+describe("Components/Breadcrumbs", () => {
   afterEach(() => {
     vi.clearAllMocks();
     vi.resetAllMocks();
 
-    vi.mock('react-router', async () => {
-      const mod = await vi.importActual<any>('react-router');
+    vi.mock("react-router", async () => {
+      const mod = await vi.importActual<any>("react-router");
       return {
         ...mod,
         useLocation: () => ({
-          pathname: '/',
+          pathname: "/",
         }),
       };
     });
   });
 
   it(`must render null`, async () => {
-    vi.spyOn(useBreadcrumbsMock, 'useBreadcrumbs').mockImplementation(() => ({
+    vi.spyOn(useBreadcrumbsMock, "useBreadcrumbs").mockImplementation(() => ({
       breadcrumbs: [
         {
           label: `Test`,
@@ -35,23 +34,23 @@ describe('Components/Breadcrumbs', () => {
       ],
       setBreadcrumbs: vi.fn(),
     }));
-    vi.spyOn(useLocationMock, 'useLocation').mockImplementation(
+    vi.spyOn(useLocationMock, "useLocation").mockImplementation(
       () =>
         ({
-          pathname: '/',
-        }) as any,
+          pathname: "/",
+        }) as any
     );
     const { queryAllByText } = render(
       <InjectorProviders>
         <Breadcrumbs />
-      </InjectorProviders>,
+      </InjectorProviders>
     );
-    const result = queryAllByText('Test');
+    const result = queryAllByText("Test");
     expect(result.length).toBe(0);
   });
 
   it(`must render null`, async () => {
-    vi.spyOn(useBreadcrumbsMock, 'useBreadcrumbs').mockImplementation(() => ({
+    vi.spyOn(useBreadcrumbsMock, "useBreadcrumbs").mockImplementation(() => ({
       breadcrumbs: [
         {
           label: `Test`,
@@ -64,18 +63,18 @@ describe('Components/Breadcrumbs', () => {
       ],
       setBreadcrumbs: vi.fn(),
     }));
-    vi.spyOn(useLocationMock, 'useLocation').mockImplementation(
+    vi.spyOn(useLocationMock, "useLocation").mockImplementation(
       () =>
         ({
-          pathname: 'test-route',
-        }) as any,
+          pathname: "test-route",
+        }) as any
     );
     const { queryAllByText } = render(
       <InjectorProviders>
         <Breadcrumbs />
-      </InjectorProviders>,
+      </InjectorProviders>
     );
-    const result = queryAllByText('Test');
+    const result = queryAllByText("Test");
     expect(result.length).toBe(1);
   });
 });

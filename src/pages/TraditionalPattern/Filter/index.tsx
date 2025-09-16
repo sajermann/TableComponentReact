@@ -1,7 +1,7 @@
 import { Column, ColumnDef, Table as TTable } from "@tanstack/react-table";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { JsonViewer, Section } from "~/components";
-import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
+import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TFilterActive, TPerson } from "~/types";
 import {
@@ -135,10 +135,6 @@ export function FilterPage() {
     ],
     [translate]
   );
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/filter",
-  });
 
   return (
     <Section title={translate("FILTER")} variant="h1">

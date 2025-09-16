@@ -1,7 +1,7 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useBreadcrumbs } from "~/hooks/useBreadcrumbs";
 
-export default function _Breadcrumbs() {
+export function Breadcrumbs() {
   const { breadcrumbs } = useBreadcrumbs();
   const location = useLocation();
 

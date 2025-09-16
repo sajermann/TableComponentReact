@@ -1,24 +1,10 @@
-import {
-  Link,
-  Outlet,
-  useChildMatches,
-  useLoaderData,
-  useMatches,
-  useRouterState,
-} from "@tanstack/react-router";
-import { useMemo } from "react";
-import { JsonViewer } from "~/components";
+import { useLoaderData } from "@tanstack/react-router";
 import { CenterOptions } from "~/components/CenterOptions";
-import { usePagesConfig, useTranslation } from "~/hooks";
+import { useTranslation } from "~/hooks";
 
 export function TraditionalPattern() {
   const { translate } = useTranslation();
   const data = useLoaderData({ from: "/traditional-pattern/" });
-
-  usePagesConfig({
-    breadcrumbs: data?.breadcrumbs || [],
-    pageTitle: data?.pageTitle,
-  });
 
   return (
     <main className="h-full gap-5 flex flex-col">

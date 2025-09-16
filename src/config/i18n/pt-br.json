@@ -12,6 +12,9 @@
     "ROLE": "Role",
     "NO_DATA": "Sem Dados",
 
+    "VIRTUALIZATION": "Virtualização",
+    "DEFAULT": "Padrão",
+    "EDITABLE_BY_ROW": "Edição por linha",
     "COMPOSITION_PATTERN_MESSAGE_PRESENTATION": "Componente de tabela construído segundo o padrão de composição, onde o desenvolvedor seleciona apenas os componentes essenciais para o caso de uso específico.",
     "DATA_IS_LOADING_PLEASE_WAITING": "Carregando dados, por favor aguarde",
     "TRADITIONAL_PATTERN_MESSAGE_PRESENTATION": "Componente de tabela baseado no padrão tradicional, em que um único componente recebe todas as propriedades necessárias para funcionar.",

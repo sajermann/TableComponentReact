@@ -15,10 +15,13 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       defaultPendingMs={0}
       defaultPendingMinMs={0}
     />
-    {/* <InjectorProviders>
-      <Layout>
-        <RoutesConfig />
-      </Layout>
-    </InjectorProviders> */}
   </React.StrictMode>
 );
+
+// ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+//   <RouterProvider
+//     router={router}
+//     defaultPendingMs={0}
+//     defaultPendingMinMs={0}
+//   />
+// );

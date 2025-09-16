@@ -1,16 +1,16 @@
+import { Link } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import { useOtherComponents } from "~/hooks/useOtherComponents";
 // import { Link } from "react-router";
 
 import { useRoutesMenu } from "~/hooks/useRoutesMenu";
 import { useTranslation } from "~/hooks/useTranslation";
 
 export function OtherComponents() {
-  const { globalRoutes: options, triRoutes } = useRoutesMenu();
   const { translate } = useTranslation();
+  const { otherComponents } = useOtherComponents();
 
-  return null;
-
-  if (!options.length || (triRoutes.next === null && triRoutes.prev === null)) {
+  if (otherComponents.next === null && otherComponents.prev === null) {
     return null;
   }
 
@@ -19,23 +19,23 @@ export function OtherComponents() {
       <p>{translate("OTHERS_COMPONENTS")}</p>
       <div className="flex justify-between items-center">
         <div>
-          {triRoutes.prev && (
+          {otherComponents.prev && (
             <Link
               className="flex items-center justify-center hover:text-primary-700 transition-colors duration-500"
-              to={triRoutes.prev.path}
+              to={otherComponents.prev.path}
             >
               <ArrowLeftIcon width="2rem" />
-              <span>{triRoutes.prev.label}</span>
+              <span>{otherComponents.prev.label}</span>
             </Link>
           )}
         </div>
         <div>
-          {triRoutes.next && (
+          {otherComponents.next && (
             <Link
               className="flex items-center justify-center hover:text-primary-700 transition-colors duration-500"
-              to={triRoutes.next.path}
+              to={otherComponents.next.path}
             >
-              {triRoutes.next.label}
+              {otherComponents.next.label}
               <ArrowRightIcon width="2rem" />
             </Link>
           )}

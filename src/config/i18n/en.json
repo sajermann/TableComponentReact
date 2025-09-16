@@ -12,6 +12,9 @@
     "ROLE": "Role",
     "NO_DATA": "No Data",
 
+    "VIRTUALIZATION": "Virtualização",
+    "DEFAULT": "Default",
+    "EDITABLE_BY_ROW": "Editable by row",
     "COMPOSITION_PATTERN_MESSAGE_PRESENTATION": "A table component built with the composition pattern, where developers assemble only the components they need for their specific use case.",
     "DATA_IS_LOADING_PLEASE_WAITING": "Data is loading, please wait",
     "TRADITIONAL_PATTERN_MESSAGE_PRESENTATION": "A table component built with the traditional pattern, where a single component receives all the necessary properties.",

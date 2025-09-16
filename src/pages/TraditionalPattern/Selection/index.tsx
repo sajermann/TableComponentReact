@@ -2,7 +2,7 @@ import { Row } from "@tanstack/react-table";
 import { useState } from "react";
 import { ContainerInput, Input, Label, Section } from "~/components";
 import Select from "~/components/Select";
-import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
+import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
@@ -23,10 +23,6 @@ export function SelectionPage() {
   const [disableSelectionForId, setDisableSelectionForId] = useState("");
   const [globalFilter, setGlobalFilter] = useState("");
   const { columns } = useColumns();
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/selection",
-  });
 
   function verifyForDisable(row: Row<TPerson>) {
     if (Number(row.original.id) > Number(disableSelectionForId)) {

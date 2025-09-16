@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Section } from "~/components";
-import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
+import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { makeData } from "~/utils";
 
@@ -59,10 +59,6 @@ export function ResizingPage() {
     localStorage.removeItem(IDENTIFIER);
     window.location.reload();
   }
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/resizing",
-  });
 
   return (
     <Section title={translate("RESIZING")} variant="h1">

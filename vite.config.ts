@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
   console.log({ VITE_URL_BASENAME, mode });
 
   return {
-    // base: `/${VITE_URL_BASENAME}`,
+    base: `/${VITE_URL_BASENAME}`,
 
     server: {
       port: 5000,

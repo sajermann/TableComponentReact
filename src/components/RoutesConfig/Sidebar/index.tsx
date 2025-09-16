@@ -5,7 +5,7 @@ import { Credits } from "./Credits";
 import { OtherComponents } from "./OtherComponents";
 import { TableOfContents } from "./TableOfContents";
 
-export function _Sidebar() {
+export function Sidebar() {
   const { isHomePage } = useHomePage();
   if (isHomePage) {
     return null;

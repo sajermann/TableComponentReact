@@ -1,8 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Section } from "~/components";
-import { useColumns, useLoaderAndConfig, useTranslation } from "~/hooks";
-import { Table } from "~/packages/Table";
+import { useColumns, useTranslation } from "~/hooks";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
 import { Automatic, Disabled, Manual } from "./components";
@@ -27,10 +26,6 @@ export function SortPage() {
     ],
     [translate]
   );
-
-  useLoaderAndConfig({
-    from: "/traditional-pattern/sort",
-  });
 
   return (
     <Section title={translate("SORT")} variant="h1">
