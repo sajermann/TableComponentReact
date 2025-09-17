@@ -4,7 +4,6 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { InjectorProviders } from "~/components/InjectorProviders";
-import { useRoutesMenu } from "~/hooks/useRoutesMenu";
 import { TRoutesMenu } from "~/types";
 import { OtherComponents } from ".";
 
@@ -29,14 +28,6 @@ describe("Components/Sidebar/OtherComponents", () => {
       label: "Modal",
     } as TRoutesMenu;
 
-    vi.mocked(useRoutesMenu).mockImplementation(() => ({
-      globalMenus: () => [],
-      globalRoutes: [prev, current, next],
-      triRoutes: {
-        next,
-        prev,
-      },
-    }));
     const { getByText } = render(
       <InjectorProviders>
         <OtherComponents />
@@ -54,14 +45,6 @@ describe("Components/Sidebar/OtherComponents", () => {
       label: "Home",
     } as TRoutesMenu;
 
-    vi.mocked(useRoutesMenu).mockImplementation(() => ({
-      globalMenus: () => [],
-      globalRoutes: [prev],
-      triRoutes: {
-        next: null,
-        prev: null,
-      },
-    }));
     const { queryByText } = render(
       <InjectorProviders>
         <OtherComponents />

@@ -1,29 +1,14 @@
 import {
-  Link,
   Outlet,
   createHashHistory,
   createRootRoute,
   createRoute,
   createRouter,
   lazyRouteComponent,
-  useChildMatches,
-  useLocation,
-  useRouterState,
 } from "@tanstack/react-router";
-import i18next from "i18next";
-import { lazy, useMemo } from "react";
+import { InjectorProviders, RoutesConfig } from "~/components";
+import { LoadingPage } from "~/components/LoadingForPage";
 import { Home } from "~/pages/Home";
-
-const OPTIONS = [
-  {
-    label: "TRADITIONAL_PATTERN",
-    path: "/traditional-pattern",
-  },
-  {
-    label: "COMPOSITION_PATTERN",
-    path: "/composition-pattern",
-  },
-];
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -66,7 +51,7 @@ const tableTraditionalOutletRoute = createRoute({
   path: "/traditional-pattern",
   component: Outlet,
   staticData: {
-    routerName: i18next.t("TRADITIONAL_PATTERN"),
+    routerName: "TRADITIONAL_PATTERN",
   },
 });
 
@@ -76,7 +61,7 @@ const tableTraditionalRootRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("TRADITIONAL_PATTERN"),
+      pageTitle: "TRADITIONAL_PATTERN",
       options: [
         {
           label: "COLUMN_ORDER",
@@ -153,108 +138,183 @@ const tableTraditionalRootRoute = createRoute({
   ),
 });
 
-const tableTraditionalColumnOrderRoute = createRoute({
-  getParentRoute: () => tableTraditionalOutletRoute,
-  path: "/column-order",
-  component: lazyRouteComponent(
-    () => import("~/pages/TraditionalPattern/ColumnOrder"),
-    "ColumnOrderPage"
-  ),
-  loader: async () => {
-    // await delay(2000); // View Loader :)
-    return {
-      pageTitle: i18next.t("COLUMN_ORDER"),
-    };
-  },
-  staticData: {
-    routerName: i18next.t("COLUMN_ORDER"),
-  },
-});
+// const tableTraditionalColumnOrderRoute = createRoute({
+//   getParentRoute: () => tableTraditionalOutletRoute,
+//   path: "/column-order",
+//   component: lazyRouteComponent(
+//     () => import("~/pages/TraditionalPattern/ColumnOrder"),
+//     "ColumnOrderPage"
+//   ),
+//   loader: async () => {
+//     // await delay(2000); // View Loader :)
+//     return {
+//       pageTitle: "COLUMN_ORDER",
+//     };
+//   },
+//   staticData: {
+//     routerName: "COLUMN_ORDER",
+//   },
+// });
 
-const tableTraditionalColumnVisibilityRoute = createRoute({
-  getParentRoute: () => tableTraditionalOutletRoute,
-  path: "/column-visibility",
-  component: lazyRouteComponent(
-    () => import("~/pages/TraditionalPattern/ColumnVisibility"),
-    "ColumnVisibilityPage"
-  ),
-  loader: async () => {
-    // await delay(2000); // View Loader :)
-    return {
-      pageTitle: i18next.t("COLUMN_VISIBILITY"),
-    };
-  },
-  staticData: {
-    routerName: i18next.t("COLUMN_VISIBILITY"),
-  },
-});
+// const tableTraditionalColumnVisibilityRoute = createRoute({
+//   getParentRoute: () => tableTraditionalOutletRoute,
+//   path: "/column-visibility",
+//   component: lazyRouteComponent(
+//     () => import("~/pages/TraditionalPattern/ColumnVisibility"),
+//     "ColumnVisibilityPage"
+//   ),
+//   loader: async () => {
+//     // await delay(2000); // View Loader :)
+//     return {
+//       pageTitle: "COLUMN_VISIBILITY",
+//     };
+//   },
+//   staticData: {
+//     routerName: "COLUMN_VISIBILITY",
+//   },
+// });
 
-const tableTraditionalEditableRoute = createRoute({
-  getParentRoute: () => tableTraditionalOutletRoute,
-  path: "/editable",
-  component: lazyRouteComponent(
-    () => import("~/pages/TraditionalPattern/Editable"),
-    "EditablePage"
-  ),
-  loader: async () => {
-    // await delay(2000); // View Loader :)
-    return {
-      pageTitle: i18next.t("EDITABLE"),
-      breadcrumbs: [
-        {
-          label: "Home",
-          link: "/",
-        },
-        {
-          label: i18next.t("TRADITIONAL_PATTERN"),
-          link: "/traditional-pattern",
-        },
-        {
-          label: i18next.t("EDITABLE"),
-        },
-      ],
-    };
-  },
-  staticData: {
-    routerName: i18next.t("EDITABLE"),
-  },
-});
+// const tableTraditionalEditableRoute = createRoute({
+//   getParentRoute: () => tableTraditionalOutletRoute,
+//   path: "/editable",
+//   component: lazyRouteComponent(
+//     () => import("~/pages/TraditionalPattern/Editable"),
+//     "EditablePage"
+//   ),
+//   loader: async () => {
+//     // await delay(2000); // View Loader :)
+//     return {
+//       pageTitle: "EDITABLE",
+//       breadcrumbs: [
+//         {
+//           label: "Home",
+//           link: "/",
+//         },
+//         {
+//           label: "TRADITIONAL_PATTERN",
+//           link: "/traditional-pattern",
+//         },
+//         {
+//           label: "EDITABLE",
+//         },
+//       ],
+//     };
+//   },
+//   staticData: {
+//     routerName: "EDITABLE",
+//   },
+// });
 
-const tableTraditionalEllipsisRoute = createRoute({
-  getParentRoute: () => tableTraditionalOutletRoute,
-  path: "/ellipsis",
-  component: lazyRouteComponent(
-    () => import("~/pages/TraditionalPattern/Ellipsis"),
-    "EllipsisPage"
-  ),
-  loader: async () => {
-    // await delay(2000); // View Loader :)
-    return {
-      pageTitle: "Ellipsis",
-    };
-  },
-  staticData: {
-    routerName: "Ellipsis",
-  },
-});
+// const tableTraditionalEllipsisRoute = createRoute({
+//   getParentRoute: () => tableTraditionalOutletRoute,
+//   path: "/ellipsis",
+//   component: lazyRouteComponent(
+//     () => import("~/pages/TraditionalPattern/Ellipsis"),
+//     "EllipsisPage"
+//   ),
+//   loader: async () => {
+//     // await delay(2000); // View Loader :)
+//     return {
+//       pageTitle: "Ellipsis",
+//     };
+//   },
+//   staticData: {
+//     routerName: "Ellipsis",
+//   },
+// });
 
-const tableTraditionalExpandLineRoute = createRoute({
-  getParentRoute: () => tableTraditionalOutletRoute,
-  path: "/expand-line",
-  component: lazyRouteComponent(
-    () => import("~/pages/TraditionalPattern/ExpandedLine"),
-    "ExpandedLinePage"
-  ),
-  loader: async () => {
-    // await delay(2000); // View Loader :)
-    return {
-      pageTitle: i18next.t("EXPAND_LINE"),
-    };
+// const tableTraditionalExpandLineRoute = createRoute({
+//   getParentRoute: () => tableTraditionalOutletRoute,
+//   path: "/expand-line",
+//   component: lazyRouteComponent(
+//     () => import("~/pages/TraditionalPattern/ExpandedLine"),
+//     "ExpandedLinePage"
+//   ),
+//   loader: async () => {
+//     // await delay(2000); // View Loader :)
+//     return {
+//       pageTitle: "EXPAND_LINE",
+//     };
+//   },
+//   staticData: {
+//     routerName: "EXPAND_LINE",
+//   },
+// });
+
+const traditionalChilds = [
+  {
+    getParentRoute: () => tableTraditionalOutletRoute,
+    path: "/column-order",
+    component: lazyRouteComponent(
+      () => import("~/pages/TraditionalPattern/ColumnOrder"),
+      "ColumnOrderPage"
+    ),
+    staticData: {
+      routerName: "COLUMN_ORDER",
+    },
   },
-  staticData: {
-    routerName: i18next.t("EXPAND_LINE"),
+  {
+    getParentRoute: () => tableTraditionalOutletRoute,
+    path: "/column-visibility",
+    component: lazyRouteComponent(
+      () => import("~/pages/TraditionalPattern/ColumnVisibility"),
+      "ColumnVisibilityPage"
+    ),
+    staticData: {
+      routerName: "COLUMN_VISIBILITY",
+    },
   },
-});
+  {
+    getParentRoute: () => tableTraditionalOutletRoute,
+    path: "/editable",
+    component: lazyRouteComponent(
+      () => import("~/pages/TraditionalPattern/Editable"),
+      "EditablePage"
+    ),
+    staticData: {
+      routerName: "EDITABLE",
+    },
+  },
+  {
+    getParentRoute: () => tableTraditionalOutletRoute,
+    path: "/ellipsis",
+    component: lazyRouteComponent(
+      () => import("~/pages/TraditionalPattern/Ellipsis"),
+      "EllipsisPage"
+    ),
+    staticData: {
+      routerName: "Ellipsis",
+    },
+  },
+  {
+    getParentRoute: () => tableTraditionalOutletRoute,
+    path: "/expand-line",
+    component: lazyRouteComponent(
+      () => import("~/pages/TraditionalPattern/ExpandedLine"),
+      "ExpandedLinePage"
+    ),
+    loader: async () => {
+      // await delay(2000); // View Loader :)
+      return {
+        pageTitle: "EXPAND_LINE",
+      };
+    },
+    staticData: {
+      routerName: "EXPAND_LINE",
+    },
+  },
+  {
+    getParentRoute: () => tableTraditionalOutletRoute,
+    path: "/export",
+    component: lazyRouteComponent(
+      () => import("~/pages/TraditionalPattern/Export"),
+      "ExportPage"
+    ),
+    staticData: {
+      routerName: "EXPORT",
+    },
+  },
+];
 
 const tableTraditionalExportRoute = createRoute({
   getParentRoute: () => tableTraditionalOutletRoute,
@@ -266,11 +326,11 @@ const tableTraditionalExportRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("EXPORT"),
+      pageTitle: "EXPORT",
     };
   },
   staticData: {
-    routerName: i18next.t("EXPORT"),
+    routerName: "EXPORT",
   },
 });
 
@@ -284,11 +344,11 @@ const tableTraditionalFavoritesRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("FAVORITES"),
+      pageTitle: "FAVORITES",
     };
   },
   staticData: {
-    routerName: i18next.t("FAVORITES"),
+    routerName: "FAVORITES",
   },
 });
 
@@ -302,11 +362,11 @@ const tableTraditionalFilterRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("FILTER"),
+      pageTitle: "FILTER",
     };
   },
   staticData: {
-    routerName: i18next.t("FILTER"),
+    routerName: "FILTER",
   },
 });
 
@@ -320,11 +380,11 @@ const tableTraditionalFooterRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("FOOTER"),
+      pageTitle: "FOOTER",
     };
   },
   staticData: {
-    routerName: i18next.t("FOOTER"),
+    routerName: "FOOTER",
   },
 });
 
@@ -338,11 +398,11 @@ const tableTraditionalFullEditableRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("FULL_EDITABLE"),
+      pageTitle: "FULL_EDITABLE",
     };
   },
   staticData: {
-    routerName: i18next.t("FULL_EDITABLE"),
+    routerName: "FULL_EDITABLE",
   },
 });
 
@@ -356,11 +416,11 @@ const tableTraditionalLoadingRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("LOADING"),
+      pageTitle: "LOADING",
     };
   },
   staticData: {
-    routerName: i18next.t("LOADING"),
+    routerName: "LOADING",
   },
 });
 
@@ -374,11 +434,11 @@ const tableTraditionalPaginationRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("PAGINATION"),
+      pageTitle: "PAGINATION",
     };
   },
   staticData: {
-    routerName: i18next.t("PAGINATION"),
+    routerName: "PAGINATION",
   },
 });
 
@@ -392,11 +452,11 @@ const tableTraditionalResizingRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("RESIZING"),
+      pageTitle: "RESIZING",
     };
   },
   staticData: {
-    routerName: i18next.t("RESIZING"),
+    routerName: "RESIZING",
   },
 });
 
@@ -410,11 +470,11 @@ const tableTraditionalSelectionRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("SELECTION"),
+      pageTitle: "SELECTION",
     };
   },
   staticData: {
-    routerName: i18next.t("SELECTION"),
+    routerName: "SELECTION",
   },
 });
 
@@ -428,11 +488,11 @@ const tableTraditionalSortRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("SORT"),
+      pageTitle: "SORT",
     };
   },
   staticData: {
-    routerName: i18next.t("SORT"),
+    routerName: "SORT",
   },
 });
 
@@ -446,11 +506,11 @@ const tableTraditionalVirtualizedRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("VIRTUALIZED"),
+      pageTitle: "VIRTUALIZED",
     };
   },
   staticData: {
-    routerName: i18next.t("VIRTUALIZED"),
+    routerName: "VIRTUALIZED",
   },
   pendingComponent: LoadingPage,
 });
@@ -460,7 +520,7 @@ const tableCompositionOutletRoute = createRoute({
   path: "/composition-pattern",
   component: Outlet,
   staticData: {
-    routerName: i18next.t("COMPOSITION_PATTERN"),
+    routerName: "COMPOSITION_PATTERN",
   },
 });
 
@@ -470,14 +530,14 @@ const tableCompositionRootRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("COMPOSITION_PATTERN"),
+      pageTitle: "COMPOSITION_PATTERN",
       breadcrumbs: [
         {
           label: "Home",
           link: "/",
         },
         {
-          label: i18next.t("COMPOSITION_PATTERN"),
+          label: "COMPOSITION_PATTERN",
         },
       ],
       options: [
@@ -568,7 +628,7 @@ const tableCompositionColumnOrderRoute = createRoute({
     return {};
   },
   staticData: {
-    routerName: i18next.t("COLUMN_ORDER"),
+    routerName: "COLUMN_ORDER",
   },
 });
 
@@ -582,11 +642,11 @@ const tableCompositionColumnVisibilityRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("COLUMN_VISIBILITY"),
+      pageTitle: "COLUMN_VISIBILITY",
     };
   },
   staticData: {
-    routerName: i18next.t("COLUMN_VISIBILITY"),
+    routerName: "COLUMN_VISIBILITY",
   },
 });
 
@@ -600,11 +660,11 @@ const tableCompositionDefaultRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("DEFAULT"),
+      pageTitle: "DEFAULT",
     };
   },
   staticData: {
-    routerName: i18next.t("DEFAULT"),
+    routerName: "DEFAULT",
   },
 });
 
@@ -618,11 +678,11 @@ const tableCompositionEditableByRowRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("EDITABLE_BY_ROW"),
+      pageTitle: "EDITABLE_BY_ROW",
     };
   },
   staticData: {
-    routerName: i18next.t("EDITABLE_BY_ROW"),
+    routerName: "EDITABLE_BY_ROW",
   },
 });
 
@@ -654,11 +714,11 @@ const tableCompositionExpandRowRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("EXPAND_ROW"),
+      pageTitle: "EXPAND_ROW",
     };
   },
   staticData: {
-    routerName: i18next.t("EXPAND_ROW"),
+    routerName: "EXPAND_ROW",
   },
 });
 
@@ -672,11 +732,11 @@ const tableCompositionExportRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("EXPORT"),
+      pageTitle: "EXPORT",
     };
   },
   staticData: {
-    routerName: i18next.t("EXPORT"),
+    routerName: "EXPORT",
   },
 });
 
@@ -690,11 +750,11 @@ const tableCompositionFilterRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("FILTER"),
+      pageTitle: "FILTER",
     };
   },
   staticData: {
-    routerName: i18next.t("FILTER"),
+    routerName: "FILTER",
   },
 });
 
@@ -708,11 +768,11 @@ const tableCompositionFooterRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("FOOTER"),
+      pageTitle: "FOOTER",
     };
   },
   staticData: {
-    routerName: i18next.t("FOOTER"),
+    routerName: "FOOTER",
   },
 });
 
@@ -726,11 +786,11 @@ const tableCompositionFullEditableRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("FULL_EDITABLE"),
+      pageTitle: "FULL_EDITABLE",
     };
   },
   staticData: {
-    routerName: i18next.t("FULL_EDITABLE"),
+    routerName: "FULL_EDITABLE",
   },
 });
 
@@ -744,12 +804,12 @@ const tableCompositionLoadingRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("LOADING"),
+      pageTitle: "LOADING",
     };
   },
 
   staticData: {
-    routerName: i18next.t("LOADING"),
+    routerName: "LOADING",
   },
 });
 
@@ -763,11 +823,11 @@ const tableCompositionPaginationRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("PAGINATION"),
+      pageTitle: "PAGINATION",
     };
   },
   staticData: {
-    routerName: i18next.t("PAGINATION"),
+    routerName: "PAGINATION",
   },
 });
 
@@ -781,11 +841,11 @@ const tableCompositionResizingRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("RESIZING"),
+      pageTitle: "RESIZING",
     };
   },
   staticData: {
-    routerName: i18next.t("RESIZING"),
+    routerName: "RESIZING",
   },
 });
 
@@ -799,11 +859,11 @@ const tableCompositionSelectionRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("SELECTION"),
+      pageTitle: "SELECTION",
     };
   },
   staticData: {
-    routerName: i18next.t("SELECTION"),
+    routerName: "SELECTION",
   },
 });
 
@@ -817,11 +877,11 @@ const tableCompositionSortRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("SORT"),
+      pageTitle: "SORT",
     };
   },
   staticData: {
-    routerName: i18next.t("SORT"),
+    routerName: "SORT",
   },
 });
 
@@ -835,11 +895,11 @@ const tableCompositionVirtualizationRoute = createRoute({
   loader: async () => {
     // await delay(2000); // View Loader :)
     return {
-      pageTitle: i18next.t("VIRTUALIZATION"),
+      pageTitle: "VIRTUALIZATION",
     };
   },
   staticData: {
-    routerName: i18next.t("VIRTUALIZATION"),
+    routerName: "VIRTUALIZATION",
   },
 });
 
@@ -847,8 +907,9 @@ const routeTree = rootRoute.addChildren([
   homeRoute,
   tableTraditionalOutletRoute.addChildren([
     tableTraditionalRootRoute,
-    tableTraditionalColumnOrderRoute,
-    tableTraditionalColumnVisibilityRoute,
+    ...traditionalChilds,
+    // tableTraditionalColumnOrderRoute,
+    // tableTraditionalColumnVisibilityRoute,
     tableTraditionalEditableRoute,
     tableTraditionalEllipsisRoute,
     tableTraditionalExpandLineRoute,
@@ -888,30 +949,3 @@ const routeTree = rootRoute.addChildren([
 const hashHistory = createHashHistory();
 
 export const router = createRouter({ routeTree, history: hashHistory });
-
-import {
-  _getMenus,
-  _sortCustomName,
-  _sortCustomOrder,
-  getTriRoutes,
-} from "~/hooks/useRoutesMenu/utils";
-import { useTranslation } from "~/hooks/useTranslation";
-
-import { InjectorProviders, RoutesConfig } from "~/components";
-
-import { LoadingPage } from "~/components/LoadingForPage";
-import { TraditionalPattern } from "~/pages/TraditionalPattern";
-import { TRoutesMenu } from "~/types";
-import { delay } from "~/utils";
-import { TTriRoutes } from "./types";
-
-export function useRoutesMenu() {
-  const { translate, currentLanguage } = useTranslation();
-  const location = useLocation();
-
-  return {
-    globalRoutes: [],
-    triRoutes: [],
-    globalMenus: [],
-  };
-}

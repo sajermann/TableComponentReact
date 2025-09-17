@@ -1,6 +1,6 @@
 type TComponent = {
-  label?: string;
-  path?: string;
+  label: string;
+  path: string;
 };
 
 export type TOtherComponents = {

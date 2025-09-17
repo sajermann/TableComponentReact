@@ -1,9 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useOtherComponents } from "~/hooks/useOtherComponents";
-// import { Link } from "react-router";
-
-import { useRoutesMenu } from "~/hooks/useRoutesMenu";
 import { useTranslation } from "~/hooks/useTranslation";
 
 export function OtherComponents() {
@@ -23,9 +20,10 @@ export function OtherComponents() {
             <Link
               className="flex items-center justify-center hover:text-primary-700 transition-colors duration-500"
               to={otherComponents.prev.path}
+              viewTransition
             >
               <ArrowLeftIcon width="2rem" />
-              <span>{otherComponents.prev.label}</span>
+              <span>{translate(otherComponents.prev.label)}</span>
             </Link>
           )}
         </div>
@@ -34,8 +32,9 @@ export function OtherComponents() {
             <Link
               className="flex items-center justify-center hover:text-primary-700 transition-colors duration-500"
               to={otherComponents.next.path}
+              viewTransition
             >
-              {otherComponents.next.label}
+              {translate(otherComponents.next.label)}
               <ArrowRightIcon width="2rem" />
             </Link>
           )}

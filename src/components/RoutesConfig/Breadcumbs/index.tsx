@@ -1,7 +1,9 @@
 import { Link, useLocation } from "@tanstack/react-router";
+import { useTranslation } from "~/hooks";
 import { useBreadcrumbs } from "~/hooks/useBreadcrumbs";
 
 export function Breadcrumbs() {
+  const { translate } = useTranslation();
   const { breadcrumbs } = useBreadcrumbs();
   const location = useLocation();
 
@@ -15,12 +17,12 @@ export function Breadcrumbs() {
         item.link && breadcrumbs[index + 1] ? (
           <ol key={`${item.link}-${breadcrumbs[index + 1]}`}>
             <Link to={item.link} className="hover:underline !text-primary-500">
-              {item.label}
+              {translate(item.label)}
             </Link>
             {breadcrumbs[index + 1].label && " / "}
           </ol>
         ) : (
-          <ol key={`${item.label}-${index}`}>{item.label}</ol>
+          <ol key={`${item.label}-${index}`}>{translate(item.label)}</ol>
         )
       )}
     </div>

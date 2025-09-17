@@ -12,7 +12,8 @@
     "ROLE": "Role",
     "NO_DATA": "No Data",
 
-    "VIRTUALIZATION": "Virtualização",
+    "HOME": "Home",
+    "VIRTUALIZATION": "Virtualization",
     "DEFAULT": "Default",
     "EDITABLE_BY_ROW": "Editable by row",
     "COMPOSITION_PATTERN_MESSAGE_PRESENTATION": "A table component built with the composition pattern, where developers assemble only the components they need for their specific use case.",

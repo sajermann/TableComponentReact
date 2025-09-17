@@ -1,4 +1,9 @@
-import { useLoaderData } from "@tanstack/react-router";
+import {
+  useChildMatches,
+  useLoaderData,
+  useMatches,
+  useRouter,
+} from "@tanstack/react-router";
 import { useMemo } from "react";
 import { CenterOptions } from "~/components/CenterOptions";
 import { useTranslation } from "~/hooks/useTranslation";
@@ -9,6 +14,13 @@ export function Home() {
   const { translate } = useTranslation();
   const data = useLoaderData({ from: "/" });
 
+  const matchs = useMatches();
+  const childMatches = useChildMatches();
+  // const a = useRouter();
+  // const currentRoute = a.flatRoutes.find(
+  //   (route: { _fullPath: string }) => route._fullPath === location.pathname
+  // );
+  console.log({ matchs, childMatches });
   const options = useMemo(() => {
     return data?.options || [];
   }, [data]);

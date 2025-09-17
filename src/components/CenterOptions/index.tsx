@@ -1,7 +1,6 @@
 import { Link, useRouter } from "@tanstack/react-router";
 import { EyeIcon } from "lucide-react";
 import { useTranslation } from "~/hooks";
-import { useRoutesMenu } from "~/hooks/useRoutesMenu";
 import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
 
 type TCenterOptionsProps = {
