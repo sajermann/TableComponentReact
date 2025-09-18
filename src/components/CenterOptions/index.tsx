@@ -5,7 +5,9 @@ import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
 
 type TCenterOptionsProps = {
   options: {
-    label: string;
+    staticData?: {
+      routerName: string;
+    };
     path: string;
     className?: string;
   }[];
@@ -25,12 +27,12 @@ export function CenterOptions({ options }: TCenterOptionsProps) {
           ])}
         >
           <header className="h-16 p-2 flex justify-center items-center rounded-t-2xl">
-            {translate(opt.label)}
+            {translate(opt.staticData?.routerName || "")}
           </header>
 
           <footer className="h-16 flex items-center justify-center">
             <Link
-              to={opt.path}
+              to={opt.path.substring(1)}
               className={managerClassNames([
                 "flex flex-col items-center justify-center gap-1 p-1",
                 "text-white duration-500 transition-colors text-sm",

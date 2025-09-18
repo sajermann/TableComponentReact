@@ -50,8 +50,8 @@ export function TableMegaExpandRowPage() {
           <TableMega.Thead.Sort />
           <TableMega.Tbody>
             <TableMega.Rows.Default.Expand
-              parentTrProps={{ className: "border border-b-0" }}
-              expandedTrProps={{ className: "border border-t-0" }}
+              parentTrProps={{ className: "border border-b-0 !bg-red-500" }}
+              expandedTrProps={{ className: "border border-t-0 !bg-red-500" }}
             />
           </TableMega.Tbody>
         </TableMega.Table>

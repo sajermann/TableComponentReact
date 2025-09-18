@@ -1,10 +1,9 @@
-import { useLoaderData } from "@tanstack/react-router";
 import { CenterOptions } from "~/components/CenterOptions";
+import { traditionalChilds } from "~/config/routes";
 import { useTranslation } from "~/hooks";
 
 export function TraditionalPattern() {
   const { translate } = useTranslation();
-  const data = useLoaderData({ from: "/traditional-pattern/" });
 
   return (
     <main className="h-full gap-5 flex flex-col">
@@ -26,7 +25,7 @@ export function TraditionalPattern() {
           />
         </a>
       </div>
-      <CenterOptions options={data?.options || []} />
+      <CenterOptions options={traditionalChilds || []} />
     </main>
   );
 }

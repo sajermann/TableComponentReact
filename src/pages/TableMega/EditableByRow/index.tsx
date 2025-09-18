@@ -224,7 +224,7 @@ export function TableMegaEditableByRowPage() {
   );
 
   return (
-    <Section title={translate("EDITABLE")} variant="h1">
+    <Section title={translate("EDITABLE_BY_ROW")} variant="h1">
       {translate("IMPLEMENTS_EDITABLE_MODE")}
       <form onSubmit={handleFormSubmit}>
         <TableMega.Root data={data} columns={[...columnsInternal]}>

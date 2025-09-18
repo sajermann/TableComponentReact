@@ -1,22 +1,15 @@
-import { Dispatch, SetStateAction } from "react";
 import { useTranslation } from "~/hooks/useTranslation";
+import { TSearchProps } from "../../types/search.type";
 import { Input } from "../Input";
 
-type Props = {
-  globalFilter?: {
-    filter: string;
-    setFilter: Dispatch<SetStateAction<string>>;
-    disableInput?: boolean;
-  };
-};
-
-export function Search({ globalFilter }: Props) {
+export function Search({ value, show, onChange, ...rest }: TSearchProps) {
   const { translate } = useTranslation();
-  if (!globalFilter || globalFilter.disableInput) return null;
+  if (!show) return null;
   return (
     <Input
-      value={globalFilter.filter}
-      onChange={(e) => globalFilter?.setFilter(e.target.value)}
+      {...rest}
+      value={value}
+      onChange={onChange}
       placeholder={translate("SEARCH")}
       type="search"
     />

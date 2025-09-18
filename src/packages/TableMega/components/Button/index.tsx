@@ -72,10 +72,10 @@ const buttonVariants = tv({
     },
     iconButton: {
       rounded: {
-        buttonPropsInternal: ["w-11 h-11 p-2 rounded-full"],
+        buttonPropsInternal: ["min-w-11 w-11 min-h-11 h-11 p-2 rounded-full"],
       },
       squared: {
-        buttonPropsInternal: ["w-11 h-11 p-2"],
+        buttonPropsInternal: ["min-w-11 w-11 min-h-11 h-11 p-2"],
       },
     },
   },

@@ -28,8 +28,10 @@ import { Thead } from "./Thead";
 import { useTranslation } from "~/hooks/useTranslation";
 import { RadioGroup } from "~/packages/Table/components/Radio";
 import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
+import { TExpandRow } from "../types/expand-row.type";
 import { getValueForRadio } from "../utils";
-import { Expander } from "./Expander";
+
+import { TGlobalFilter } from "../types/global-filter.type";
 import { Selector } from "./Selector";
 import styles from "./index.module.css";
 
@@ -39,18 +41,10 @@ type Props<T, U = undefined> = {
   columns: ColumnDef<T, unknown>[];
   data: T[];
   isLoading?: boolean;
-  expandLine?: {
-    render: (data: Row<T>) => React.ReactNode;
-  };
+  expandRow?: TExpandRow<T>;
 
-  globalFilter?: {
-    filter: U;
-    setFilter: Dispatch<SetStateAction<U>>;
-    globalFilterFn?: FilterFnOption<T>;
-    disableInput?: boolean;
-  };
+  globalFilter?: TGlobalFilter<T>;
 
-  rowForUpdate?: { row: number; data: T } | null;
   enableVirtualization?: boolean;
   pagination?: TPagination;
   meta?: TableMeta<T>;
@@ -80,9 +74,8 @@ export function Table<T, U = undefined>({
   columns,
   data,
   isLoading,
-  expandLine,
+  expandRow,
   globalFilter,
-  rowForUpdate,
   enableVirtualization,
   pagination,
   meta,
@@ -97,48 +90,33 @@ export function Table<T, U = undefined>({
   sorting,
 }: Props<T, U>) {
   const [sortingInternal, setSortingInternal] = useState<SortingState>([]);
-  const { translate } = useTranslation();
+  const [globalFilterInternal, setGlobalFilterInternal] = useState("");
 
   function buildColumns() {
     const result: ColumnDef<T, unknown>[] = [];
 
-    if (selection && !selection.disableCheckbox) {
-      const t = [
-        {
-          id: "select",
-          header: ({ table }: HeaderContext<T, unknown>) => (
-            <Selector selection={selection} table={table} />
-          ),
-          size: 50,
-          minSize: 50,
-          maxSize: 50,
-          meta: {
-            align: "center",
-          },
-          enableSorting: false,
-          enableResizing: false,
-          cell: ({ row }: CellContext<T, unknown>) => (
-            <Selector row={row} selection={selection} />
-          ),
-        },
-      ];
-      result.push(t as unknown as ColumnDef<T, unknown>);
-    }
-
-    if (expandLine) {
-      const t = [
-        {
-          id: "expander",
-          header: translate("ACTION"),
-          minSize: 50,
-          size: 50,
-          enableSorting: false,
-          enableResizing: false,
-          cell: ({ row }: CellContext<T, unknown>) => <Expander row={row} />,
-        },
-      ];
-      result.push(t as unknown as ColumnDef<T, unknown>);
-    }
+    // if (selection && !selection.disableCheckbox) {
+    //   const t = [
+    //     {
+    //       id: "select",
+    //       header: ({ table }: HeaderContext<T, unknown>) => (
+    //         <Selector selection={selection} table={table} />
+    //       ),
+    //       size: 50,
+    //       minSize: 50,
+    //       maxSize: 50,
+    //       meta: {
+    //         align: "center",
+    //       },
+    //       enableSorting: false,
+    //       enableResizing: false,
+    //       cell: ({ row }: CellContext<T, unknown>) => (
+    //         <Selector row={row} selection={selection} />
+    //       ),
+    //     },
+    //   ];
+    //   result.push(t as unknown as ColumnDef<T, unknown>);
+    // }
 
     result.push(columns as unknown as ColumnDef<T, unknown>);
     return result.flat();
@@ -158,13 +136,17 @@ export function Table<T, U = undefined>({
       },
       sorting: sorting?.disabled ? undefined : sortingInternal,
       rowSelection: selection?.rowSelection,
-      globalFilter: globalFilter?.filter,
+      globalFilter: !globalFilter
+        ? undefined
+        : globalFilter?.controlled?.filter || globalFilterInternal,
       columnVisibility,
       columnOrder,
     },
-    onGlobalFilterChange: globalFilter?.setFilter,
+    onGlobalFilterChange: !globalFilter
+      ? undefined
+      : globalFilter?.controlled?.setFilter || setGlobalFilterInternal,
     onRowSelectionChange: selection?.setRowSelection,
-    enableRowSelection: selection !== undefined,
+    enableRowSelection: !!selection,
     enableMultiRowSelection: selection?.type === "multi",
     onSortingChange: sorting?.disabled
       ? undefined
@@ -180,7 +162,7 @@ export function Table<T, U = undefined>({
           return setSortingInternal(funcUpdater);
         },
     getSortedRowModel: getSortedRowModel(),
-    getRowCanExpand: () => !!expandLine,
+    getRowCanExpand: () => !!expandRow,
     getExpandedRowModel: getExpandedRowModel(),
     manualPagination: pagination?.automatic ? undefined : true,
     getPaginationRowModel: pagination?.automatic
@@ -188,7 +170,9 @@ export function Table<T, U = undefined>({
       : undefined,
     onPaginationChange: pagination?.setPagination,
     meta,
-    globalFilterFn: globalFilter?.globalFilterFn || "auto",
+    globalFilterFn: !globalFilter
+      ? undefined
+      : globalFilter?.globalFilterFn || "auto",
     manualSorting: !!sorting?.manualSorting,
     enableMultiSort: true,
   });
@@ -210,7 +194,21 @@ export function Table<T, U = undefined>({
 
   return (
     <>
-      <Header table={table} globalFilter={globalFilter} tools={tools} />
+      <Header
+        table={table}
+        searchProps={{
+          show: globalFilter?.showInput,
+          value: globalFilter?.controlled?.filter || globalFilterInternal,
+          onChange: (e) => {
+            if (globalFilter?.controlled?.setFilter) {
+              globalFilter?.controlled?.setFilter(e.target.value);
+              return;
+            }
+            setGlobalFilterInternal(e.target.value);
+          },
+        }}
+        tools={tools}
+      />
       <div
         ref={tableContainerRef}
         className={managerClassNames({
@@ -228,24 +226,20 @@ export function Table<T, U = undefined>({
           maxHeight: maxHeight || undefined,
         }}
       >
-        <RadioGroup value={getValueForRadio({ selection })}>
-          <table className={styles.table}>
-            <Thead table={table} sorting={sorting} />
+        <table className={styles.table}>
+          <Thead table={table} sorting={sorting} />
 
-            <Tbody
-              table={table}
-              tableContainerRef={tableContainerRef}
-              data={data}
-              columns={columns}
-              isLoading={isLoading}
-              expandLine={expandLine}
-              selection={selection}
-              rowForUpdate={rowForUpdate}
-              enableVirtualization={enableVirtualization}
-            />
-            <Tfoot table={table} showFooter={showFooter} />
-          </table>
-        </RadioGroup>
+          <Tbody
+            table={table}
+            tableContainerRef={tableContainerRef}
+            data={data}
+            columns={columns}
+            isLoading={isLoading}
+            expandRow={expandRow}
+            enableVirtualization={enableVirtualization}
+          />
+          <Tfoot table={table} showFooter={showFooter} />
+        </table>
       </div>
       <Pagination table={table} pagination={pagination} />
     </>

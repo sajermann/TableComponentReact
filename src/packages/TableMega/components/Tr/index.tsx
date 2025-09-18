@@ -1,9 +1,6 @@
 import { Row } from "@tanstack/react-table";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
-
 import { tv } from "tailwind-variants";
-
-import { TSelection } from "../../types";
 
 const trVariant = tv({
   base: "h-17 max-h-17 min-h-17",

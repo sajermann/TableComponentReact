@@ -7,7 +7,7 @@ import { TPerson } from "~/types";
 import { makeData } from "~/utils";
 import { Selector } from "./components/Selector";
 
-const data = makeData.person(10);
+const DATA = makeData.person(10);
 
 export function TableMegaColumnOrderPage() {
   const { translate } = useTranslation();
@@ -176,7 +176,7 @@ export function TableMegaColumnOrderPage() {
       <div>{translate("COLUMN_ORDER_WITH_STATE_FULLY_CONTROLLED")}</div>
 
       <TableMega.Root
-        data={data}
+        data={DATA}
         columns={columns2}
         columnOrder={columnOrder.map((item) => item.id)}
       >

@@ -1,10 +1,9 @@
-import { useLoaderData } from "@tanstack/react-router";
 import { CenterOptions } from "~/components/CenterOptions";
+import { compositionChilds } from "~/config/routes";
 import { useTranslation } from "~/hooks";
 
 export function TableMegaPage() {
   const { translate } = useTranslation();
-  const data = useLoaderData({ from: "/composition-pattern/" });
 
   return (
     <main className="h-full gap-5 flex flex-col">
@@ -26,7 +25,7 @@ export function TableMegaPage() {
           />
         </a>
       </div>
-      <CenterOptions options={data?.options || []} />
+      <CenterOptions options={compositionChilds || []} />
     </main>
   );
 }

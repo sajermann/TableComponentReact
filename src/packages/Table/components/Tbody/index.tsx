@@ -3,7 +3,7 @@ import { RefObject } from "react";
 
 import { useDarkMode } from "~/hooks/useDarkMode";
 import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
-import { TSelection } from "../../types";
+import { TExpandRow } from "../../types/expand-row.type";
 import { IsLoading } from "../IsLoading";
 import { NoData } from "../NoData";
 import { RowsWithVirtualization } from "../RowsWithVirtualization";
@@ -15,11 +15,7 @@ type Props<T> = {
   data: T[];
   isLoading?: boolean;
   columns: ColumnDef<T>[];
-  selection?: Omit<TSelection<T>, "disableCheckbox">;
-  expandLine?: {
-    render: (data: Row<T>) => React.ReactNode;
-  };
-  rowForUpdate?: { row: number; data: T } | null;
+  expandRow?: TExpandRow<T>;
   enableVirtualization?: boolean;
 };
 
@@ -29,9 +25,7 @@ export function Tbody<T>({
   data,
   isLoading,
   columns,
-  selection,
-  expandLine,
-  rowForUpdate,
+  expandRow,
   enableVirtualization,
 }: Props<T>) {
   const { rows } = table.getRowModel();
@@ -47,35 +41,19 @@ export function Tbody<T>({
         opacity: isLoading ? 0.5 : 1,
       }}
     >
-      <NoData
-        columns={columns}
-        data={data}
-        isLoading={isLoading}
-        expandLine={expandLine}
-        selection={selection}
-      />
-      <IsLoading
-        columns={columns}
-        data={data}
-        isLoading={isLoading}
-        expandLine={expandLine}
-        selection={selection}
-      />
+      <NoData columns={columns} data={data} isLoading={isLoading} />
+      <IsLoading columns={columns} data={data} isLoading={isLoading} />
       <RowsWithoutVirtualization
         table={table}
         enableVirtualization={enableVirtualization}
-        expandLine={expandLine}
-        rowForUpdate={rowForUpdate}
-        selection={selection}
+        expandRow={expandRow}
       />
 
       <RowsWithVirtualization
         tableContainerRef={tableContainerRef}
         enableVirtualization={enableVirtualization}
         rows={rows}
-        expandLine={expandLine}
-        rowForUpdate={rowForUpdate}
-        selection={selection}
+        expandRow={expandRow}
       />
     </tbody>
   );

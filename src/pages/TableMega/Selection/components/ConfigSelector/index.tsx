@@ -1,25 +1,8 @@
-import type { Table as ITable } from "@tanstack/react-table";
-import {
-  CellContext,
-  ColumnDef,
-  HeaderContext,
-  Row,
-} from "@tanstack/react-table";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
-import {
-  Checkbox,
-  ContainerInput,
-  Input,
-  Label,
-  RadioGroup,
-  Section,
-} from "~/components";
+import { Dispatch, SetStateAction } from "react";
+import { ContainerInput, Input, Label } from "~/components";
 import Select from "~/components/Select";
-import { useColumns, useTranslation } from "~/hooks";
-import { Table } from "~/packages/Table";
+import { useTranslation } from "~/hooks";
 import * as TableMega from "~/packages/TableMega";
-import { TPerson } from "~/types";
-import { makeData } from "~/utils";
 import { TConfig, TOptions, TSelectionRow } from "../../types";
 
 type TConfigSelector = {

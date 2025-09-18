@@ -84,26 +84,26 @@ export function TableMegaSelectionPage() {
     <Section title={translate("SELECTION")} variant="h1">
       {translate("IMPLEMENTS_SELECTION_MODE")}
       <div className="flex flex-col gap-2">
-        <RadioGroup
-          onValueChange={(e) => {
-            setSelectedItems({
-              [e]: true,
-            });
+        <TableMega.Root
+          data={DATA}
+          columns={[...columnsInternal, ...columns]}
+          selection={{
+            rowSelection: selectedItems,
+            setRowSelection: setSelectedItems,
+            type: config.mode,
           }}
-          value={
-            Object.keys(selectedItems).length
-              ? Object.keys(selectedItems)[0]
-              : ""
-          }
         >
-          <TableMega.Root
-            data={DATA}
-            columns={[...columnsInternal, ...columns]}
-            selection={{
-              rowSelection: selectedItems,
-              setRowSelection: setSelectedItems,
-              type: config.mode,
+          <RadioGroup
+            onValueChange={(e) => {
+              setSelectedItems({
+                [e]: true,
+              });
             }}
+            value={
+              Object.keys(selectedItems).length
+                ? Object.keys(selectedItems)[0]
+                : ""
+            }
           >
             <ConfigSelector
               config={config}
@@ -117,8 +117,8 @@ export function TableMegaSelectionPage() {
                 <TableMega.Rows />
               </TableMega.Tbody>
             </TableMega.Table>
-          </TableMega.Root>
-        </RadioGroup>
+          </RadioGroup>
+        </TableMega.Root>
         {translate("SELECTED_ROWS")}: {JSON.stringify(selectedItems, null, 2)}
       </div>
     </Section>

@@ -12,8 +12,8 @@ export function VirtualizedPage() {
   const { columns } = useColumns();
 
   return (
-    <Section title={translate("VIRTUALIZED")} variant="h1">
-      {translate("IMPLEMENTS_VIRTUALIZED_MODE")}
+    <Section title={translate("VIRTUALIZATION")} variant="h1">
+      {translate("IMPLEMENTS_VIRTUALIZATION_MODE")}
 
       <div className="flex flex-col gap-2">
         <Button

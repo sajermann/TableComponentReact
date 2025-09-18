@@ -1,5 +1,5 @@
 import { Row } from "@tanstack/react-table";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent } from "react";
 import {
   Button,
   Checkbox,
@@ -61,12 +61,7 @@ export function UpdateData({
   return (
     <form
       onSubmit={handleSave}
-      className={managerClassNames([
-        "p-2 flex flex-col gap-2",
-        {
-          "bg-dark-600": typeof row?.index === "number" && row.index % 2 !== 0,
-        },
-      ])}
+      className={managerClassNames(["p-2 flex flex-col gap-2"])}
     >
       <div className="grid grid-cols-12 gap-6">
         <ContainerInput className="col-span-12 lg:col-span-3">

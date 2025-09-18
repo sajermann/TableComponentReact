@@ -11,10 +11,9 @@ export function TableMegaVirtualizationPage() {
   const [virtualized, setVirtualized] = useState(true);
   const { columns } = useColumns();
   const containerRef = useRef<HTMLDivElement>(null);
-
   return (
-    <Section title={translate("VIRTUALIZED")} variant="h1">
-      {translate("IMPLEMENTS_VIRTUALIZED_MODE")}
+    <Section title={translate("VIRTUALIZATION")} variant="h1">
+      {translate("IMPLEMENTS_VIRTUALIZATION_MODE")}
 
       <div className="flex flex-col gap-2">
         <Button

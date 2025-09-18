@@ -5,7 +5,7 @@ import { Table } from "~/packages/Table";
 import { makeData } from "~/utils";
 import { ColumnVisibilitySelector } from "./components/ColumnVisibilitySelector";
 
-const data = makeData.person(5);
+const DATA = makeData.person(5);
 
 export function ColumnVisibilityPage() {
   const { translate } = useTranslation();
@@ -94,7 +94,7 @@ export function ColumnVisibilityPage() {
           />
           <Table
             columns={columns}
-            data={data}
+            data={DATA}
             columnVisibility={columnVisibility}
           />
         </div>

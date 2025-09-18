@@ -1,28 +1,21 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import { Row, flexRender } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { Fragment, RefObject } from "react";
-import { TSelection } from "../../types";
+import { TExpandRow } from "../../types/expand-row.type";
 import { ExpandLine } from "../ExpandLine";
 import { Td } from "../Td";
 import { Tr } from "../Tr";
 
 type Props<T> = {
-  selection?: Omit<TSelection<T>, "disableCheckbox">;
   rows: Row<T>[];
   enableVirtualization?: boolean;
-  rowForUpdate?: { row: number; data: T } | null;
-  expandLine?: {
-    render: (data: Row<T>) => React.ReactNode;
-  };
+  expandRow?: TExpandRow<T>;
   tableContainerRef: RefObject<HTMLDivElement | null>;
 };
 export function RowsWithVirtualization<T>({
-  selection,
   rows,
   enableVirtualization,
-  rowForUpdate,
-  expandLine,
+  expandRow,
   tableContainerRef,
 }: Props<T>) {
   const { getVirtualItems, getTotalSize } = useVirtualizer({
@@ -52,7 +45,10 @@ export function RowsWithVirtualization<T>({
         const row = rows[virtualRow.index];
         return (
           <Fragment key={row.id}>
-            <Tr row={row} selection={selection} expandLine={expandLine}>
+            <Tr
+              row={row}
+              {...(row.getIsExpanded() ? expandRow?.parentTrProps : {})}
+            >
               {row.getVisibleCells().map((cell) => (
                 <Td
                   {...{
@@ -63,15 +59,12 @@ export function RowsWithVirtualization<T>({
                   title={cell.getContext().getValue() as string}
                   key={cell.id}
                 >
-                  {rowForUpdate?.row === cell.row.index &&
-                  cell.column.columnDef.meta?.cellEdit
-                    ? cell.column.columnDef.meta?.cellEdit(cell.row)
-                    : flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </Td>
               ))}
             </Tr>
 
-            <ExpandLine row={row} expandLine={expandLine} />
+            <ExpandLine row={row} expandRow={expandRow} />
           </Fragment>
         );
       })}

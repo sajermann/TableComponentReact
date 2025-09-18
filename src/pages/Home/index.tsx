@@ -1,10 +1,4 @@
-import {
-  useChildMatches,
-  useLoaderData,
-  useMatches,
-  useRouter,
-} from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useLoaderData } from "@tanstack/react-router";
 import { CenterOptions } from "~/components/CenterOptions";
 import { useTranslation } from "~/hooks/useTranslation";
 
@@ -13,17 +7,6 @@ const APPLICATION_NAME = import.meta.env.VITE_APPLICATION_NAME;
 export function Home() {
   const { translate } = useTranslation();
   const data = useLoaderData({ from: "/" });
-
-  const matchs = useMatches();
-  const childMatches = useChildMatches();
-  // const a = useRouter();
-  // const currentRoute = a.flatRoutes.find(
-  //   (route: { _fullPath: string }) => route._fullPath === location.pathname
-  // );
-  console.log({ matchs, childMatches });
-  const options = useMemo(() => {
-    return data?.options || [];
-  }, [data]);
 
   return (
     <main className="h-full gap-5 flex flex-col">
@@ -45,7 +28,7 @@ export function Home() {
           />
         </a>
       </div>
-      <CenterOptions options={options} />
+      <CenterOptions options={data?.options || []} />
     </main>
   );
 }

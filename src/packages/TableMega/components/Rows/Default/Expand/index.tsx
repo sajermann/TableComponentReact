@@ -1,8 +1,6 @@
-import { flexRender, getExpandedRowModel } from "@tanstack/react-table";
-import { CSSProperties, Fragment, useEffect, useState } from "react";
+import { getExpandedRowModel } from "@tanstack/react-table";
+import { Fragment, useEffect, useState } from "react";
 import { useTableMega } from "~/packages/TableMega/hooks";
-import { Td } from "../../../Td";
-import { Tr } from "../../../Tr";
 import { TrComplete } from "../TrComplete";
 import { TCommonProps } from "../types";
 import { ExpandRow } from "./ExpandRow";
@@ -16,8 +14,7 @@ export function Expand({
   enableEllipsis,
   parentTrProps,
   expandedTrProps,
-}: //  selection,
-TExpandProps) {
+}: TExpandProps) {
   const { table } = useTableMega();
   const [_, setIsFirstRender] = useState(false);
 

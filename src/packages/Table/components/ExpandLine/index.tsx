@@ -1,19 +1,16 @@
-import { Row } from '@tanstack/react-table';
-import { Tr } from '../Tr';
-import styles from './index.module.css';
+import { Row } from "@tanstack/react-table";
+import { TExpandRow } from "../../types/expand-row.type";
+import { Tr } from "../Tr";
 
 type Props<T> = {
-	row: Row<T>;
-	expandLine?: {
-		render: (data: Row<T>) => React.ReactNode;
-	};
+  row: Row<T>;
+  expandRow?: TExpandRow<T>;
 };
-export function ExpandLine<T>({ row, expandLine }: Props<T>) {
-	if (!row.getIsExpanded()) return null;
-	return (
-		<Tr className={styles.isExpandedChild} row={row}>
-			{/* 2nd row is a custom 1 cell row */}
-			<td colSpan={row.getVisibleCells().length}>{expandLine?.render(row)}</td>
-		</Tr>
-	);
+export function ExpandLine<T>({ row, expandRow }: Props<T>) {
+  if (!row.getIsExpanded()) return null;
+  return (
+    <Tr row={row} {...expandRow?.expandedTrProps}>
+      <td colSpan={row.getVisibleCells().length}>{expandRow?.render(row)}</td>
+    </Tr>
+  );
 }

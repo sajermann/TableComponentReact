@@ -14,31 +14,33 @@ export function OtherComponents() {
   return (
     <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2">
       <p>{translate("OTHERS_COMPONENTS")}</p>
-      <div className="flex justify-between items-center">
-        <div>
-          {otherComponents.prev && (
-            <Link
-              className="flex items-center justify-center hover:text-primary-700 transition-colors duration-500"
-              to={otherComponents.prev.path}
-              viewTransition
-            >
-              <ArrowLeftIcon width="2rem" />
-              <span>{translate(otherComponents.prev.label)}</span>
-            </Link>
-          )}
-        </div>
-        <div>
-          {otherComponents.next && (
-            <Link
-              className="flex items-center justify-center hover:text-primary-700 transition-colors duration-500"
-              to={otherComponents.next.path}
-              viewTransition
-            >
+      <div className="flex gap-2 justify-between items-center">
+        {otherComponents.prev && (
+          <Link
+            className="flex items-center justify-center gap-2 transition-all duration-300 flex-1 hover:opacity-70"
+            to={otherComponents.prev.path}
+            viewTransition
+          >
+            <ArrowLeftIcon className="w-5" />
+            <span className="truncate flex-1 text-left">
+              {translate(otherComponents.prev.label)}
+            </span>
+          </Link>
+        )}
+
+        {otherComponents.next && (
+          <Link
+            className="flex items-center justify-center gap-2 transition-all duration-300 flex-1 hover:opacity-70"
+            to={otherComponents.next.path}
+            viewTransition
+          >
+            <span className="truncate flex-1 text-right">
               {translate(otherComponents.next.label)}
-              <ArrowRightIcon width="2rem" />
-            </Link>
-          )}
-        </div>
+            </span>
+
+            <ArrowRightIcon className="w-5" />
+          </Link>
+        )}
       </div>
     </main>
   );

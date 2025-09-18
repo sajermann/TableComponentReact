@@ -2,41 +2,31 @@ import { Table } from "@tanstack/react-table";
 import { Dispatch, SetStateAction } from "react";
 import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
 import { TDefTools } from "../../types";
+import { TGlobalFilter } from "../../types/global-filter.type";
+import { TSearchProps } from "../../types/search.type";
 import { ExportButtons } from "../ExportButtons";
 import { Search } from "../Search";
 
-type Props<T, U> = {
-  globalFilter?: {
-    filter: U;
-    setFilter: Dispatch<SetStateAction<U>>;
-    disableInput?: boolean;
-  };
+type THeaderProps<T> = {
+  searchProps: TSearchProps;
   table: Table<T>;
   tools?: TDefTools<T>;
 };
 
-export function Header<T, U>({ globalFilter, table, tools }: Props<T, U>) {
-  if (!tools && (!globalFilter || globalFilter?.disableInput)) return null;
-
+export function Header<T>({ table, tools, searchProps }: THeaderProps<T>) {
+  console.log({ searchProps, tools });
+  if (!tools && (!searchProps || !searchProps?.show)) return null;
   return (
     <div className="grid grid-cols-12 gap-2 w-full mb-1 items-center">
-      <div
+      <Search
         className={managerClassNames({
-          "col-span-12 sm:col-span-6": tools,
-          "col-span-12": !tools,
+          "col-span-12 sm:col-span-6": !!tools,
+          "col-span-12": !!!tools,
         })}
-      >
-        <Search
-          globalFilter={{
-            filter: globalFilter?.filter as string,
-            setFilter: globalFilter?.setFilter as Dispatch<
-              SetStateAction<string>
-            >,
-            disableInput: globalFilter?.disableInput,
-          }}
-        />
-      </div>
+        {...searchProps}
+      />
 
+      {/* 
       <div
         className={managerClassNames({
           "col-span-12 sm:col-span-6":
@@ -45,7 +35,7 @@ export function Header<T, U>({ globalFilter, table, tools }: Props<T, U>) {
         })}
       >
         <ExportButtons table={table} tools={tools} />
-      </div>
+      </div> */}
     </div>
   );
 }
