@@ -30,6 +30,7 @@
     "WITHOUT_DATA": "Without Data",
     "ACTIVE_LOADING": "Active Loading",
     "NOTE_UPDATED_AFTER_SAVE_SUBMIT": "Note: Data updated after save (Submit Form).",
+    "NOTE_DATA_UPDATED_REAL_TIME": "Note: Updated data in real time.",
     "SEARCH_ON_EMAIL_AND_FRIENDS": "Search on Email and Friends",
     "SIMPLE": "Simple",
     "COMPLEX": "Complex",

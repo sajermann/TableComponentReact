@@ -234,6 +234,9 @@ export function FullEditablePage() {
       {translate("IMPLEMENTS_FULL_EDITABLE_MODE")}
 
       <Table columns={columns} data={data} />
+      <span className="text-sm italic">
+        {translate("NOTE_DATA_UPDATED_REAL_TIME")}
+      </span>
       <JsonViewer value={data} />
     </Section>
   );

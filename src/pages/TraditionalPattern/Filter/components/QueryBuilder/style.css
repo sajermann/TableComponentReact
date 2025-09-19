@@ -1,0 +1,5 @@
+.group--actions,
+.rule--header,
+.qb-drag-handler {
+  opacity: 1 !important;
+}

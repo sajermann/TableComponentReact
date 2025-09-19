@@ -1,5 +1,6 @@
 import { Table } from "@tanstack/react-table";
 import { PrinterIcon } from "lucide-react";
+import { DetailedHTMLProps, HTMLAttributes } from "react";
 import { useTranslation } from "~/hooks/useTranslation";
 import { TDefTools } from "../../types";
 import { exportTo, showInDevelopment } from "../../utils";
@@ -9,13 +10,19 @@ import { Icons } from "../Icons";
 type Props<T> = {
   table: Table<T>;
   tools?: TDefTools<T>;
+  containerProps: DetailedHTMLProps<
+    HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  >;
 };
-export function ExportButtons<T>({ tools, table }: Props<T>) {
+export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
   const { translate } = useTranslation();
   const { rows } = table.getRowModel();
 
+  if (!tools) return null;
+
   return (
-    <div className="flex gap-2 justify-end">
+    <div {...containerProps}>
       {tools?.defForPrint && (
         <Button
           {...showInDevelopment({ "data-testid": "button-export-print" })}

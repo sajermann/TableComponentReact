@@ -10,8 +10,8 @@ export function PaginationPage() {
     <Section title={translate("PAGINATION")} variant="h1">
       {translate("IMPLEMENTS_PAGINATION_MODE")}
       <div className="flex flex-col gap-10">
+        {/* <Frontend /> */}
         <Backend />
-        <Frontend />
       </div>
     </Section>
   );

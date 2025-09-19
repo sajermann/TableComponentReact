@@ -122,13 +122,19 @@ export function UpdateData({
         </ContainerInput>
 
         <div className="col-span-12 lg:col-span-3 flex items-end">
-          <Button variant="outlined" onClick={() => onCancel?.({ row })}>
+          <Button
+            variant="option"
+            colorStyle="mono"
+            onClick={() => onCancel?.({ row })}
+          >
             {translate("CANCEL")}
           </Button>
         </div>
 
         <div className="col-span-12 lg:col-span-3 flex items-end">
-          <Button type="submit">{translate("SAVE")}</Button>
+          <Button variant="outlined" colorStyle="mono" type="submit">
+            {translate("SAVE")}
+          </Button>
         </div>
       </div>
     </form>

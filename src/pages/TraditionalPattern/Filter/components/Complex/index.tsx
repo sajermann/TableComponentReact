@@ -1,8 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 import jsonLogic from "json-logic-js";
 import { useMemo, useState } from "react";
-import { Input, Section } from "~/components";
+import { Input, JsonViewer, Section } from "~/components";
 import { useColumns, useTranslation } from "~/hooks";
+import { Table } from "~/packages/Table";
 import * as TableMega from "~/packages/TableMega";
 import { TFilterActive, TPerson } from "~/types";
 import { filterRangeDate, formatDate, makeData, stringToDate } from "~/utils";
@@ -192,49 +193,45 @@ export function Complex() {
 
   return (
     <Section title={translate("COMPLEX")} variant="h2">
-      <TableMega.Root
+      <div className="flex gap-2">
+        <Input
+          type="search"
+          value={globalFilter.input}
+          placeholder={translate("SEARCH_ON_EMAIL_AND_FRIENDS")}
+          onChange={(e) =>
+            setGlobalFilter((prev) => ({ ...prev, input: e.target.value }))
+          }
+        />
+        <SuperFilter
+          onChange={(e) => {
+            setGlobalFilter((prev) => ({ ...prev, custom: e }));
+          }}
+        />
+      </div>
+      <Table
+        columns={columns2}
         data={DATA}
-        columns={[...columns2]}
         globalFilter={{
-          filter: globalFilter,
-          onChange: setGlobalFilter,
-          globalFilterFn: (row, _, filters) => {
-            try {
-              const filterRule = convertComplexFilterToJsonLogic(filters);
-              const result = jsonLogic.apply(filterRule, {
-                ...row.original,
-                friends: row.original.friends.map((f) => f.name).join(" | "),
-              });
-              return result === undefined || result === true;
-            } catch (error) {
-              console.log({ error });
-              return true;
-            }
+          controlled: {
+            filter: globalFilter,
+            setFilter: setGlobalFilter,
+            globalFilterFn: (row, _, filters) => {
+              try {
+                const filterRule = convertComplexFilterToJsonLogic(filters);
+                const result = jsonLogic.apply(filterRule, {
+                  ...row.original,
+                  friends: row.original.friends.map((f) => f.name).join(" | "),
+                });
+                return result === undefined || result === true;
+              } catch (error) {
+                console.log({ error });
+                return true;
+              }
+            },
           },
         }}
-      >
-        <div className="flex gap-2">
-          <Input
-            type="search"
-            value={globalFilter.input}
-            placeholder={translate("SEARCH_ON_EMAIL_AND_FRIENDS")}
-            onChange={(e) =>
-              setGlobalFilter((prev) => ({ ...prev, input: e.target.value }))
-            }
-          />
-          <SuperFilter
-            onChange={(e) => {
-              setGlobalFilter((prev) => ({ ...prev, custom: e }));
-            }}
-          />
-        </div>
-        <TableMega.Table>
-          <TableMega.Thead.Sort />
-          <TableMega.Tbody>
-            <TableMega.Rows />
-          </TableMega.Tbody>
-        </TableMega.Table>
-      </TableMega.Root>
+      />
+      <JsonViewer value={globalFilter} />
     </Section>
   );
 }

@@ -7,7 +7,7 @@ import { Popover } from "~/components/Popover";
 import { TPerson } from "~/types";
 
 type Props2 = {
-  column: Column<TPerson, string>;
+  column: Column<TPerson, unknown>;
   table: TTable<TPerson>;
   propForFilter: keyof TPerson;
 };

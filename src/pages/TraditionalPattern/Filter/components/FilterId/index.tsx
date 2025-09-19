@@ -13,7 +13,7 @@ type TOptionsProps = {
   label: string;
 };
 
-export function FilterId({ column }: { column: Column<TPerson, string> }) {
+export function FilterId({ column }: { column: Column<TPerson, unknown> }) {
   const { translate } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [selectType, setSelectType] = useState<TOptionsProps | null>(null);

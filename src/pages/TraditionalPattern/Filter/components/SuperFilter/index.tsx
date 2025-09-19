@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { FunnelIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Chip,
@@ -12,14 +13,15 @@ import { useTranslation } from "~/hooks";
 import { TFilterActive } from "~/types";
 import { showInDevelopment } from "~/utils";
 
-type Props = {
-  onChange: Dispatch<SetStateAction<TFilterActive[]>>;
+type TSuperFilterProps = {
+  onChange: (data: TFilterActive[]) => void;
 };
 
-export function SuperFilter({ onChange }: Props) {
+export function SuperFilter({ onChange }: TSuperFilterProps) {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [optionColumnSelected, setOptionColumnSelected] = useState("id");
-  const [optionTypeSelected, setOptionTypeSelected] = useState("equals");
+  const [optionTypeSelected, setOptionTypeSelected] =
+    useState<TFilterActive["type"]>("equals");
   const [valueSelected, setValueSelected] = useState("");
   const [activeFilters, setActiveFilters] = useState<TFilterActive[]>([]);
   const [visibleFilters, setVisibleFilters] = useState<TFilterActive[]>([]);
@@ -109,6 +111,11 @@ export function SuperFilter({ onChange }: Props) {
         onClick={() => setIsOpenModal(true)}
         variant="outlined"
         colorStyle="mono"
+        endIcon={
+          <div className="h-full flex items-center justify-center">
+            <FunnelIcon className={activeFilters.length ? "fill-white" : ""} />
+          </div>
+        }
       >
         {translate("SUPER_FILTER")}
       </Button>
@@ -155,7 +162,9 @@ export function SuperFilter({ onChange }: Props) {
                 <Select.Select
                   id="select_type"
                   onChange={({ target }) => {
-                    setOptionTypeSelected(target?.value || "");
+                    setOptionTypeSelected(
+                      (target?.value as TFilterActive["type"]) || ""
+                    );
                   }}
                   value={
                     optionsType.find(
@@ -193,11 +202,7 @@ export function SuperFilter({ onChange }: Props) {
             <div className="flex w-full h-full items-end">
               <Button
                 onClick={handleAddFilter}
-                disabled={
-                  optionColumnSelected === "" ||
-                  optionTypeSelected === "" ||
-                  valueSelected === ""
-                }
+                disabled={optionColumnSelected === "" || valueSelected === ""}
                 colorStyle="mono"
                 variant="outlined"
               >

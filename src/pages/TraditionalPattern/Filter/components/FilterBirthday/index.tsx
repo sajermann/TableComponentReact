@@ -9,7 +9,7 @@ import { TPerson } from "~/types";
 export function FilterBirthday({
   column,
 }: {
-  column: Column<TPerson, string>;
+  column: Column<TPerson, unknown>;
 }) {
   const { translate } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);

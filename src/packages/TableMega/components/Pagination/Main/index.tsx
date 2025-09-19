@@ -88,58 +88,41 @@ export function Main({ disabled }: TMainProps) {
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage() || disabled}
         >
-          <ChevronsLeftIcon color="#fff" />
+          <ChevronsLeftIcon />
         </ButtonPagination>
         <ButtonPagination
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage() || disabled}
         >
-          <ChevronLeftIcon color="#fff" />
+          <ChevronLeftIcon />
         </ButtonPagination>
         <ButtonPagination
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage() || disabled}
         >
-          <ChevronRightIcon color="#fff" />
+          <ChevronRightIcon />
         </ButtonPagination>
         <ButtonPagination
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage() || disabled}
         >
-          <ChevronsRightIcon color="#fff" />
+          <ChevronsRightIcon />
         </ButtonPagination>
         <span className="flex items-center gap-1">
           <span>{translate("PAGE")}</span>
-          <strong>{table.getState().pagination.pageIndex + 1}</strong>
-          <span>{translate("OF")}</span> <strong>{table.getPageCount()}</strong>
+          <strong>
+            {Math.ceil(table.getState().pagination.pageIndex + 1)}
+          </strong>
+          <span>{translate("OF")}</span>{" "}
+          <strong>{Math.ceil(table.getPageCount())}</strong>
         </span>
         <ContainerInput className="w-max flex-row items-center">
-          <Label className="whitespace-nowrap" htmlFor="pageNumber">
-            {translate("GO_TO_PAGE")}
-          </Label>
-          <Input
-            disabled={disabled}
-            type="number"
-            id="pageNumber"
-            defaultValue={table.getState().pagination.pageIndex + 1}
-            onBlur={(e) => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              table.setPageIndex(page);
-            }}
-            min={1}
-            max={table.getPageCount()}
-          />
-        </ContainerInput>
-
-        {/* {pagination?.disabledPageSize && (
-          <div>| {table.getRowModel().rows.length} Linhas</div>
-        )} */}
-        <ContainerInput className="w-max flex-row items-center">
-          <Label htmlFor="isActive">{translate("ROWS")}</Label>
+          <Label htmlFor="rows">{translate("ROWS")}</Label>
           <Select.Container>
             <Select.Select
-              required
-              id="isActive"
+              disabled={disabled}
+              id="rows"
+              className="!w-20"
               onChange={({ target }) =>
                 table.setPageSize(Number(target?.value))
               }

@@ -4,26 +4,31 @@ import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { makeData } from "~/utils";
 
+const DATA = makeData.person(100);
+
 export function Frontend() {
   const { translate } = useTranslation();
   const { columns } = useColumns();
-  const [dataForFront] = useState(makeData.person(100));
   const [paginationOnlyFront, setPaginationOnlyFront] = useState({
-    pageIndex: 0,
-    pageSize: 10,
+    pageIndex: 1,
+    pageSize: 20,
   });
 
   return (
     <Section title={translate("PAGINATION_IN_FRONTEND")} variant="h2">
       <Table
-        columns={[...columns]}
-        data={dataForFront}
+        height="400px"
+        columns={columns}
+        data={DATA}
         pagination={{
-          pageCount: dataForFront.length / paginationOnlyFront.pageSize,
-          pageIndex: paginationOnlyFront.pageIndex,
-          pageSize: paginationOnlyFront.pageSize,
-          setPagination: setPaginationOnlyFront,
           automatic: true,
+          // automatic: {
+          //   controlled: {
+          //     pageIndex: paginationOnlyFront.pageIndex,
+          //     pageSize: paginationOnlyFront.pageSize,
+          //     onChange: setPaginationOnlyFront,
+          //   },
+          // },
         }}
       />
     </Section>

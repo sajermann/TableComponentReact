@@ -15,9 +15,21 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
-import { TDefTools, TPagination, TSelection } from "../types";
+import {
+  TDefTools,
+  TPagination,
+  TPaginationControlled,
+  TSelection,
+} from "../types";
 
 import { Header } from "./Header";
 import { Pagination } from "./Pagination";
@@ -43,7 +55,7 @@ type Props<T, U = undefined> = {
   isLoading?: boolean;
   expandRow?: TExpandRow<T>;
 
-  globalFilter?: TGlobalFilter<T>;
+  globalFilter?: TGlobalFilter<T, U>;
 
   enableVirtualization?: boolean;
   pagination?: TPagination;
@@ -92,48 +104,36 @@ export function Table<T, U = undefined>({
   const [sortingInternal, setSortingInternal] = useState<SortingState>([]);
   const [globalFilterInternal, setGlobalFilterInternal] = useState("");
 
-  function buildColumns() {
-    const result: ColumnDef<T, unknown>[] = [];
+  const paginationState = useMemo(() => {
+    if (!pagination || typeof pagination?.automatic === "boolean") {
+      return {
+        onChange: undefined,
+        getPaginationRowModel:
+          pagination?.automatic === true ? getPaginationRowModel() : undefined,
+      };
+    }
 
-    // if (selection && !selection.disableCheckbox) {
-    //   const t = [
-    //     {
-    //       id: "select",
-    //       header: ({ table }: HeaderContext<T, unknown>) => (
-    //         <Selector selection={selection} table={table} />
-    //       ),
-    //       size: 50,
-    //       minSize: 50,
-    //       maxSize: 50,
-    //       meta: {
-    //         align: "center",
-    //       },
-    //       enableSorting: false,
-    //       enableResizing: false,
-    //       cell: ({ row }: CellContext<T, unknown>) => (
-    //         <Selector row={row} selection={selection} />
-    //       ),
-    //     },
-    //   ];
-    //   result.push(t as unknown as ColumnDef<T, unknown>);
-    // }
-
-    result.push(columns as unknown as ColumnDef<T, unknown>);
-    return result.flat();
-  }
-
+    if (pagination?.automatic && pagination.automatic.controlled) {
+      return {
+        pagination: {
+          pageIndex: pagination.automatic.controlled.pageIndex || 0,
+          pageSize: pagination.automatic.controlled.pageSize || 0,
+        },
+        onChange: pagination.automatic.controlled.onChange,
+        getPaginationRowModel: getPaginationRowModel(),
+      };
+    }
+  }, [pagination]);
+  console.log({ paginationState });
   const table = useReactTable({
     data,
-    columns: buildColumns(),
+    columns,
     getCoreRowModel: getCoreRowModel(),
     columnResizeMode: "onChange",
     getFilteredRowModel: getFilteredRowModel(),
-    pageCount: pagination?.pageCount,
+    // pageCount: pagination?.pageCount,
     state: {
-      pagination: {
-        pageIndex: pagination?.pageIndex || 0,
-        pageSize: pagination?.pageSize || 0,
-      },
+      ...paginationState,
       sorting: sorting?.disabled ? undefined : sortingInternal,
       rowSelection: selection?.rowSelection,
       globalFilter: !globalFilter
@@ -165,14 +165,11 @@ export function Table<T, U = undefined>({
     getRowCanExpand: () => !!expandRow,
     getExpandedRowModel: getExpandedRowModel(),
     manualPagination: pagination?.automatic ? undefined : true,
-    getPaginationRowModel: pagination?.automatic
-      ? getPaginationRowModel()
-      : undefined,
-    onPaginationChange: pagination?.setPagination,
+    ...paginationState,
     meta,
     globalFilterFn: !globalFilter
       ? undefined
-      : globalFilter?.globalFilterFn || "auto",
+      : globalFilter?.controlled?.globalFilterFn || "auto",
     manualSorting: !!sorting?.manualSorting,
     enableMultiSort: true,
   });
@@ -198,10 +195,12 @@ export function Table<T, U = undefined>({
         table={table}
         searchProps={{
           show: globalFilter?.showInput,
-          value: globalFilter?.controlled?.filter || globalFilterInternal,
+          value:
+            (globalFilter?.controlled?.filter as string) ||
+            globalFilterInternal,
           onChange: (e) => {
             if (globalFilter?.controlled?.setFilter) {
-              globalFilter?.controlled?.setFilter(e.target.value);
+              globalFilter?.controlled?.setFilter(e.target.value as any);
               return;
             }
             setGlobalFilterInternal(e.target.value);

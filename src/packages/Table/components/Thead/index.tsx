@@ -1,6 +1,5 @@
 import { Table, flexRender } from "@tanstack/react-table";
 import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
-import { Filter } from "./Filter";
 import { Resizing } from "./Resizing";
 import { SortIcon } from "./SortIcon";
 
@@ -61,7 +60,6 @@ export function Thead<T>({ table, sorting }: Props<T>) {
                       )}
                       <SortIcon header={header} />
                     </button>
-                    <Filter header={header} table={table} />
                   </div>
                   <Resizing header={header} />
                 </>

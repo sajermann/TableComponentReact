@@ -230,7 +230,7 @@ export function TableMegaFullEditablePage() {
     <Section title={translate("FULL_EDITABLE")} variant="h1">
       <form onSubmit={handleFormSubmit}>
         <TableMega.Root data={data} columns={columns}>
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full mb-2">
             {translate("IMPLEMENTS_FULL_EDITABLE_MODE")}
             <Button colorStyle="mono" variant="outlined">
               {translate("SAVE")}

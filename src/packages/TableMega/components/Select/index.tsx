@@ -26,6 +26,7 @@ function Select(
         "transition-all duration-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none",
         "focus:ring-blue-500 group-hover:border-blue-500 focus:border-blue-500",
         "required:invalid:text-gray-400",
+        { [props.className as string]: !!props.className },
       ])}
     />
   );

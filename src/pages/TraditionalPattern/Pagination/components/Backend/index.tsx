@@ -53,15 +53,18 @@ export function Backend() {
         />
 
         <Table
+          height="400px"
           isLoading={isLoading}
           columns={[...columns]}
           data={data || []}
           pagination={{
-            pageCount,
-            pageIndex: pagination.pageIndex,
-            pageSize: pagination.pageSize,
-            setPagination,
             disabledActions: isLoading,
+            manual: {
+              pageIndex: pagination.pageIndex,
+              pageSize: pagination.pageSize,
+              onChange: setPagination,
+              pageCount: pageCount,
+            },
           }}
         />
       </div>
