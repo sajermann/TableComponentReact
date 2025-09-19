@@ -114,7 +114,7 @@ export function Main({ disabled }: TMainProps) {
             {Math.ceil(table.getState().pagination.pageIndex + 1)}
           </strong>
           <span>{translate("OF")}</span>{" "}
-          <strong>{Math.ceil(table.getPageCount())}</strong>
+          <strong>{Math.ceil(table.getPageCount()) || "?"}</strong>
         </span>
         <ContainerInput className="w-max flex-row items-center">
           <Label htmlFor="rows">{translate("ROWS")}</Label>

@@ -47,8 +47,9 @@ export function Selector({
     ),
     favorite: (
       <button
+        disabled={disabled}
         onClick={onChange}
-        className="w-full h-6 flex items-center justify-center hover:cursor-pointer"
+        className="w-full h-6 flex items-center justify-center hover:cursor-pointer disabled:!cursor-not-allowed disabled:!opacity-50"
       >
         <Icons
           nameIcon="star"

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export type TPaginationControlled = {
-  pageCount?: number;
+  rowCount?: number;
   pageIndex?: number;
   pageSize?: number;
   onChange?: Dispatch<

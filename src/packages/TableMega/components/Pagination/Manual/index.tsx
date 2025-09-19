@@ -12,13 +12,15 @@ type TPaginationProps = {
   pageIndex: number;
   pageSize: number;
   onPaginationChange: OnChangeFn<PaginationState>;
+  rowCount: number;
 };
 
-export function Controlled({
+export function Manual({
   disabled,
   pageIndex,
   pageSize,
   onPaginationChange,
+  rowCount,
 }: TPaginationProps) {
   const { table } = useTableMega();
 
@@ -26,16 +28,17 @@ export function Controlled({
     table.setState((prev) => ({
       ...prev,
       pagination: {
-        pageIndex: pageIndex,
-        pageSize: pageSize,
+        pageIndex,
+        pageSize,
       },
     }));
     table.setOptions((prev) => ({
       ...prev,
       onPaginationChange,
-      getPaginationRowModel: getPaginationRowModel(),
+      rowCount,
+      manualPagination: true,
     }));
-  }, [pageIndex, pageSize]);
+  }, [pageIndex, pageSize, rowCount]);
 
   return <Main disabled={disabled} />;
 }

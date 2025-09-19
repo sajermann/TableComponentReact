@@ -12,7 +12,6 @@ type THeaderProps<T> = {
 };
 
 export function Header<T>({ table, tools, searchProps }: THeaderProps<T>) {
-  // console.log({ searchProps, tools });
   if (!tools && (!searchProps || !searchProps?.show)) return null;
   return (
     <div className="grid grid-cols-12 gap-2 w-full mb-1 items-center">

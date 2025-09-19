@@ -6,6 +6,7 @@ export function usePagination() {
   const [backQuery, setBackQuery] = useState('');
   const [filterQuery, setFilterQuery] = useState('');
   const [pageCount, setPageCount] = useState(0);
+  const [rowCount, setRowCount] = useState(0);
   const [pagination, setPagination] = useState(DEFAULT_PAG);
 
   function resetPagination() {
@@ -33,5 +34,7 @@ export function usePagination() {
     backQuery,
     filterQuery,
     setFilterQuery,
+    rowCount,
+    setRowCount,
   };
 }

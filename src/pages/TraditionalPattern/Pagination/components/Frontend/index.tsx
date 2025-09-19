@@ -10,7 +10,7 @@ export function Frontend() {
   const { translate } = useTranslation();
   const { columns } = useColumns();
   const [paginationOnlyFront, setPaginationOnlyFront] = useState({
-    pageIndex: 1,
+    pageIndex: 2,
     pageSize: 20,
   });
 

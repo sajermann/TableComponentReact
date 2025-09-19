@@ -7,6 +7,7 @@ const switchVariants = tv({
     inputPropsInternal: [
       "group outline-none focus:ring-1",
       "transition-all duration-500",
+      "disabled:!cursor-not-allowed disabled:!opacity-50",
     ],
   },
   variants: {

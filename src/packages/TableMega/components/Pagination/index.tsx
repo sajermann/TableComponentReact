@@ -1,9 +1,9 @@
 /* eslint-disable react/button-has-type */
 
 import { Automatic } from "./Automatic";
-import { Controlled } from "./Controlled";
+import { Manual } from "./Manual";
 
 export const Pagination = {
-  Controlled,
+  Manual,
   Automatic,
 };

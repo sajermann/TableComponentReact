@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
-import { Section } from "~/components";
+import { JsonViewer, Section } from "~/components";
 import { useColumns, useTranslation } from "~/hooks";
-import { Table } from "~/packages/Table";
 import * as TableMega from "~/packages/TableMega";
 import { TPerson } from "~/types";
 import { delay, makeData } from "~/utils";
 import { usePagination } from "../../hook";
 import { Search } from "../Search";
-// TODO: problemas
+
 export function Backend() {
   const { translate } = useTranslation();
   const {
-    pageCount,
-    setPageCount,
+    rowCount,
+    setRowCount,
     pagination,
     setPagination,
     filterQuery,
@@ -22,18 +21,20 @@ export function Backend() {
   const { columns } = useColumns();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<TPerson[]>([]);
+
   async function load(query: string) {
     try {
       setIsLoading(true);
       if (query === "") return [];
-      console.log(`batendo load`, { query });
       await delay(3000);
       const result = makeData.personWithPagination({
         pageSize: pagination.pageSize,
       });
-
-      setPageCount(result.pageCount);
       setData(result.data);
+      setRowCount(result.rowCount);
+    } catch (error) {
+      console.log(`Error on Backend`, error);
+      setData([]);
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +50,6 @@ export function Backend() {
         <div>
           <strong>{translate("NOTE")}: </strong>
           <span>{translate("NOTE_PAGINATION_MODE")} </span>
-          <span>{JSON.stringify({ backQuery })}</span>
         </div>
         <Search
           filterParams={filterQuery}
@@ -57,19 +57,7 @@ export function Backend() {
           isLoading={isLoading}
         />
 
-        {/* <Table
-          isLoading={isLoading}
-          columns={[...columns]}
-          data={data || []}
-          pagination={{
-            pageCount,
-            pageIndex: pagination.pageIndex,
-            pageSize: pagination.pageSize,
-            setPagination,
-            disabledActions: isLoading,
-          }}
-        /> */}
-        <TableMega.Root data={data} columns={columns}>
+        <TableMega.Root data={data} columns={columns.slice(1)}>
           <div className="max-h-100 overflow-auto">
             <TableMega.Table>
               <TableMega.Thead>
@@ -80,14 +68,22 @@ export function Backend() {
               </TableMega.Tbody>
             </TableMega.Table>
           </div>
-          <TableMega.Pagination.Controlled
-            pageCount={pageCount}
+          <TableMega.Pagination.Manual
             pageIndex={pagination.pageIndex}
             pageSize={pagination.pageSize}
             onPaginationChange={setPagination}
+            rowCount={rowCount}
+            disabled={isLoading}
           />
         </TableMega.Root>
-        <pre>{JSON.stringify({ pageCount, pagination })}</pre>
+        <JsonViewer
+          value={{
+            pageIndex: pagination.pageIndex,
+            pageSize: pagination.pageSize,
+            rowCount,
+            backQuery,
+          }}
+        />
       </div>
     </Section>
   );

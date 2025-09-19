@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { DEFAULT_PAG } from '~/constants';
-
-import { objectToQuery } from '~/pages/Pagination/utils/objectToQuery';
+import { objectToQuery } from '../../utils';
 
 export function usePagination() {
   const [backQuery, setBackQuery] = useState('');
   const [filterQuery, setFilterQuery] = useState('');
   const [pageCount, setPageCount] = useState(0);
+  const [rowCount, setRowCount] = useState(0);
   const [pagination, setPagination] = useState(DEFAULT_PAG);
 
   function resetPagination() {
@@ -34,5 +34,7 @@ export function usePagination() {
     backQuery,
     filterQuery,
     setFilterQuery,
+    rowCount,
+    setRowCount,
   };
 }

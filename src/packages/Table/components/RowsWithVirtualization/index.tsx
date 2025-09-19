@@ -1,6 +1,6 @@
 import { Row, flexRender } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { Fragment, RefObject } from "react";
+import { Fragment, RefObject, useEffect, useState } from "react";
 import { TExpandRow } from "../../types/expand-row.type";
 import { ExpandLine } from "../ExpandLine";
 import { Td } from "../Td";
@@ -18,6 +18,7 @@ export function RowsWithVirtualization<T>({
   expandRow,
   tableContainerRef,
 }: Props<T>) {
+  const [_, setFisrtRender] = useState(false);
   const { getVirtualItems, getTotalSize } = useVirtualizer({
     count: rows.length,
     getScrollElement: () => tableContainerRef.current,
@@ -25,7 +26,6 @@ export function RowsWithVirtualization<T>({
     overscan: 10,
   });
 
-  if (!enableVirtualization) return null;
   const paddingTop =
     getVirtualItems().length > 0 ? getVirtualItems()?.[0]?.start || 0 : 0;
   const paddingBottom =
@@ -33,6 +33,14 @@ export function RowsWithVirtualization<T>({
       ? getTotalSize() -
           (getVirtualItems()?.[getVirtualItems().length - 1]?.end || 0) || 0
       : 0;
+
+  useEffect(() => {
+    if (tableContainerRef.current) {
+      setFisrtRender(true);
+    }
+  }, [tableContainerRef]);
+
+  if (!enableVirtualization) return null;
 
   return (
     <>

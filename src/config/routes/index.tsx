@@ -442,13 +442,13 @@ export const traditionalChilds = [
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/virtualized",
+    path: "/virtualization",
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/Virtualized"),
-      "VirtualizedPage"
+      () => import("~/pages/TraditionalPattern/Virtualization"),
+      "VirtualizationPage"
     ),
     staticData: {
-      routerName: "VIRTUALIZED",
+      routerName: "VIRTUALIZATION",
     },
   },
 ]

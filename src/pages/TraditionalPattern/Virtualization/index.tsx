@@ -6,7 +6,7 @@ import { makeData } from "~/utils";
 
 const DATA = makeData.person(10000);
 
-export function VirtualizedPage() {
+export function VirtualizationPage() {
   const { translate } = useTranslation();
   const [virtualized, setVirtualized] = useState(true);
   const { columns } = useColumns();
@@ -28,6 +28,7 @@ export function VirtualizedPage() {
         </Button>
 
         <Table
+          height="800px"
           columns={[...columns]}
           data={DATA}
           enableVirtualization={virtualized}

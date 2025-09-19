@@ -10,7 +10,7 @@ const radioVariants = tv({
       "hover:cursor-pointer bg-transparent w-11 h-11",
       "rounded-full focus:shadow-[0_0_0_2px]",
       "outline-none cursor-default",
-      "disabled:cursor-not-allowed disabled:!opacity-50",
+      "disabled:!cursor-not-allowed disabled:!opacity-50",
     ],
     radioIndicatorPropsInternal: [
       "flex items-center justify-center w-full h-full",

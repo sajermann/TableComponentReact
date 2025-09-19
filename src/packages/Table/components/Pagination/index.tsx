@@ -113,7 +113,7 @@ export function Pagination<T>({ table, pagination }: Props<T>) {
             {Math.ceil(table.getState().pagination.pageIndex + 1)}
           </strong>
           <span>{translate("OF")}</span>{" "}
-          <strong>{Math.ceil(table.getPageCount())}</strong>
+          <strong>{Math.ceil(table.getPageCount()) || "?"}</strong>
         </span>
 
         <ContainerInput className="w-max flex-row items-center">

@@ -190,14 +190,17 @@ function countries() {
   ];
 }
 
-type Props = {
+const DEFAULT_ROWS_COUNT = 10000;
+
+type TPersonWithPaginationProps = {
   pageSize: number;
 };
 
-function personWithPagination({ pageSize }: Props) {
+function personWithPagination({ pageSize }: TPersonWithPaginationProps) {
   return {
-    pageCount: faker.number.int({ min: 1, max: 100 }),
+    pageCount: DEFAULT_ROWS_COUNT / pageSize,
     data: person(pageSize),
+    rowCount: DEFAULT_ROWS_COUNT,
   };
 }
 

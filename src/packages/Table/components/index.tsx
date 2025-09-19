@@ -1,11 +1,7 @@
 import {
-  CellContext,
   ColumnDef,
   ColumnSizingInfoState,
   ColumnSizingState,
-  FilterFnOption,
-  HeaderContext,
-  Row,
   SortingState,
   TableMeta,
   getCoreRowModel,
@@ -15,21 +11,9 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import {
-  TDefTools,
-  TPagination,
-  TPaginationControlled,
-  TSelection,
-} from "../types";
+import { TDefTools, TPagination, TSelection } from "../types";
 
 import { Header } from "./Header";
 import { Pagination } from "./Pagination";
@@ -37,14 +21,10 @@ import { Tbody } from "./Tbody";
 import { Tfoot } from "./Tfoot";
 import { Thead } from "./Thead";
 
-import { useTranslation } from "~/hooks/useTranslation";
-import { RadioGroup } from "~/packages/Table/components/Radio";
 import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
 import { TExpandRow } from "../types/expand-row.type";
-import { getValueForRadio } from "../utils";
 
 import { TGlobalFilter } from "../types/global-filter.type";
-import { Selector } from "./Selector";
 import styles from "./index.module.css";
 
 type Props<T, U = undefined> = {
@@ -119,19 +99,30 @@ export function Table<T, U = undefined>({
           pageIndex: pagination.automatic.controlled.pageIndex || 0,
           pageSize: pagination.automatic.controlled.pageSize || 0,
         },
-        onChange: pagination.automatic.controlled.onChange,
+        onPaginationChange: pagination.automatic.controlled.onChange,
         getPaginationRowModel: getPaginationRowModel(),
       };
     }
+
+    if (pagination?.manual) {
+      return {
+        pagination: {
+          pageIndex: pagination.manual.pageIndex || 0,
+          pageSize: pagination.manual.pageSize || 0,
+        },
+        onPaginationChange: pagination.manual.onChange,
+        manualPagination: true,
+        rowCount: pagination.manual.rowCount,
+      };
+    }
   }, [pagination]);
-  console.log({ paginationState });
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     columnResizeMode: "onChange",
     getFilteredRowModel: getFilteredRowModel(),
-    // pageCount: pagination?.pageCount,
     state: {
       ...paginationState,
       sorting: sorting?.disabled ? undefined : sortingInternal,
@@ -164,7 +155,6 @@ export function Table<T, U = undefined>({
     getSortedRowModel: getSortedRowModel(),
     getRowCanExpand: () => !!expandRow,
     getExpandedRowModel: getExpandedRowModel(),
-    manualPagination: pagination?.automatic ? undefined : true,
     ...paginationState,
     meta,
     globalFilterFn: !globalFilter
@@ -210,14 +200,11 @@ export function Table<T, U = undefined>({
       />
       <div
         ref={tableContainerRef}
-        className={managerClassNames({
-          [styles.customContainer]: true,
-          "scrollbar-thin": true,
-          "scrollbar-thumb-gray-500": true,
-          "scrollbar-track-gray-300": true,
-          "scrollbar-thumb-rounded-full": true,
-          "scrollbar-track-rounded-full": true,
-        })}
+        className={managerClassNames([
+          "scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-300",
+          "scrollbar-thumb-rounded-full scrollbar-track-rounded-full",
+          styles.customContainer,
+        ])}
         style={{
           overflow: isLoading ? "hidden" : "auto",
           height: height || undefined,

@@ -38,7 +38,7 @@ const checkboxVariants = tv({
     checkboxPropsInternal: [
       "group outline-none focus:ring-1 border rounded h-11 w-11 bg-transparent",
       "transition-all duration-500",
-      "disabled:cursor-not-allowed disabled:!opacity-50 focus:ring-1",
+      "disabled:!cursor-not-allowed disabled:!opacity-50 focus:ring-1",
     ],
   },
   variants: {

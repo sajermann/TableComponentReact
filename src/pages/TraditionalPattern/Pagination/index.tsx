@@ -1,7 +1,6 @@
 import { Section } from "~/components";
 import { useTranslation } from "~/hooks";
-import { Backend } from "./components";
-import { Frontend } from "./components/Frontend";
+import { Backend, Frontend } from "./components";
 
 export function PaginationPage() {
   const { translate } = useTranslation();
@@ -10,7 +9,7 @@ export function PaginationPage() {
     <Section title={translate("PAGINATION")} variant="h1">
       {translate("IMPLEMENTS_PAGINATION_MODE")}
       <div className="flex flex-col gap-10">
-        {/* <Frontend /> */}
+        <Frontend />
         <Backend />
       </div>
     </Section>
