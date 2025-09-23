@@ -6,12 +6,16 @@ declare global {
   }
 }
 
+type TFilterElement = {
+  column: Column<T, unknown>;
+  table: Table<T>;
+};
+
 declare module '@tanstack/react-table' {
   // biome-ignore lint/correctness/noUnusedVariables: <explanation>
   interface ColumnMeta<TData extends RowData, TValue> {
     align?: TextAlign;
-    filterElement?: (data: any, dataB: any) => React.ReactNode;
-    cellEdit?: (data: any) => React.ReactNode;
+    filterElement?: (data: TFilterElement) => React.ReactNode;
     resizingElement?: (data: any) => React.ReactNode;
   }
 }
