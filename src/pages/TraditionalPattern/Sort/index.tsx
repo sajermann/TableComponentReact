@@ -32,8 +32,8 @@ export function SortPage() {
       {translate("IMPLEMENTS_SORT_MODE")}
       <div className="flex flex-col gap-10">
         <Automatic data={DATA} columns={[...columns, ...columns2]} />
-        <Manual data={DATA} columns={[...columns, ...columns2]} />
-        <Disabled data={DATA} columns={[...columns, ...columns2]} />
+        {/* <Manual data={DATA} columns={[...columns, ...columns2]} />
+        <Disabled data={DATA} columns={[...columns, ...columns2]} /> */}
       </div>
     </Section>
   );

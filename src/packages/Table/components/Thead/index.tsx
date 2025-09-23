@@ -11,6 +11,7 @@ type Props<T> = {
 };
 
 export function Thead<T>({ table, sorting }: Props<T>) {
+  console.log({ sorting });
   return (
     <thead
       className={managerClassNames({
@@ -31,6 +32,11 @@ export function Thead<T>({ table, sorting }: Props<T>) {
             >
               {header.isPlaceholder ? null : (
                 <>
+                  {/* {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                  <SortIcon header={header} /> */}
                   <div
                     className={managerClassNames({
                       "flex items-center gap-1": true,
