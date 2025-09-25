@@ -1,8 +1,14 @@
-import { Header, flexRender } from "@tanstack/react-table";
+import { Header, Table } from "@tanstack/react-table";
 import { managerClassNames } from "~/packages/TableMega/utils/managerClassNames";
 import { ResizingElement } from "../ResizingElement";
+import { ThContent } from "../ThContent";
 
-export function ThWithoutSort<T>({ header }: { header: Header<T, unknown> }) {
+type TThWithoutSortProps<T> = {
+  table: Table<T>;
+  header: Header<T, unknown>;
+};
+
+export function ThWithoutSort<T>({ header, table }: TThWithoutSortProps<T>) {
   return (
     <th
       className={managerClassNames([
@@ -21,10 +27,12 @@ export function ThWithoutSort<T>({ header }: { header: Header<T, unknown> }) {
         width: header.getSize(),
       }}
     >
-      {header.isPlaceholder
-        ? null
-        : flexRender(header.column.columnDef.header, header.getContext())}
-      <ResizingElement header={header} />
+      {header.isPlaceholder ? null : (
+        <>
+          <ThContent table={table} header={header} />
+          <ResizingElement header={header} />
+        </>
+      )}
     </th>
   );
 }

@@ -17,9 +17,9 @@ export type TSortProps = DetailedHTMLProps<
     sort: SortingState;
     setSort: OnChangeFn<SortingState>;
   };
-  children?: React.ReactNode;
+  // children?: React.ReactNode;
 };
-export function Sort({ controlled, children, ...rest }: TSortProps) {
+export function Sort({ controlled, ...rest }: TSortProps) {
   const { table } = useTableMega();
 
   useEffect(() => {
@@ -46,7 +46,6 @@ export function Sort({ controlled, children, ...rest }: TSortProps) {
   return (
     <THeadDefaultInternal {...rest}>
       <RowsWithSort />
-      {children}
     </THeadDefaultInternal>
   );
 }

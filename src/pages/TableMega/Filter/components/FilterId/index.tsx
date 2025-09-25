@@ -44,13 +44,13 @@ export function FilterId({ column }: { column: Column<TPerson, unknown> }) {
       onInteractOutside={() => setIsOpen(false)}
       trigger={
         <button
-          className="w-5 h-5 flex items-center justify-center"
+          className="w-5 h-5 flex items-center justify-center hover:opacity-70 transition-opacity duration-500"
           type="button"
           onClick={() => setIsOpen(true)}
         >
           <FunnelIcon
             className={managerClassNames([
-              "h-full w-full",
+              "h-4.5  w-4.5",
               { "fill-white": verifyFillFilter() },
             ])}
           />

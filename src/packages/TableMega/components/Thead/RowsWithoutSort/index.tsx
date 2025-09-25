@@ -8,7 +8,7 @@ export function RowsWithoutSort() {
       {table.getHeaderGroups().map((headerGroup) => (
         <tr key={headerGroup.id}>
           {headerGroup.headers.map((header) => (
-            <ThWithoutSort key={header.id} header={header} />
+            <ThWithoutSort key={header.id} table={table} header={header} />
           ))}
         </tr>
       ))}

@@ -1,18 +1,30 @@
-import { Header, flexRender } from "@tanstack/react-table";
+import { Header, Table } from "@tanstack/react-table";
 import { managerClassNames } from "~/packages/TableMega/utils/managerClassNames";
 import { ResizingElement } from "../ResizingElement";
-import { SortIcon } from "../SortIcon";
+import { ThContent } from "../ThContent";
 import { ThWithoutSort } from "../ThWithoutSort";
 
-// TODO: Remover button
+type TThWithSortProps<T> = {
+  table: Table<T>;
+  header: Header<T, unknown>;
+};
 
-export function ThWithSort<T>({ header }: { header: Header<T, unknown> }) {
+export function ThWithSort<T>({ header, table }: TThWithSortProps<T>) {
   if (!header.column.getCanSort()) {
-    return <ThWithoutSort header={header} />;
+    return <ThWithoutSort table={table} header={header} />;
   }
   return (
     <th
-      className="p-4 relative"
+      className={managerClassNames([
+        "p-4 relative",
+        {
+          "text-left": !header.getContext().column.columnDef.meta?.align,
+          "text-center":
+            header.getContext().column.columnDef.meta?.align === "center",
+          "text-right":
+            header.getContext().column.columnDef.meta?.align === "right",
+        },
+      ])}
       key={header.id}
       colSpan={header.colSpan}
       style={{
@@ -20,25 +32,11 @@ export function ThWithSort<T>({ header }: { header: Header<T, unknown> }) {
       }}
     >
       {header.isPlaceholder ? null : (
-        <button
-          type="button"
-          className={managerClassNames([
-            "flex items-center gap-2 w-full",
-            {
-              "justify-center":
-                header.getContext().column.columnDef.meta?.align === "center",
-              "justify-right":
-                header.getContext().column.columnDef.meta?.align === "right",
-              "cursor-pointer select-none": header.column.getCanSort(),
-            },
-          ])}
-          onClick={header.column.getToggleSortingHandler()}
-        >
-          {flexRender(header.column.columnDef.header, header.getContext())}
-          <SortIcon header={header} />
-        </button>
+        <>
+          <ThContent table={table} header={header} withSorting />
+          <ResizingElement header={header} />
+        </>
       )}
-      <ResizingElement header={header} />
     </th>
   );
 }
