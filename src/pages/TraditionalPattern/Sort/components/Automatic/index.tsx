@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Section } from "~/components";
-import { useColumns, useTranslation } from "~/hooks";
+import { useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 

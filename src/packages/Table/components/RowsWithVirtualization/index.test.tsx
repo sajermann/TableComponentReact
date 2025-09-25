@@ -28,9 +28,6 @@ const columns: ColumnDef<TIdName>[] = [
   {
     accessorKey: "name",
     header: "Nome",
-    meta: {
-      cellEdit: ({ name }) => <span>{name}</span>,
-    },
   },
 ];
 
@@ -65,8 +62,6 @@ function Mock({ selection }: TProps) {
           tableContainerRef={ref}
           enableVirtualization
           rows={rows}
-          selection={selection}
-          rowForUpdate={{ row: 1, data: { id: "1", name: "name-1" } }}
         />
       </div>
     </div>
@@ -85,7 +80,7 @@ describe("Components/Table/RowsWithVirtualization", () => {
         right: 1255,
         bottom: 392,
         left: 8,
-      } as any)
+      }) as any
   );
 
   it(`must render first item`, async () => {

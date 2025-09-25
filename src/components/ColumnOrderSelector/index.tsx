@@ -1,6 +1,6 @@
 import Select from "~/components/Select";
 
-type TSelectorProps = {
+type TColumnOrderSelectorProps = {
   value?: React.ComponentProps<typeof Select.Select>["value"];
   defaultValue?: React.ComponentProps<typeof Select.Select>["defaultValue"];
   onChange: (data: string) => void;
@@ -10,12 +10,12 @@ type TSelectorProps = {
   }[];
 };
 
-export function Selector({
+export function ColumnOrderSelector({
   defaultValue,
   value,
   onChange,
   optionsList,
-}: TSelectorProps) {
+}: TColumnOrderSelectorProps) {
   return (
     <Select.Container>
       <Select.Select

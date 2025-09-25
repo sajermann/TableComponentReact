@@ -1,22 +1,21 @@
 import { Checkbox, ContainerInput, Icons, Switch } from "~/components";
 import { RadioItem } from "~/components";
-import { TConfig } from "../../types";
 
-type TSelectorProps = {
+type TSelectionTypeProps = {
   disabled: boolean;
   isActivated: boolean | "indeterminate";
   onChange: (data: unknown) => void;
-  componentType: TConfig["componentType"];
+  componentType: "checkbox" | "radio" | "switch" | "favorite";
   rowIndex?: number;
 };
 
-export function Selector({
+export function SelectionType({
   disabled,
   isActivated,
   onChange,
   componentType,
   rowIndex,
-}: TSelectorProps) {
+}: TSelectionTypeProps) {
   const config = {
     checkbox: (
       <Checkbox
@@ -47,8 +46,9 @@ export function Selector({
     ),
     favorite: (
       <button
+        disabled={disabled}
         onClick={onChange}
-        className="w-full h-6 flex items-center justify-center hover:cursor-pointer"
+        className="w-full h-6 flex items-center justify-center hover:cursor-pointer disabled:!cursor-not-allowed disabled:!opacity-50"
       >
         <Icons
           nameIcon="star"

@@ -203,8 +203,11 @@ export function ExportPage() {
         columns={columns}
         data={DATA}
         globalFilter={{
-          filter: globalFilter,
-          setFilter: setGlobalFilter,
+          controlled: {
+            filter: globalFilter,
+            setFilter: setGlobalFilter,
+          },
+          showInput: true,
         }}
         tools={{
           defForCsv: defForCsvAndXml,

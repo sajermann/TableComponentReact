@@ -1,16 +1,16 @@
 /**
  * @vitest-environment jsdom
  */
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { describe, it } from "vitest";
 import { InjectorProviders } from "~/components";
-import { SelectionPage } from ".";
+import { TableMegaSelectionPage } from ".";
 
-describe("Pages/Table/SelectionPage", () => {
+describe("pages/TableMega/TableMegaSelectionPage", () => {
   it(`must render `, async () => {
-    const { getAllByText } = render(
+    render(
       <InjectorProviders>
-        <SelectionPage />
+        <TableMegaSelectionPage />
       </InjectorProviders>
     );
   });

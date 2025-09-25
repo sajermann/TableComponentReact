@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Section } from "~/components";
+import { LoadingSelector } from "~/components/LoadingSelector";
 import { useColumns, useTranslation } from "~/hooks";
 import * as TableMega from "~/packages/TableMega";
 import { makeData } from "~/utils";
-import { Selector } from "./components/Selector";
 
 const DATA = makeData.person(10);
 
@@ -20,7 +20,7 @@ export function TableMegaLoadingPage() {
       {translate("IMPLEMENTS_LOADING_MODE")}
 
       <div className="flex flex-col gap-2">
-        <Selector
+        <LoadingSelector
           isLoading={config.isLoading}
           withData={config.withData}
           onChange={setConfig}

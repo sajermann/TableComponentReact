@@ -2,20 +2,25 @@ import { Dispatch, SetStateAction } from "react";
 import { ContainerInput, Input, Label } from "~/components";
 import Select from "~/components/Select";
 import { useTranslation } from "~/hooks";
-import * as TableMega from "~/packages/TableMega";
-import { TConfig, TOptions, TSelectionRow } from "../../types";
+import {
+  TConfig,
+  TOptions,
+  TSelectionRow,
+} from "../../pages/TraditionalPattern/Selection/types";
 
-type TConfigSelector = {
+type TSelectionConfigSelectorProps = {
   config: TConfig;
   setConfig: Dispatch<SetStateAction<TConfig>>;
   setSelectedItems: Dispatch<SetStateAction<TSelectionRow>>;
+  children?: React.ReactNode;
 };
 
-export function ConfigSelector({
+export function SelectionConfigSelector({
   config,
   setConfig,
   setSelectedItems,
-}: TConfigSelector) {
+  children,
+}: TSelectionConfigSelectorProps) {
   const { translate } = useTranslation();
 
   const OPTIONS_LIST: TOptions<"single" | "multi">[] = [
@@ -112,10 +117,7 @@ export function ConfigSelector({
         />
       </ContainerInput>
 
-      <ContainerInput className="col-span-12 md:col-span-6 lg:col-span-4">
-        <Label htmlFor="search">{translate("SEARCH")}</Label>
-        <TableMega.Search.Input id="search" />
-      </ContainerInput>
+      {children}
     </div>
   );
 }

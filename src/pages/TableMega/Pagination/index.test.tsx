@@ -1,16 +1,16 @@
 /**
  * @vitest-environment jsdom
  */
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { describe, it } from "vitest";
 import { InjectorProviders } from "~/components";
-import { PaginationPage } from ".";
+import { TableMegaPaginationPage } from ".";
 
-describe("Pages/Table/PaginationPage", () => {
+describe("pages/TableMega/TableMegaPaginationPage", () => {
   it(`must render `, async () => {
-    const { getAllByText } = render(
+    render(
       <InjectorProviders>
-        <PaginationPage />
+        <TableMegaPaginationPage />
       </InjectorProviders>
     );
   });

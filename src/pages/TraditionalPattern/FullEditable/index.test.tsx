@@ -9,7 +9,7 @@ import { FullEditablePage } from ".";
 
 // TODO: Mudar a lib de Table para por padrao não ter virtualização, pois quebra os testes
 
-describe("Pages/Table/FullEditablePage", () => {
+describe("pages/TraditionalPattern/FullEditablePage", () => {
   it(`must update data`, async () => {
     const { getByText, getByTestId } = render(
       <InjectorProviders>

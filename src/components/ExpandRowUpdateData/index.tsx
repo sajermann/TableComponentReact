@@ -1,5 +1,5 @@
 import { Row } from "@tanstack/react-table";
-import { FormEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -26,7 +26,7 @@ const DEFAULT_VALUE: TPerson = {
   role: "User",
 };
 
-type TUpdateDataProps<T> = {
+type TExpandRowUpdateDataProps<T> = {
   dataToEdit?: TPerson;
   onSave?: ({
     dataToUpdate,
@@ -38,11 +38,11 @@ type TUpdateDataProps<T> = {
   onCancel?: ({ row }: { row?: Row<T> }) => void;
   row?: Row<T>;
 };
-export function UpdateData({
+export function ExpandRowUpdateData({
   onCancel,
   onSave,
   row,
-}: TUpdateDataProps<TPerson>) {
+}: TExpandRowUpdateDataProps<TPerson>) {
   const { translate } = useTranslation();
   const formData = row?.original || DEFAULT_VALUE;
   const [year, month, day] = formData?.birthday.substring(0, 10).split("-");

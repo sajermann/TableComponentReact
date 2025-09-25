@@ -27,6 +27,7 @@ export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
         <Button
           {...showInDevelopment({ "data-testid": "button-export-print" })}
           variant="outlined"
+          colorStyle="mono"
           onClick={() =>
             exportTo.print({
               data: rows.map((item) => item.original),
@@ -43,6 +44,7 @@ export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
         <Button
           {...showInDevelopment({ "data-testid": "button-export-pdf" })}
           variant="outlined"
+          colorStyle="mono"
           onClick={() =>
             exportTo.pdf({
               data: rows.map((item) => item.original),
@@ -59,6 +61,7 @@ export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
         <Button
           {...showInDevelopment({ "data-testid": "button-export-png" })}
           variant="outlined"
+          colorStyle="mono"
           onClick={() =>
             exportTo.png({
               data: rows.map((item) => item.original),
@@ -75,6 +78,7 @@ export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
         <Button
           {...showInDevelopment({ "data-testid": "button-export-excel" })}
           variant="outlined"
+          colorStyle="mono"
           onClick={() =>
             exportTo.excel({
               data: rows.map((item) => item.original),
@@ -91,6 +95,7 @@ export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
         <Button
           {...showInDevelopment({ "data-testid": "button-export-csv" })}
           variant="outlined"
+          colorStyle="mono"
           onClick={() =>
             exportTo.csv({
               data: rows.map((item) => item.original),
@@ -108,6 +113,7 @@ export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
         <Button
           {...showInDevelopment({ "data-testid": "button-export-xml" })}
           variant="outlined"
+          colorStyle="mono"
           onClick={() =>
             exportTo.xml({
               data: rows.map((item) => item.original),

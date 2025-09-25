@@ -1,32 +1,17 @@
 import {
   ColumnDef,
   ColumnOrderState,
-  ColumnSort,
   FilterFnOption,
   OnChangeFn,
   RowSelectionState,
-  SortingState,
   Table,
   TableMeta,
-  TableOptions,
   getCoreRowModel,
-  getExpandedRowModel,
   getFilteredRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import React, { JSX } from "react";
-import {
-  Dispatch,
-  ReactNode,
-  RefObject,
-  SetStateAction,
-  createContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { ReactNode, createContext, useMemo } from "react";
 import { OnExpanded } from "../OnExpanded";
 
 function getExpandComponent(children: ReactNode) {
@@ -47,7 +32,7 @@ type TContextProviderType<T> = {
   expandedComponent?: React.ReactNode;
 };
 
-export const Context = createContext({} as TContextProviderType<T>);
+export const Context = createContext({} as TContextProviderType<any>);
 
 export type TContextProviderProps<T, U = undefined> = {
   children: ReactNode;
@@ -88,12 +73,7 @@ export function ContextProvider<T, U>({
     ...((columns.some((col) => col.filterFn) || !!globalFilter) && {
       getFilteredRowModel: getFilteredRowModel(),
     }),
-    // pageCount: pagination?.pageCount,
     state: {
-      // pagination: {
-      //   pageIndex: pagination?.pageIndex || 0,
-      //   pageSize: pagination?.pageSize || 0,
-      // },
       ...(!!selection && {
         rowSelection: selection.rowSelection,
       }),
@@ -118,12 +98,6 @@ export function ContextProvider<T, U>({
       enableRowSelection: true,
       enableMultiRowSelection: selection?.type === "multi",
     }),
-
-    // manualPagination: pagination?.automatic ? undefined : true,
-    // getPaginationRowModel: pagination?.automatic
-    //   ? getPaginationRowModel()
-    //   : undefined,
-    // onPaginationChange: pagination?.setPagination,
     meta,
   });
 
@@ -135,20 +109,13 @@ export function ContextProvider<T, U>({
       columns,
       data,
       meta,
+      expandedComponent,
     }),
-    [table, columns, data, meta]
+    [table, columns, data, meta, expandedComponent]
   );
 
   return (
-    <Context.Provider
-      value={{
-        table,
-        columns,
-        data,
-        meta,
-        expandedComponent,
-      }}
-    >
+    <Context.Provider value={{ ...memoizedValue, expandedComponent }}>
       {children}
     </Context.Provider>
   );

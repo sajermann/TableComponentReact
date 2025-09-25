@@ -7,7 +7,7 @@ import { InjectorProviders } from "~/components";
 
 import { LoadingPage } from ".";
 
-describe("Pages/Table/LoadingPage", () => {
+describe("pages/TraditionalPattern/LoadingPage", () => {
   it(`must render `, async () => {
     const { getAllByText } = render(
       <InjectorProviders>

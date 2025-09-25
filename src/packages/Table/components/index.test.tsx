@@ -3,10 +3,10 @@
  * @vitest-environment jsdom
  */
 
+import { ColumnDef } from "@tanstack/react-table";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 import { Table } from ".";
-import { ColumnDef } from "@tanstack/react-table";
 
 const DATA = [
   {
@@ -112,7 +112,6 @@ describe("Components/Table", () => {
   });
 
   test(`should not select item`, async () => {
-    const resultMock = () => true;
     const setRowSelectionMock = vi.fn();
     const { container } = render(
       <Table
@@ -122,7 +121,6 @@ describe("Components/Table", () => {
           rowSelection: {},
           setRowSelection: setRowSelectionMock,
           type: "single",
-          disableSelectionRow: resultMock,
         }}
       />
     );

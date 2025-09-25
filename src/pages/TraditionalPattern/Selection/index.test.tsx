@@ -6,7 +6,7 @@ import { describe, it } from "vitest";
 import { InjectorProviders } from "~/components";
 import { SelectionPage } from ".";
 
-describe("Pages/Table/SelectionPage", () => {
+describe("pages/TraditionalPattern/SelectionPage", () => {
   it(`must render `, async () => {
     const { getAllByText } = render(
       <InjectorProviders>

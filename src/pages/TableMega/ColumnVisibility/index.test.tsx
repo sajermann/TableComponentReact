@@ -5,13 +5,13 @@ import { render } from "@testing-library/react";
 import { describe, it } from "vitest";
 
 import { InjectorProviders } from "~/components";
-import { ColumnVisibilityPage } from ".";
+import { TableMegaColumnVisibilityPage } from ".";
 
-describe("Pages/Table/ColumnVisibilityPage", () => {
+describe("pages/TableMega/TableMegaColumnVisibilityPage", () => {
   it(`must render `, async () => {
     render(
       <InjectorProviders>
-        <ColumnVisibilityPage />
+        <TableMegaColumnVisibilityPage />
       </InjectorProviders>
     );
   });

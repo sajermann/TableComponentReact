@@ -1,13 +1,14 @@
 import type { Table as ITable } from "@tanstack/react-table";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
-import { RadioGroup, Section } from "~/components";
+import { ContainerInput, Label, RadioGroup, Section } from "~/components";
 import { useColumns, useTranslation } from "~/hooks";
 import * as TableMega from "~/packages/TableMega";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
-import { ConfigSelector } from "./components/ConfigSelector";
-import { Selector } from "./components/Selector";
+
+import { SelectionConfigSelector } from "~/components/SelectionConfigSelector";
+import { SelectionType } from "~/components/SelectionType";
 import { TConfig, TSelectionRow } from "./types";
 
 const DATA = makeData.person(10);
@@ -41,7 +42,7 @@ export function TableMegaSelectionPage() {
         header: ({ table }: HeaderContext<TPerson, unknown>) =>
           config.mode === "multi" && (
             <>
-              <Selector
+              <SelectionType
                 componentType={config.componentType}
                 onChange={() => {
                   table.getToggleAllRowsSelectedHandler()({ target: {} });
@@ -61,7 +62,7 @@ export function TableMegaSelectionPage() {
         enableResizing: false,
         cell: ({ row }) => {
           return (
-            <Selector
+            <SelectionType
               rowIndex={row.index}
               componentType={config.componentType}
               onChange={() => {
@@ -105,11 +106,16 @@ export function TableMegaSelectionPage() {
                 : ""
             }
           >
-            <ConfigSelector
+            <SelectionConfigSelector
               config={config}
               setConfig={setConfig}
               setSelectedItems={setSelectedItems}
-            />
+            >
+              <ContainerInput className="col-span-12 md:col-span-6 lg:col-span-4">
+                <Label htmlFor="search">{translate("SEARCH")}</Label>
+                <TableMega.Search.Input id="search" />
+              </ContainerInput>
+            </SelectionConfigSelector>
 
             <TableMega.Table>
               <TableMega.Thead />

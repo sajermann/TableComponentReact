@@ -2,11 +2,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button, Section } from "~/components";
+import { ExpandRowUpdateData } from "~/components/ExpandRowUpdateData";
 import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
-import { UpdateData } from "./components/UpdateData";
 
 export function TraditionalExpandRowPage() {
   const { translate } = useTranslation();
@@ -52,7 +52,7 @@ export function TraditionalExpandRowPage() {
           parentTrProps: { className: "border border-b-0 !bg-red-500" },
           expandedTrProps: { className: "border border-t-0 !bg-red-500" },
           render: (row) => (
-            <UpdateData
+            <ExpandRowUpdateData
               row={row}
               onCancel={({ row }) => row?.getToggleExpandedHandler()()}
               onSave={({ row, dataToUpdate }) => {

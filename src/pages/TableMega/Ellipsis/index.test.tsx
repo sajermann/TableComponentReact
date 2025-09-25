@@ -5,13 +5,13 @@ import { render } from "@testing-library/react";
 import { describe, it } from "vitest";
 
 import { InjectorProviders } from "~/components";
-import { EllipsisPage } from ".";
+import { TableMegaEllipsisPage } from ".";
 
-describe("Pages/Table/EllipsisPage", () => {
+describe("pages/TableMega/TableMegaEllipsisPage", () => {
   it(`must render `, async () => {
-    const { getAllByText } = render(
+    render(
       <InjectorProviders>
-        <EllipsisPage />
+        <TableMegaEllipsisPage />
       </InjectorProviders>
     );
   });

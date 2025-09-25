@@ -3,7 +3,6 @@ export * from './filterByType';
 export * from './filterRangeDate';
 export * from './getValueForRadio';
 export * from './globalFilterFnCustom';
-export * from './onClickRow';
 export * from './showInDevelopment';
 export * from './removeProp';
 export * from './export';

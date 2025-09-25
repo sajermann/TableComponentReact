@@ -26,8 +26,8 @@ export function Header<T>({ table, tools, searchProps }: THeaderProps<T>) {
       <ExportButtons
         containerProps={{
           className: managerClassNames(["flex gap-2 justify-end"], {
-            "col-span-12 sm:col-span-6": searchProps && !searchProps.show,
-            "col-span-12": !searchProps,
+            "col-span-12 sm:col-span-6": tools && searchProps.show,
+            "col-span-12": tools && !searchProps?.show,
           }),
         }}
         table={table}

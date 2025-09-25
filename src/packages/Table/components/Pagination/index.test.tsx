@@ -1,17 +1,17 @@
+import {
+  ColumnDef,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 /* eslint-disable no-return-assign */
 /**
  * @vitest-environment jsdom
  */
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import {
-  ColumnDef,
-  getCoreRowModel,
-  getSortedRowModel,
-  useReactTable,
-  getFilteredRowModel,
-} from "@tanstack/react-table";
-import { describe, expect, test } from "vitest";
 import { useState } from "react";
+import { describe, expect, test } from "vitest";
 
 import { Pagination } from ".";
 import { DEFAULT_PAG } from "../../constants";
@@ -66,21 +66,6 @@ function Mock() {
       table={table}
       pagination={{
         disabledActions: false,
-      }}
-      propsButtonFirstPage={{
-        "data-testid": "firstButton",
-      }}
-      propsButtonPrevPage={{
-        "data-testid": "prevButton",
-      }}
-      propsButtonNextPage={{
-        "data-testid": "nextButton",
-      }}
-      propsButtonLastPage={{
-        "data-testid": "lastButton",
-      }}
-      propsInput={{
-        "data-testid": "input",
       }}
     />
   );

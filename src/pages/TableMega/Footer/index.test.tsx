@@ -1,18 +1,17 @@
 /**
  * @vitest-environment jsdom
  */
-import { fireEvent, render, waitFor } from "@testing-library/react";
-import { useState } from "react";
+import { render } from "@testing-library/react";
 import { describe, it } from "vitest";
 
 import { InjectorProviders } from "~/components";
-import { FooterPage } from ".";
+import { TableMegaFooterPage } from ".";
 
-describe("Pages/Table/FooterPage", () => {
+describe("pages/TableMega/TableMegaFooterPage", () => {
   it(`must render `, async () => {
-    const { getAllByText } = render(
+    render(
       <InjectorProviders>
-        <FooterPage />
+        <TableMegaFooterPage />
       </InjectorProviders>
     );
   });

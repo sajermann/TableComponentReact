@@ -6,13 +6,13 @@ import { fireEvent, render, waitFor } from "@testing-library/react";
 import { describe, it } from "vitest";
 
 import { InjectorProviders } from "~/components";
-import { VirtualizedPage } from ".";
+import { VirtualizationPage } from ".";
 
-describe("Pages/Table/VirtualizedPage", () => {
+describe("pages/TraditionalPattern/VirtualizedPage", () => {
   it(`must render `, async () => {
-    const { getAllByText } = render(
+    render(
       <InjectorProviders>
-        <VirtualizedPage />
+        <VirtualizationPage />
       </InjectorProviders>
     );
   });

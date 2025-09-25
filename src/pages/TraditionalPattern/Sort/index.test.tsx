@@ -6,7 +6,7 @@ import { describe, it } from "vitest";
 import { InjectorProviders } from "~/components";
 import { SortPage } from ".";
 
-describe("Pages/Table/SortPage", () => {
+describe("pages/TraditionalPattern/SortPage", () => {
   it(`must render `, async () => {
     render(
       <InjectorProviders>

@@ -1,11 +1,11 @@
 /**
  * @vitest-environment jsdom
  */
-import { fireEvent, render } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { render } from "@testing-library/react";
+import { describe, it } from "vitest";
 
 import { InjectorProviders } from "~/components";
-import { ExportPage } from ".";
+import { TableMegaExportPage } from ".";
 
 const itemsToTest: Array<"print" | "pdf" | "png" | "excel" | "csv" | "xml"> = [
   "print",
@@ -16,13 +16,12 @@ const itemsToTest: Array<"print" | "pdf" | "png" | "excel" | "csv" | "xml"> = [
   "xml",
 ];
 
-describe("Pages/Export", () => {
+describe("pages/TableMega/TableMegaExportPage", () => {
   for (const item of itemsToTest) {
     it(`should test ${item} button`, async () => {
-      const spy = vi.fn();
-      const { getByTestId } = render(
+      render(
         <InjectorProviders>
-          <ExportPage />
+          <TableMegaExportPage />
         </InjectorProviders>
       );
     });

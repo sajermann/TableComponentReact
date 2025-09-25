@@ -7,7 +7,7 @@ import { describe, it } from "vitest";
 import { InjectorProviders } from "~/components";
 import { ColumnVisibilityPage } from ".";
 
-describe("Pages/Table/ColumnVisibilityPage", () => {
+describe("pages/TraditionalPattern/ColumnVisibilityPage", () => {
   it(`must render `, async () => {
     render(
       <InjectorProviders>

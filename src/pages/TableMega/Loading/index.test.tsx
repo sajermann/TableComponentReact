@@ -1,17 +1,17 @@
 /**
  * @vitest-environment jsdom
  */
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { describe, it } from "vitest";
 import { InjectorProviders } from "~/components";
 
-import { LoadingPage } from ".";
+import { TableMegaLoadingPage } from ".";
 
-describe("Pages/Table/LoadingPage", () => {
+describe("pages/TableMega/TableMegaLoadingPage", () => {
   it(`must render `, async () => {
-    const { getAllByText } = render(
+    render(
       <InjectorProviders>
-        <LoadingPage />
+        <TableMegaLoadingPage />
       </InjectorProviders>
     );
   });

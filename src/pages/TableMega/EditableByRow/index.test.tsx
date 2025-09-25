@@ -2,17 +2,17 @@
  * @vitest-environment jsdom
  */
 
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { InjectorProviders } from "~/components";
-import { EditablePage } from ".";
+import { TableMegaEditableByRowPage } from ".";
 
-describe("Pages/Table/EditablePage", () => {
+describe("pages/TableMega/TableMegaEditableByRowPage", () => {
   it(`must update row `, async () => {
     const { getByTestId, findByTestId, findByText } = render(
       <InjectorProviders>
-        <EditablePage />
+        <TableMegaEditableByRowPage />
       </InjectorProviders>
     );
     const updateButton = getByTestId("update-button-0");
@@ -28,7 +28,7 @@ describe("Pages/Table/EditablePage", () => {
   it(`must cancel update row mode`, async () => {
     const { getByTestId, findByTestId } = render(
       <InjectorProviders>
-        <EditablePage />
+        <TableMegaEditableByRowPage />
       </InjectorProviders>
     );
     const updateButton = getByTestId("update-button-0");

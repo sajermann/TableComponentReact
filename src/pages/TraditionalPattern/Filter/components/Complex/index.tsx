@@ -2,19 +2,16 @@ import { ColumnDef } from "@tanstack/react-table";
 import jsonLogic from "json-logic-js";
 import { useMemo, useState } from "react";
 import { Input, JsonViewer, Section } from "~/components";
-import { useColumns, useTranslation } from "~/hooks";
-import { Table } from "~/packages/Table";
-import * as TableMega from "~/packages/TableMega";
-import { TFilterActive, TPerson } from "~/types";
-import { filterRangeDate, formatDate, makeData, stringToDate } from "~/utils";
 import {
   FilterBirthday,
   FilterColumnBySelect,
   FilterId,
   SuperFilter,
-} from "../";
-
-// TODO: Olhar console log e ver erro de rerender
+} from "~/components/Filter";
+import { useColumns, useTranslation } from "~/hooks";
+import { Table } from "~/packages/Table";
+import { TFilterActive, TPerson } from "~/types";
+import { filterRangeDate, makeData } from "~/utils";
 
 jsonLogic.add_operation("startsWith", (str, prefix) => {
   if (typeof str !== "string" || typeof prefix !== "string") return false;

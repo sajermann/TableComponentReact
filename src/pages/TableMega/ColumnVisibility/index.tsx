@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
+import { ColumnVisibilitySelector } from "~/components/ColumnVisibilitySelector";
 import { Section } from "~/components/Section";
 import { useColumns, useTranslation } from "~/hooks";
 import * as TableMega from "~/packages/TableMega";
 import { makeData } from "~/utils";
-import { ColumnVisibilitySelector } from "./components/ColumnVisibilitySelector";
 
 const DATA = makeData.person(5);
 

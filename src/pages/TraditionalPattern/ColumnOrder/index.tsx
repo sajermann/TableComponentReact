@@ -1,11 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
+import { ColumnOrderSelector } from "~/components/ColumnOrderSelector";
 import { Section } from "~/components/Section";
 import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
-import { Selector } from "./components/Selector";
 
 const DATA = makeData.person(50);
 
@@ -48,7 +48,7 @@ export function ColumnOrderPage() {
       {
         ...columns[0],
         header: ({ header }) => (
-          <Selector
+          <ColumnOrderSelector
             value={columnOrder[header.index].content}
             optionsList={columnOrder}
             onChange={(value) => {
@@ -63,7 +63,7 @@ export function ColumnOrderPage() {
       {
         ...columns[1],
         header: ({ header }) => (
-          <Selector
+          <ColumnOrderSelector
             value={columnOrder[header.index].content}
             optionsList={columnOrder}
             onChange={(value) => {
@@ -78,7 +78,7 @@ export function ColumnOrderPage() {
       {
         ...columns[2],
         header: ({ header }) => (
-          <Selector
+          <ColumnOrderSelector
             value={columnOrder[header.index].content}
             optionsList={columnOrder}
             onChange={(value) => {
@@ -93,7 +93,7 @@ export function ColumnOrderPage() {
       {
         ...columns[3],
         header: ({ header }) => (
-          <Selector
+          <ColumnOrderSelector
             value={columnOrder[header.index].content}
             optionsList={columnOrder}
             onChange={(value) => {
@@ -108,7 +108,7 @@ export function ColumnOrderPage() {
       {
         ...columns[4],
         header: ({ header }) => (
-          <Selector
+          <ColumnOrderSelector
             value={columnOrder[header.index].content}
             optionsList={columnOrder}
             onChange={(value) => {
@@ -123,7 +123,7 @@ export function ColumnOrderPage() {
       {
         ...columns[5],
         header: ({ header }) => (
-          <Selector
+          <ColumnOrderSelector
             value={columnOrder[header.index].content}
             optionsList={columnOrder}
             onChange={(value) => {
@@ -138,7 +138,7 @@ export function ColumnOrderPage() {
       {
         ...columns[6],
         header: ({ header }) => (
-          <Selector
+          <ColumnOrderSelector
             value={columnOrder[header.index].content}
             optionsList={columnOrder}
             onChange={(value) => {
@@ -153,7 +153,7 @@ export function ColumnOrderPage() {
       {
         ...columns[7],
         header: ({ header }) => (
-          <Selector
+          <ColumnOrderSelector
             value={columnOrder[header.index].content}
             optionsList={columnOrder}
             onChange={(value) => {

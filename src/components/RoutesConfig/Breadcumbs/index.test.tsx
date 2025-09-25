@@ -34,12 +34,12 @@ describe("Components/Breadcrumbs", () => {
       ],
       setBreadcrumbs: vi.fn(),
     }));
-    vi.spyOn(useLocationMock, "useLocation").mockImplementation(
-      () =>
-        ({
-          pathname: "/",
-        }) as any
-    );
+    // vi.spyOn(useLocationMock, "useLocation").mockImplementation(
+    //   () =>
+    //     ({
+    //       pathname: "/",
+    //     }) as any
+    // );
     const { queryAllByText } = render(
       <InjectorProviders>
         <Breadcrumbs />
@@ -63,12 +63,12 @@ describe("Components/Breadcrumbs", () => {
       ],
       setBreadcrumbs: vi.fn(),
     }));
-    vi.spyOn(useLocationMock, "useLocation").mockImplementation(
-      () =>
-        ({
-          pathname: "test-route",
-        }) as any
-    );
+    // vi.spyOn(useLocationMock, "useLocation").mockImplementation(
+    //   () =>
+    //     ({
+    //       pathname: "test-route",
+    //     }) as any
+    // );
     const { queryAllByText } = render(
       <InjectorProviders>
         <Breadcrumbs />

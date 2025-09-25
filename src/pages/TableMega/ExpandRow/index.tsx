@@ -2,11 +2,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button, Section } from "~/components";
+import { ExpandRowUpdateData } from "~/components/ExpandRowUpdateData";
 import { useColumns, useTranslation } from "~/hooks";
 import * as TableMega from "~/packages/TableMega";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
-import { UpdateData } from "./components/UpdateData";
 
 export function TableMegaExpandRowPage() {
   const { translate } = useTranslation();
@@ -56,7 +56,7 @@ export function TableMegaExpandRowPage() {
           </TableMega.Tbody>
         </TableMega.Table>
         <TableMega.OnExpanded>
-          <UpdateData
+          <ExpandRowUpdateData
             onCancel={({ row }) => row?.getToggleExpandedHandler()()}
             onSave={({ row, dataToUpdate }) => {
               if (!row) {

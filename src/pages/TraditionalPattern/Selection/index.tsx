@@ -2,12 +2,13 @@ import type { Table as ITable } from "@tanstack/react-table";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { RadioGroup, Section } from "~/components";
+import { SelectionConfigSelector } from "~/components/SelectionConfigSelector";
 import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { TPerson } from "~/types";
 import { makeData } from "~/utils";
-import { ConfigSelector } from "./components/ConfigSelector";
-import { Selector } from "./components/Selector";
+
+import { SelectionType } from "~/components/SelectionType";
 import { TConfig, TSelectionRow } from "./types";
 
 const DATA = makeData.person(10);
@@ -26,8 +27,6 @@ function verifyIndeterminate<T>(table: ITable<T>) {
 
 export function SelectionPage() {
   const { translate } = useTranslation();
-
-  const [globalFilter, setGlobalFilter] = useState("");
   const [config, setConfig] = useState<TConfig>({
     mode: "single",
     componentType: "checkbox",
@@ -43,7 +42,7 @@ export function SelectionPage() {
         header: ({ table }: HeaderContext<TPerson, unknown>) =>
           config.mode === "multi" && (
             <>
-              <Selector
+              <SelectionType
                 componentType={config.componentType}
                 onChange={() => {
                   table.getToggleAllRowsSelectedHandler()({ target: {} });
@@ -63,7 +62,7 @@ export function SelectionPage() {
         enableResizing: false,
         cell: ({ row }) => {
           return (
-            <Selector
+            <SelectionType
               rowIndex={row.index}
               componentType={config.componentType}
               onChange={() => {
@@ -98,7 +97,7 @@ export function SelectionPage() {
           }
           className="flex flex-col gap-2"
         >
-          <ConfigSelector
+          <SelectionConfigSelector
             config={config}
             setConfig={setConfig}
             setSelectedItems={setSelectedItems}
@@ -112,8 +111,7 @@ export function SelectionPage() {
               type: config.mode,
             }}
             globalFilter={{
-              filter: globalFilter,
-              setFilter: setGlobalFilter,
+              showInput: true,
             }}
           />
         </RadioGroup>

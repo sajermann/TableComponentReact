@@ -3,7 +3,7 @@ import { Section } from "~/components";
 import { useColumns, useTranslation } from "~/hooks";
 import { Table } from "~/packages/Table";
 import { makeData } from "~/utils";
-import { Selector } from "./components/Selector";
+import { LoadingSelector } from "../../../components/LoadingSelector";
 
 const DATA = makeData.person(10);
 
@@ -21,7 +21,7 @@ export function LoadingPage() {
       {translate("IMPLEMENTS_LOADING_MODE")}
 
       <div className="flex flex-col gap-2">
-        <Selector
+        <LoadingSelector
           isLoading={config.isLoading}
           withData={config.withData}
           onChange={setConfig}

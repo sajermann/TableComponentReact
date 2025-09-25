@@ -19,7 +19,11 @@ type TSelectorProps = {
   onChange: (data: { withData: boolean; isLoading: boolean }) => void;
 };
 
-export function Selector({ withData, isLoading, onChange }: TSelectorProps) {
+export function LoadingSelector({
+  withData,
+  isLoading,
+  onChange,
+}: TSelectorProps) {
   const { translate } = useTranslation();
   return (
     <div className="flex gap-2">

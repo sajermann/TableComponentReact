@@ -5,13 +5,13 @@ import { render } from "@testing-library/react";
 import { describe, it } from "vitest";
 
 import { InjectorProviders } from "~/components";
-import { ExpandedLinePage } from ".";
+import { TraditionalExpandRowPage } from ".";
 
-describe("Pages/ExpandedLinePage", () => {
+describe("pages//TraditionalPattern/TraditionalExpandRowPage", () => {
   it(`must render `, async () => {
-    const { getAllByText } = render(
+    render(
       <InjectorProviders>
-        <ExpandedLinePage />
+        <TraditionalExpandRowPage />
       </InjectorProviders>
     );
   });
