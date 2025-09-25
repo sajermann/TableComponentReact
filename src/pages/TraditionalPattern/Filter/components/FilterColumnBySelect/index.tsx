@@ -1,10 +1,8 @@
 import { Column, Table as TTable } from "@tanstack/react-table";
-import { FunnelIcon, SaveIcon, TrashIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { Button, ContainerInput } from "~/components";
-import { Popover } from "~/components/Popover";
 
 import { TPerson } from "~/types";
+import { PopoverBase } from "../PopoverBase";
 
 type Props2 = {
   column: Column<TPerson, unknown>;
@@ -14,11 +12,11 @@ type Props2 = {
 
 export function FilterColumnBySelect({ column, table, propForFilter }: Props2) {
   const [isOpen, setIsOpen] = useState(false);
-
   const [optionsChecked, setOptionsChecked] = useState<string[]>([]);
   useEffect(() => {
     setOptionsChecked((column.getFilterValue() as string[]) || []);
   }, [isOpen]);
+
   const options = useMemo(() => {
     const myRows = table
       .getCoreRowModel()
@@ -37,28 +35,18 @@ export function FilterColumnBySelect({ column, table, propForFilter }: Props2) {
     });
   }, [table.getCoreRowModel().flatRows]);
 
-  function verifyFillFilter() {
+  const funnelFilled = useMemo(() => {
     const filterValueTemp = column.getFilterValue();
-    if (!filterValueTemp || (filterValueTemp as string[]).length === 0) {
-      return false;
-    }
-    return true;
-  }
+    return !(!filterValueTemp || (filterValueTemp as string[]).length === 0);
+  }, [column.getFilterValue()]);
 
   return (
-    <Popover
+    <PopoverBase
       isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
-      onInteractOutside={() => setIsOpen(false)}
-      trigger={
-        <button
-          className="w-5 h-4 flex items-center justify-center"
-          type="button"
-          onClick={() => setIsOpen(true)}
-        >
-          <FunnelIcon className={verifyFillFilter() ? "fill-white" : ""} />
-        </button>
-      }
+      setIsOpen={setIsOpen}
+      onClear={() => column.setFilterValue(undefined)}
+      onSave={() => column.setFilterValue(optionsChecked)}
+      funnelFilled={funnelFilled}
     >
       <div className="grid grid-cols-2 gap-2 items-center justify-center">
         {options.map((column) => (
@@ -83,30 +71,6 @@ export function FilterColumnBySelect({ column, table, propForFilter }: Props2) {
           </div>
         ))}
       </div>
-
-      <div className="w-full flex justify-center gap-4 mt-4">
-        <Button
-          iconButton="rounded"
-          colorStyle="mono"
-          variant="outlined"
-          onClick={() => {
-            column.setFilterValue(undefined);
-            setIsOpen(false);
-          }}
-          endIcon={<TrashIcon />}
-        />
-
-        <Button
-          iconButton="rounded"
-          variant="outlined"
-          colorStyle="mono"
-          onClick={() => {
-            column.setFilterValue(optionsChecked);
-            setIsOpen(false);
-          }}
-          endIcon={<SaveIcon />}
-        />
-      </div>
-    </Popover>
+    </PopoverBase>
   );
 }

@@ -82,18 +82,10 @@ export function Complex() {
   const columns2 = useMemo<ColumnDef<TPerson>[]>(
     () => [
       {
-        accessorKey: "id",
-        accessorFn: ({ id }) => Number(id),
-        header: ({ column }) => (
-          <div className="w-full flex items-center justify-center gap-2">
-            Id
-            <FilterId column={column} />
-          </div>
-        ),
-        minSize: 100,
-        size: 100,
+        ...columns[0],
         meta: {
           align: "center",
+          filterElement: FilterId,
         },
         filterFn: (row, columnId, valueFilter) => {
           const columnValue = Number(row.getValue(columnId));
@@ -112,22 +104,12 @@ export function Complex() {
       },
       columns[1],
       {
-        accessorKey: "name",
-        header: ({ table, column }) => (
-          <div className="w-full flex items-center justify-center gap-2">
-            {translate("NAME")}
-            <FilterColumnBySelect
-              column={column}
-              table={table}
-              propForFilter="name"
-            />
-          </div>
-        ),
-        minSize: 100,
-        size: 100,
-        enableSorting: true,
+        ...columns[2],
         meta: {
           align: "center",
+          filterElement: (props) => (
+            <FilterColumnBySelect {...props} propForFilter="name" />
+          ),
         },
         filterFn: (row, columnId, valueFilter) =>
           valueFilter.length === 0 ||
@@ -135,43 +117,21 @@ export function Complex() {
       },
       columns[3],
       {
-        accessorFn: (row) => formatDate(new Date(row.birthday)),
-        accessorKey: "birthday",
-        header: ({ column }) => (
-          <div className="w-full flex items-center justify-center gap-2">
-            {translate("BIRTHDAY")}
-            <FilterBirthday column={column} />
-          </div>
-        ),
-        minSize: 100,
-        size: 100,
-        sortingFn: (rowA, rowB, columnId) => {
-          const dateA = stringToDate(rowA.getValue(columnId));
-          const dateB = stringToDate(rowB.getValue(columnId));
-          return dateB < dateA ? 1 : -1;
-        },
+        ...columns[4],
         meta: {
           align: "center",
+          filterElement: FilterBirthday,
         },
         filterFn: (row, columnId, valueFilter) =>
           filterRangeDate({ row, columnId, valueFilter }),
       },
       {
-        accessorKey: "email",
-        header: ({ table, column }) => (
-          <div className="w-full flex items-center justify-center gap-2">
-            Email
-            <FilterColumnBySelect
-              column={column}
-              table={table}
-              propForFilter="email"
-            />
-          </div>
-        ),
-        minSize: 100,
-        size: 100,
+        ...columns[5],
         meta: {
           align: "center",
+          filterElement: (props) => (
+            <FilterColumnBySelect {...props} propForFilter="email" />
+          ),
         },
         filterFn: (row, columnId, valueFilter) =>
           valueFilter.length === 0 ||

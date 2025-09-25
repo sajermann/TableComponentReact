@@ -1,10 +1,9 @@
 import { Column } from "@tanstack/react-table";
-import { FunnelIcon, SaveIcon, TrashIcon } from "lucide-react";
-import { useState } from "react";
-import { Button, ContainerInput, Datepicker, Label } from "~/components";
-import { Popover } from "~/components/Popover";
+import { useMemo, useState } from "react";
+import { ContainerInput, Datepicker, Label } from "~/components";
 import { useTranslation } from "~/hooks";
 import { TPerson } from "~/types";
+import { PopoverBase } from "../PopoverBase";
 
 export function FilterBirthday({
   column,
@@ -18,77 +17,49 @@ export function FilterBirthday({
     to: "",
   });
 
-  function verifyFillFilter() {
-    if (dates.from === "" && dates.to === "") return false;
-    return true;
-  }
+  const funnelFilled = useMemo(() => {
+    return !(dates.from === "" && dates.to === "");
+  }, [dates]);
 
   return (
-    <Popover
+    <PopoverBase
       isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
-      onInteractOutside={() => setIsOpen(false)}
-      trigger={
-        <button
-          className="w-5 h-4 flex items-center justify-center"
-          type="button"
-          onClick={() => setIsOpen(true)}
-        >
-          <FunnelIcon className={verifyFillFilter() ? "fill-white" : ""} />
-        </button>
-      }
+      setIsOpen={setIsOpen}
+      onClear={() => {
+        setDates({ from: "", to: "" });
+        column.setFilterValue(undefined);
+      }}
+      onSave={() => column.setFilterValue(dates)}
+      funnelFilled={funnelFilled}
     >
-      <>
-        <div className="flex flex-col gap-4">
-          <div className="w-48">
-            <ContainerInput>
-              <Label htmlFor="from">{translate("FROM")}</Label>
-              <Datepicker
-                placeholder="DD/MM/YYYY"
-                id="from"
-                value={dates.from}
-                onChange={(e) =>
-                  setDates((prev) => ({ ...prev, from: e.target.value }))
-                }
-              />
-            </ContainerInput>
-          </div>
-          <div className="w-48">
-            <ContainerInput>
-              <Label htmlFor="to">{translate("TO")}</Label>
-              <Datepicker
-                placeholder="DD/MM/YYYY"
-                id="to"
-                value={dates.to}
-                onChange={(e) =>
-                  setDates((prev) => ({ ...prev, to: e.target.value }))
-                }
-              />
-            </ContainerInput>
-          </div>
+      <div className="flex flex-col gap-4">
+        <div className="w-48">
+          <ContainerInput>
+            <Label htmlFor="from">{translate("FROM")}</Label>
+            <Datepicker
+              placeholder="DD/MM/YYYY"
+              id="from"
+              value={dates.from}
+              onChange={(e) =>
+                setDates((prev) => ({ ...prev, from: e.target.value }))
+              }
+            />
+          </ContainerInput>
         </div>
-
-        <div className="w-full flex justify-center gap-4 mt-4">
-          <Button
-            iconButton="rounded"
-            colorStyle="mono"
-            variant="outlined"
-            onClick={() => setDates({ from: "", to: "" })}
-            endIcon={<TrashIcon />}
-          />
-
-          <Button
-            iconButton="rounded"
-            variant="outlined"
-            colorStyle="mono"
-            onClick={() => {
-              column.setFilterValue(dates);
-              setIsOpen(false);
-            }}
-            endIcon={<SaveIcon />}
-          />
+        <div className="w-48">
+          <ContainerInput>
+            <Label htmlFor="to">{translate("TO")}</Label>
+            <Datepicker
+              placeholder="DD/MM/YYYY"
+              id="to"
+              value={dates.to}
+              onChange={(e) =>
+                setDates((prev) => ({ ...prev, to: e.target.value }))
+              }
+            />
+          </ContainerInput>
         </div>
-      </>
-    </Popover>
+      </div>
+    </PopoverBase>
   );
 }

@@ -1,17 +1,16 @@
-import { Table, flexRender } from "@tanstack/react-table";
+import { Table } from "@tanstack/react-table";
 import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
 import { Resizing } from "./Resizing";
-import { SortIcon } from "./SortIcon";
+import { ThContent } from "./ThContent";
 
-type Props<T> = {
+type TTheadProps<T> = {
   table: Table<T>;
   sorting?: {
     disabled?: boolean;
   };
 };
 
-export function Thead<T>({ table, sorting }: Props<T>) {
-  console.log({ sorting });
+export function Thead<T>({ table, sorting }: TTheadProps<T>) {
   return (
     <thead
       className={managerClassNames({
@@ -23,7 +22,19 @@ export function Thead<T>({ table, sorting }: Props<T>) {
         <tr key={headerGroup.id}>
           {headerGroup.headers.map((header) => (
             <th
-              className="p-4 text-left relative"
+              className={managerClassNames([
+                "p-4 relative",
+                {
+                  "text-left":
+                    !header.getContext().column.columnDef.meta?.align,
+                  "text-center":
+                    header.getContext().column.columnDef.meta?.align ===
+                    "center",
+                  "text-right":
+                    header.getContext().column.columnDef.meta?.align ===
+                    "right",
+                },
+              ])}
               key={header.id}
               colSpan={header.colSpan}
               style={{
@@ -32,41 +43,7 @@ export function Thead<T>({ table, sorting }: Props<T>) {
             >
               {header.isPlaceholder ? null : (
                 <>
-                  {/* {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                  <SortIcon header={header} /> */}
-                  <div
-                    className={managerClassNames({
-                      "flex items-center gap-1": true,
-                      "justify-center":
-                        header.getContext().column.columnDef.meta?.align ===
-                        "center",
-                      "justify-end":
-                        header.getContext().column.columnDef.meta?.align ===
-                        "right",
-                    })}
-                  >
-                    <button
-                      type="button"
-                      className={managerClassNames({
-                        "flex items-center gap-2": true,
-                        "cursor-pointer select-none":
-                          header.column.getCanSort() && !sorting,
-                        "!cursor-default outline-0 tab select-none":
-                          !header.column.getCanSort() || sorting?.disabled,
-                      })}
-                      tabIndex={header.column.getCanSort() ? undefined : -1}
-                      onClick={header.column.getToggleSortingHandler()}
-                    >
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                      <SortIcon header={header} />
-                    </button>
-                  </div>
+                  <ThContent table={table} header={header} sorting={sorting} />
                   <Resizing header={header} />
                 </>
               )}
