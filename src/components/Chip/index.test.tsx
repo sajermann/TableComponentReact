@@ -7,7 +7,7 @@ import { describe, expect, it, vi } from "vitest";
 import { testIdOnlyDev } from "~/utils";
 import { Chip } from ".";
 
-describe("Components/Chip", () => {
+describe("components/Chip", () => {
   it(`should remove chip non editable`, async () => {
     const mock = vi.fn();
     const { getByTestId } = render(
@@ -40,7 +40,6 @@ describe("Components/Chip", () => {
     );
 
     expect(await getByText("Test")).toBeInTheDocument();
-    console.log(getAllByRole("button"));
     fireEvent.click(getByTestId("chip"));
     const input = getByTestId("input-for-update");
     fireEvent.change(input, {
@@ -71,7 +70,6 @@ describe("Components/Chip", () => {
     );
 
     expect(await getByText("Test")).toBeInTheDocument();
-    console.log(getAllByRole("button"));
     fireEvent.click(getByTestId("chip"));
     const input = getByTestId("input-for-update");
     fireEvent.change(input, {
@@ -83,20 +81,20 @@ describe("Components/Chip", () => {
     expect(mock).toBeCalled();
   });
 
-  // it(`should fire update mode by enter key event`, async () => {
-  // 	const mock = vi.fn();
-  // 	const { getByText, getAllByRole } = render(
-  // 		<Chip value="Test" onRemove={mock} onChange={vi.fn()} />,
-  // 	);
+  it(`should fire update mode by enter key event`, async () => {
+    const mock = vi.fn();
+    const { getByText, getAllByRole } = render(
+      <Chip value="Test" onRemove={mock} onChange={vi.fn()} />
+    );
 
-  // 	expect(await getByText('Test')).toBeInTheDocument();
-  // 	fireEvent.keyDown(getAllByRole('button')[0], {
-  // 		key: 'Enter',
-  // 		code: 'Enter',
-  // 		charCode: 13,
-  // 	});
-  // 	expect(getAllByRole('textbox')[0]).toBeInTheDocument();
-  // });
+    expect(await getByText("Test")).toBeInTheDocument();
+    fireEvent.keyDown(getAllByRole("button")[0], {
+      key: "Enter",
+      code: "Enter",
+      charCode: 13,
+    });
+    expect(getAllByRole("textbox")[0]).toBeInTheDocument();
+  });
 
   // it(`should remove chip by enter key event`, async () => {
   // 	const mock = vi.fn();
