@@ -6,14 +6,24 @@ import { LoadingComponent } from "./components/LoadingComponent";
 import { router } from "./config/routes";
 import "./index.css";
 
+// ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+//   <React.StrictMode>
+//     <RouterProvider
+//       router={router}
+//       defaultPendingMs={0}
+//       defaultPendingMinMs={0}
+//       defaultErrorComponent={ErrorComponent}
+//       defaultPendingComponent={LoadingComponent}
+//     />
+//   </React.StrictMode>
+// );
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <RouterProvider
-      router={router}
-      defaultPendingMs={0}
-      defaultPendingMinMs={0}
-      defaultErrorComponent={ErrorComponent}
-      defaultPendingComponent={LoadingComponent}
-    />
-  </React.StrictMode>
+  <RouterProvider
+    router={router}
+    defaultPendingMs={0}
+    defaultPendingMinMs={0}
+    defaultErrorComponent={ErrorComponent}
+    defaultPendingComponent={LoadingComponent}
+  />
 );

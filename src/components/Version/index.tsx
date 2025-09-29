@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const MODE = import.meta.env.VITE_MODE;
 const DEPLOY_TIME = import.meta.env.VITE_DEPLOY_TIME;
 const COMMIT_HASH = import.meta.env.VITE_COMMIT_HASH;
@@ -8,20 +10,17 @@ const BRANCH_NAME = import.meta.env.VITE_BRANCH_NAME;
 const LAST_COMMIT_DATE = import.meta.env.VITE_LAST_COMMIT_DATE;
 const TOTAL_COMMITS = import.meta.env.VITE_TOTAL_COMMITS;
 
-export function Version() {
-  if (MODE === "production") {
-    console.table({
-      MODE,
-      DEPLOY_TIME,
-      COMMIT_HASH,
-      COMMIT_SHORT_HASH,
-      COMMIT_MESSAGE,
-      COMMIT_AUTHOR,
-      BRANCH_NAME,
-      LAST_COMMIT_DATE,
-      TOTAL_COMMITS,
-    });
-  }
-
+export const Version = memo(() => {
+  console.table({
+    MODE,
+    DEPLOY_TIME,
+    COMMIT_HASH,
+    COMMIT_SHORT_HASH,
+    COMMIT_MESSAGE,
+    COMMIT_AUTHOR,
+    BRANCH_NAME,
+    LAST_COMMIT_DATE,
+    TOTAL_COMMITS,
+  });
   return null;
-}
+});

@@ -1,4 +1,4 @@
 export type TBreadcrumb = {
   label: string;
-  link: string;
+  link: string | null;
 };

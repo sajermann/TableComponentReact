@@ -1,4 +1,5 @@
 import { Outlet } from "@tanstack/react-router";
+import { Config, Version } from "~/components";
 import { usePagesConfig } from "~/hooks";
 import { Breadcrumbs } from "./Breadcumbs";
 import { Sidebar } from "./Sidebar";
@@ -12,6 +13,8 @@ export function RoutesConfig() {
         <Outlet />
       </div>
       <Sidebar />
+      <Version />
+      <Config />
     </div>
   );
 }

@@ -107,7 +107,6 @@ export function SuperFilter({ onChange }: TSuperFilterProps) {
   return (
     <>
       <Button
-        {...showInDevelopment({ "data-testid": "test" })}
         onClick={() => setIsOpenModal(true)}
         variant="outlined"
         colorStyle="mono"

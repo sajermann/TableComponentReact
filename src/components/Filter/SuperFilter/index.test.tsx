@@ -2,11 +2,12 @@
  * @vitest-environment jsdom
  */
 import { fireEvent, render } from "@testing-library/react";
+import { t } from "i18next";
 import { describe, expect, it, vi } from "vitest";
 
 import { SuperFilter } from ".";
 
-describe("Pages/Filter/SuperFilter", () => {
+describe("components/Filter/SuperFilter", () => {
   it(`must add filter and remove`, async () => {
     const mock = vi.fn();
     const spy = (e: any) => {
@@ -18,16 +19,16 @@ describe("Pages/Filter/SuperFilter", () => {
     const { getByTestId, getByLabelText, getByText } = render(
       <SuperFilter onChange={spy} />
     );
-    const buttonOpen = getByText("SUPER_FILTER");
+    const buttonOpen = getByText(t("SUPER_FILTER"));
     fireEvent.click(buttonOpen);
 
-    const inputValue = getByLabelText("VALUE");
+    const inputValue = getByLabelText(t("VALUE"));
     fireEvent.change(inputValue, { target: { value: "1" } });
 
-    const buttonAdd = getByText("ADD");
+    const buttonAdd = getByText(t("ADD"));
     fireEvent.click(buttonAdd);
 
-    const buttonConfirm = getByText("CONFIRM");
+    const buttonConfirm = getByText(t("CONFIRM"));
     fireEvent.click(buttonConfirm);
 
     expect(mock).toBeCalledWith("1");

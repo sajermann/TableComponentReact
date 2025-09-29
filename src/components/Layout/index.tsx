@@ -1,5 +1,5 @@
-import { Config } from "../InjectorProviders/Config";
-import { Version } from "../InjectorProviders/Version";
+import { Config } from "../Config";
+import { Version } from "../Version";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
