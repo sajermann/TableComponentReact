@@ -1,6 +1,4 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/prop-types */
-import { LabelHTMLAttributes, forwardRef } from "react";
+import { LabelHTMLAttributes } from "react";
 import { tv } from "tailwind-variants";
 import { removeProp } from "~/utils";
 
@@ -38,17 +36,16 @@ const label = tv({
   },
 });
 
-export const Label = forwardRef<HTMLLabelElement, TLabel>((props, ref) => {
+export function Label(props: TLabel) {
   const { labelPropsInternal } = label({
     color: props?.isError ? "error" : "primary",
   });
   return (
     <label
       {...removeProp(props, ["isError"])}
-      ref={ref}
       className={labelPropsInternal({
         class: props?.className,
       })}
     />
   );
-});
+}

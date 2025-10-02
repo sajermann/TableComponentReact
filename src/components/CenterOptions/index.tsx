@@ -1,4 +1,4 @@
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { EyeIcon } from "lucide-react";
 import { useTranslation } from "~/hooks";
 import { managerClassNames } from "~/packages/Table/utils/managerClassNames";

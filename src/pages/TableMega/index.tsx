@@ -4,6 +4,7 @@ import { useTranslation } from "~/hooks";
 
 export function TableMegaPage() {
   const { translate } = useTranslation();
+  console.log(`sajermann`, JSON.stringify({ compositionChilds }));
 
   return (
     <main className="h-full gap-5 flex flex-col">

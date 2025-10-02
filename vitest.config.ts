@@ -24,6 +24,7 @@ export default defineConfig({
         '**/assets/**',
         '**/interface/**',
         'src/index.tsx',
+        '**/constants/**',
       ],
     },
   },

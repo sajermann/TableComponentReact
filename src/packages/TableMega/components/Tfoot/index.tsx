@@ -2,9 +2,7 @@ import { flexRender } from "@tanstack/react-table";
 import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
 import { useTableMega } from "../../hooks";
 
-type TTfootProps<T> = {};
-
-export function Tfoot<T>({}: TTfootProps<T>) {
+export function Tfoot() {
   const { table } = useTableMega();
   return (
     <tfoot

@@ -3,11 +3,11 @@
  */
 
 import { render } from "@testing-library/react";
-import { it, describe } from "vitest";
-import { LoadingBar } from ".";
+import { describe, it } from "vitest";
 import { delay } from "~/utils";
+import { LoadingBar } from ".";
 
-describe("Components/LoadingBar", () => {
+describe("packages/TableMega/components/LoadingBar", () => {
   it(`should render component`, async () => {
     render(<LoadingBar data-testid="Test" />);
     await delay(500);

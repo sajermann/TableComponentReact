@@ -1,3 +1,4 @@
+import * as reactRouter from "@tanstack/react-router";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { InjectorProviders } from "~/components";
@@ -11,19 +12,17 @@ vi.mock("~/hooks", () => ({
 
 vi.mock("@tanstack/react-router", async () => {
   return {
-    // Mockando Link como uma função para sobrescrever nos testes
     Link: vi.fn(),
-    useLocation: vi.fn(),
+    useLoaderData: vi.fn(),
   };
 });
 
 describe("pages/Home", () => {
   it("render component", () => {
-    render(
-      <InjectorProviders>
-        <Home />
-      </InjectorProviders>
-    );
+    vi.mocked(reactRouter.useLoaderData).mockImplementation(() => ({
+      options: [{ path: "/test" }],
+    }));
+    render(<Home />);
     expect(screen.queryByText("welcome")).not.toBeInTheDocument();
   });
 });

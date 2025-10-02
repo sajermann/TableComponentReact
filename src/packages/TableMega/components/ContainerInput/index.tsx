@@ -11,16 +11,12 @@ type TContainerInput = DetailedHTMLProps<
   HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
 >;
-export const ContainerInput = forwardRef<HTMLDivElement, TContainerInput>(
-  (props, ref) => {
-    const { containerPropsInternal } = container();
-
-    return (
-      <div
-        {...props}
-        ref={ref}
-        className={containerPropsInternal({ className: props.className })}
-      />
-    );
-  }
-);
+export function ContainerInput(props: TContainerInput) {
+  const { containerPropsInternal } = container();
+  return (
+    <div
+      {...props}
+      className={containerPropsInternal({ className: props.className })}
+    />
+  );
+}
