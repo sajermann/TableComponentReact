@@ -22,3 +22,4 @@ export * from './Switch';
 export * from './Radio';
 export * from './Version';
 export * from './Config';
+export * from './LoadingSelector';

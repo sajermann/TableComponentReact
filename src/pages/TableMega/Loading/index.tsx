@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Section } from "~/components";
-import { LoadingSelector } from "~/components/LoadingSelector";
+import { LoadingSelector, Section } from "~/components";
 import { useColumns, useTranslation } from "~/hooks";
 import * as TableMega from "~/packages/TableMega";
 import { makeData } from "~/utils";

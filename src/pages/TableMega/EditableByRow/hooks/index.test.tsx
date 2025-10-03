@@ -38,33 +38,33 @@ vi.mock("~/utils", () => ({
   showInDevelopment: (props: object) => props,
 }));
 describe("pages/TableMega/EditableByRow/hooks/useEditableByRow", () => {
-  // it("initializes with 10 persons and no update line", () => {
-  //   const { result } = renderHook(() => useEditableByRow());
-  //   expect(result.current.data).toHaveLength(10);
-  //   expect(result.current.columns).toBeDefined();
-  // });
+  it("initializes with 10 persons and no update line", () => {
+    const { result } = renderHook(() => useEditableByRow());
+    expect(result.current.data).toHaveLength(10);
+    expect(result.current.columns).toBeDefined();
+  });
 
-  // it("sets updateLine correctly when update button clicked", () => {
-  //   const { result } = renderHook(() => useEditableByRow());
-  //   act(() => {
-  //     if (
-  //       !result?.current?.columns[0]?.cell ||
-  //       typeof result?.current?.columns[0]?.cell !== "function"
-  //     ) {
-  //       return;
-  //     }
-  //     // simulate update button click for row 2
-  //     result.current.columns[0].cell({
-  //       row: { index: 2, original: result.current.data[2] },
-  //     } as any);
-  //     result.current.columns[0].cell({
-  //       row: { index: 2, original: result.current.data[2] },
-  //     } as any);
-  //   });
-  //   // We can't fully simulate click here, should test component for actual setUpdateLine call
-  //   // But can validate columns and structure exist
-  //   expect(result.current.columns.length).toBeGreaterThan(0);
-  // });
+  it("sets updateLine correctly when update button clicked", () => {
+    const { result } = renderHook(() => useEditableByRow());
+    act(() => {
+      if (
+        !result?.current?.columns[0]?.cell ||
+        typeof result?.current?.columns[0]?.cell !== "function"
+      ) {
+        return;
+      }
+      // simulate update button click for row 2
+      result.current.columns[0].cell({
+        row: { index: 2, original: result.current.data[2] },
+      } as any);
+      result.current.columns[0].cell({
+        row: { index: 2, original: result.current.data[2] },
+      } as any);
+    });
+    // We can't fully simulate click here, should test component for actual setUpdateLine call
+    // But can validate columns and structure exist
+    expect(result.current.columns.length).toBeGreaterThan(0);
+  });
 
   it("handleFormSubmit updates data correctly and clears updateLine", () => {
     const { result } = renderHook(() => useEditableByRow());
@@ -109,17 +109,17 @@ describe("pages/TableMega/EditableByRow/hooks/useEditableByRow", () => {
     expect(event.preventDefault).toHaveBeenCalled();
   });
 
-  // it("columns have cells showing edit inputs when updateLine matches", () => {
-  //   const { result } = renderHook(() => useEditableByRow());
+  it("columns have cells showing edit inputs when updateLine matches", () => {
+    const { result } = renderHook(() => useEditableByRow());
 
-  //   // Manually set updateLine to row 0 for test
-  //   act(() => {
-  //     // We set updateLine manually using React state internal:
-  //     // Workaround: We'll call the setters directly via hack or rerender hook
-  //   });
+    // Manually set updateLine to row 0 for test
+    act(() => {
+      // We set updateLine manually using React state internal:
+      // Workaround: We'll call the setters directly via hack or rerender hook
+    });
 
-  //   // This is a limitation of testing hooks with internal state,
-  //   // More detailed testing requires the component using this hook.
-  //   expect(result.current.columns.length).toBeGreaterThan(0);
-  // });
+    // This is a limitation of testing hooks with internal state,
+    // More detailed testing requires the component using this hook.
+    expect(result.current.columns.length).toBeGreaterThan(0);
+  });
 });

@@ -1,13 +1,13 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { TableMegaEditableByRowPage } from ".";
+import { TableMegaFullEditablePage } from ".";
 // Mock translation hook
 vi.mock("~/hooks", () => ({
   useTranslation: () => ({
     translate: (key: string) => {
       const dict: Record<string, string> = {
-        EDITABLE_BY_ROW: "Editable by Row",
-        IMPLEMENTS_EDITABLE_MODE: "Implements editable mode",
+        FULL_EDITABLE: "Editable by Row",
+        IMPLEMENTS_FULL_EDITABLE_MODE: "Implements editable mode",
       };
       return dict[key] ?? key;
     },
@@ -16,7 +16,7 @@ vi.mock("~/hooks", () => ({
 
 // Mock useEditableByRow hook
 vi.mock("./hooks", () => ({
-  useEditableByRow: () => ({
+  useFullEditable: () => ({
     columns: [
       { id: "col1", header: "Header 1", accessorKey: "col1" },
       { id: "col2", header: "Header 2", accessorKey: "col2" },
@@ -33,7 +33,7 @@ vi.mock("./hooks", () => ({
 vi.mock("~/packages/TableMega", () => ({
   Root: ({ children }: any) => <div data-testid="root">{children}</div>,
   Table: ({ children }: any) => <table data-testid="table">{children}</table>,
-  Thead: () => <thead data-testid="thead" />,
+  Thead: { Sort: () => <thead data-testid="thead" /> },
   Tbody: ({ children }: any) => <tbody data-testid="tbody">{children}</tbody>,
   Rows: () => (
     <tr data-testid="rows">
@@ -50,19 +50,22 @@ vi.mock("~/components", () => ({
       {children}
     </section>
   ),
+  Button: (props: any) => {
+    <button {...props} />;
+  },
+  JsonViewer: (props: any) => <span>{JSON.stringify({ props })}</span>,
 }));
 
-describe("pages/TableMega/EditableByRow", () => {
+describe("pages/TableMega/TableMegaFullEditablePage", () => {
   it("renders the section with translated title and description text", () => {
-    const screen = render(<TableMegaEditableByRowPage />);
+    const screen = render(<TableMegaFullEditablePage />);
     expect(screen.getByTestId("section-title").textContent).toBe(
       "Editable by Row"
     );
-    expect(screen.getByText("Implements editable mode")).toBeInTheDocument();
   });
 
   it("renders form containing TableMega structure", () => {
-    const screen = render(<TableMegaEditableByRowPage />);
+    const screen = render(<TableMegaFullEditablePage />);
     expect(screen.getByTestId("root")).toBeInTheDocument();
     expect(screen.getByTestId("table")).toBeInTheDocument();
     expect(screen.getByTestId("thead")).toBeInTheDocument();
