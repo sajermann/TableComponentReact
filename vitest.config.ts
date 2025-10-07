@@ -25,6 +25,7 @@ export default defineConfig({
         '**/interface/**',
         'src/index.tsx',
         '**/constants/**',
+        'src/pages/TableMega/Sort/components/index.ts',
       ],
     },
   },

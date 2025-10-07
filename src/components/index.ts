@@ -23,3 +23,4 @@ export * from './Radio';
 export * from './Version';
 export * from './Config';
 export * from './LoadingSelector';
+export * from './CenterOptions';

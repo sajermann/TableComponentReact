@@ -1,4 +1,4 @@
-import { CenterOptions } from "~/components/CenterOptions";
+import { CenterOptions } from "~/components";
 import { traditionalChilds } from "~/config/routes";
 import { useTranslation } from "~/hooks";
 
