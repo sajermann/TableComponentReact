@@ -1,13 +1,10 @@
+import { toXML } from 'jstoxml';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { xml } from '.';
+import { download } from '../download';
 
-vi.mock('jstoxml', () => ({
-  toXML: vi.fn(() => '<mock>xml</mock>'),
-}));
-
-vi.mock('../download', () => ({
-  download: vi.fn(),
-}));
+vi.mock('jstoxml');
+vi.mock('../download');
 
 type Data = { name: string; age: number };
 
@@ -21,7 +18,7 @@ const defColumns = [
     header: 'Age',
     accessor: 'age',
   },
-];
+] as any;
 
 describe('xml function', () => {
   beforeEach(() => {
@@ -33,10 +30,11 @@ describe('xml function', () => {
       { name: 'Alice', age: 30 },
       { name: 'Bob', age: 25 },
     ];
+    vi.mocked(toXML).mockImplementation(() => {
+      return '<mock>Test</mock>' as any;
+    });
 
     xml({ data, defColumns });
-
-    const { toXML } = require('jstoxml');
 
     // Verify accessorFn called with expected arguments
     expect(defColumns[0].accessorFn).toHaveBeenCalledWith(
@@ -66,24 +64,25 @@ describe('xml function', () => {
       expect.any(Object),
     );
 
-    const { download } = require('../download');
     expect(download).toHaveBeenCalled();
 
     // Check Blob arguments for correct type and BOM prefix
-    const blobArgument = download.mock.calls[0][0];
+    const blobArgument = (download as any).mock.calls[0][0];
     expect(blobArgument).toBeInstanceOf(Blob);
     expect(blobArgument.type).toBe('application/xml');
   });
 
   it('should remove spaces from headers in XML keys', () => {
     const data = [{ name: 'Charlie', age: 40 }];
-    const columnsWithSpace = [
+    const columnsWithSpace: any = [
       { header: 'Full Name', accessor: 'name' },
       { header: 'Date Of Birth', accessor: 'age' },
     ];
+    vi.mocked(toXML).mockImplementation(() => {
+      return '<mock>Test</mock>' as any;
+    });
     xml({ data, defColumns: columnsWithSpace });
 
-    const { toXML } = require('jstoxml');
     const expectedData = {
       data: [
         {
@@ -96,7 +95,6 @@ describe('xml function', () => {
 
   it('should handle empty data and defColumns without errors', () => {
     expect(() => xml({ data: [], defColumns: [] })).not.toThrow();
-    const { download } = require('../download');
     expect(download).toHaveBeenCalled();
   });
 });

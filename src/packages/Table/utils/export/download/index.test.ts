@@ -5,7 +5,7 @@ import { download } from '.';
 const originalCreateObjectURL = URL.createObjectURL;
 const originalRevokeObjectURL = URL.revokeObjectURL;
 
-describe('download', () => {
+describe('packages/Table/utils/export/download', () => {
   let createElementSpy: any;
   let clickMock: ReturnType<typeof vi.fn>;
 

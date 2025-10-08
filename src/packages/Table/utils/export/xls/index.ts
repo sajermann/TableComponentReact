@@ -1,4 +1,4 @@
-import * as XLSX from 'xlsx-js-style';
+import XLSX from 'xlsx-js-style';
 import { TDefXlsx } from '../../../types';
 import { download } from '../download';
 

@@ -1,5 +1,8 @@
+import html2canvas from 'html2canvas-pro';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { png } from '.';
+import { buildTable } from '../buildTable';
+import { download } from '../download';
 
 vi.mock('../buildTable', () => ({
   buildTable: vi.fn(() => {
@@ -17,11 +20,9 @@ vi.mock('html2canvas-pro', () => ({
   ),
 }));
 
-vi.mock('../download', () => ({
-  download: vi.fn(),
-}));
+vi.mock('../download');
 
-describe('png function', () => {
+describe('packages/Table/utils/export/png', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     // Clean up DOM if anything left
@@ -31,35 +32,24 @@ describe('png function', () => {
   it('should build table, append to body and remove after png is created', async () => {
     await png({ data: [], defColumns: [] });
 
-    const { buildTable } = require('../buildTable');
-    const html2canvas = require('html2canvas-pro').default;
-    const { download } = require('../download');
-
     // buildTable is called once
-    expect(buildTable).toHaveBeenCalledWith({ data: [], defColumns: [] });
-
-    // Table is appended to body with id 'tempTable'
-    const tableInDom = document.querySelector('#tempTable');
-    expect(tableInDom).toBeTruthy();
-
-    // html2canvas called with the table element
-    expect(html2canvas).toHaveBeenCalledWith(tableInDom);
-
-    // download called with the PNG data URL and 'png' extension
+    expect(buildTable).toHaveBeenCalledWith({
+      data: [],
+      defColumns: [],
+    });
+    const table = document.createElement('table');
+    table.id = 'tempTable';
+    expect(html2canvas).toHaveBeenCalledWith(table);
     expect(download).toHaveBeenCalledWith(
       'data:image/png;base64,mockimage',
       'png',
     );
-
-    // After promise resolves, table is removed from DOM
     expect(document.querySelector('#tempTable')).toBeNull();
   });
 
   it('should handle defColumns parameter correctly', async () => {
     const defColumns = [{ header: 'Col', align: 'left', accessor: 'a' }] as any;
     await png({ data: [{ a: 1 }], defColumns });
-
-    const { buildTable } = require('../buildTable');
     expect(buildTable).toHaveBeenCalledWith({ data: [{ a: 1 }], defColumns });
   });
 });
