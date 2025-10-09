@@ -1,11 +1,11 @@
 import { TDefPrintPdfPng } from '~/packages/Table/types';
 
-type PropsPrint<T> = {
+type TAddRowsProps<T> = {
   data: T[];
   defColumns: TDefPrintPdfPng<T>[];
 };
 
-export function addRows<T>({ data, defColumns }: PropsPrint<T>) {
+export function addRows<T>({ data, defColumns }: TAddRowsProps<T>) {
   const dataTemp: Record<string, unknown>[][] = [];
   for (let i = 0; i < data.length; i += 1) {
     const rowTemp: Record<string, unknown>[] = [];

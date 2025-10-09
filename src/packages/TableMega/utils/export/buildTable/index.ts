@@ -19,7 +19,7 @@ export function buildTable<T>({ data, defColumns }: Props<T>) {
 
   // Add Rows
   const dataTemp = addRows({ data, defColumns });
-
+  console.log({ dataTemp });
   // Mount HTML
   const table = document.createElement('table');
   table.setAttribute(

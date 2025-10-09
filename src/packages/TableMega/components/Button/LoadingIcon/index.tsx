@@ -1,4 +1,4 @@
-import { Icons } from "~/components/Icons";
+import { Icons } from "../../Icons";
 import { TFeedbackProps } from "../types";
 
 interface ILoadingIcon {

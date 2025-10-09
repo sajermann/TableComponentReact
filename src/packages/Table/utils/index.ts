@@ -1,7 +1,6 @@
 export * from './countColSpan';
 export * from './filterByType';
 export * from './filterRangeDate';
-export * from './getValueForRadio';
 export * from './globalFilterFnCustom';
 export * from './showInDevelopment';
 export * from './removeProp';
