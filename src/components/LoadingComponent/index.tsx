@@ -1,8 +1,16 @@
-import { useTranslation } from "~/hooks";
+import { useEffect } from "react";
+import { useLoadingLazy, useTranslation } from "~/hooks";
 import { Icons } from "../Icons";
 
 export function LoadingComponent() {
   const { translate } = useTranslation();
+  const { setIsLoadingLazy } = useLoadingLazy();
+
+  useEffect(() => {
+    setIsLoadingLazy(true);
+    return () => setIsLoadingLazy(false);
+  }, []);
+
   return (
     <div className="w-fit flex gap-2 items-center">
       <span className="whitespace-nowrap">
