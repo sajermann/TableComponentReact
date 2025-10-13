@@ -1,6 +1,6 @@
 import { LabelHTMLAttributes } from "react";
 import { tv } from "tailwind-variants";
-import { removeProp } from "~/utils";
+import { removeProp } from "../../utils";
 
 type TLabel = React.DetailedHTMLProps<
   LabelHTMLAttributes<HTMLLabelElement>,

@@ -32,47 +32,48 @@ const input = tv({
   },
 });
 
-export const Input = forwardRef<HTMLInputElement, TInput>(
-  (
-    { iserror, onBeforeChange, onChange, debounce, className, ...rest },
-    ref
-  ) => {
-    const [event, setEvent] = useState<React.ChangeEvent<HTMLInputElement>>();
-    const { inputPropsInternal } = input({
-      color: iserror ? "error" : "primary",
-    });
+export function Input({
+  iserror,
+  onBeforeChange,
+  onChange,
+  debounce,
+  className,
+  ...rest
+}: TInput) {
+  const [event, setEvent] = useState<React.ChangeEvent<HTMLInputElement>>();
+  const { inputPropsInternal } = input({
+    color: iserror ? "error" : "primary",
+  });
 
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        if (debounce && event) {
-          onChangeCustom({
-            e: event,
-            onBeforeChange,
-            onChange,
-          });
-        }
-      }, debounce);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (debounce && event) {
+        onChangeCustom({
+          e: event,
+          onBeforeChange,
+          onChange,
+        });
+      }
+    }, debounce);
 
-      return () => clearTimeout(timer);
-    }, [event]);
+    return () => clearTimeout(timer);
+  }, [event]);
 
-    return (
-      <input
-        {...rest}
-        ref={ref}
-        className={inputPropsInternal({
-          class: className,
-        })}
-        onChange={(e) =>
-          preOnChange({
-            e,
-            setEvent,
-            debounce,
-            onBeforeChange,
-            onChange,
-          })
-        }
-      />
-    );
-  }
-);
+  return (
+    <input
+      {...rest}
+      className={inputPropsInternal({
+        class: className,
+      })}
+      onChange={(e) =>
+        preOnChange({
+          e,
+          setEvent,
+          debounce,
+          onBeforeChange,
+          onChange,
+        })
+      }
+    />
+  );
+}

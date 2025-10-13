@@ -1,4 +1,3 @@
-export * from './countColSpan';
 export * from './filterByType';
 export * from './filterRangeDate';
 export * from './globalFilterFnCustom';

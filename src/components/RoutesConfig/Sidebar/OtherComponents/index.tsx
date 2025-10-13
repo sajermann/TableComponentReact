@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
-import { useOtherComponents } from "~/hooks/useOtherComponents";
+import { useOtherComponents } from "~/hooks";
 import { useTranslation } from "~/hooks/useTranslation";
 
 export function OtherComponents() {

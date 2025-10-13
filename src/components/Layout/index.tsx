@@ -1,5 +1,4 @@
-import { Config } from "../Config";
-import { Version } from "../Version";
+import { Config, Version } from "~/components";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

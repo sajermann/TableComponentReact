@@ -1,7 +1,7 @@
-import { SwitchLanguage } from "~/components/SwitchLanguage";
-import { SwitchTheme } from "~/components/SwitchTheme";
 import { useHomePage } from "~/hooks/useHomePage";
 import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
+import { SwitchLanguage } from "../SwitchLanguage";
+import { SwitchTheme } from "../SwitchTheme";
 
 export function Config() {
   const { isHomePage } = useHomePage();
