@@ -28,5 +28,6 @@ export default defineConfig({
         'src/pages/TableMega/Sort/components/index.ts',
       ],
     },
+    unstubEnvs: true,
   },
 });

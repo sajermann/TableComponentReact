@@ -1,28 +1,33 @@
-import * as reactRouter from "@tanstack/react-router";
 import { useLocation } from "@tanstack/react-router";
-import { render, screen } from "@testing-library/react";
-import { useEffect, useState } from "react";
+import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import {
-  useDebouncedCallback,
-  useLoadingLazy,
-  useTranslation,
-  useWindow,
-} from "~/hooks";
-import { useBreadcrumbs } from "~/hooks/useBreadcrumbs";
-import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
-import { TMenu } from "./types";
+import { TableOfContents } from ".";
 import { buildOptions, scrollToSection } from "./utils";
 
-import { TableOfContents } from ".";
-
 vi.mock("@tanstack/react-router");
+vi.mock("./utils");
 
 describe("components/RoutesConfig/Sidebar/TableOfContents", () => {
-  it("render correctly", () => {
+  it("render correctly", async () => {
     vi.mocked(useLocation).mockImplementation(
       () => ({ location: "test" }) as any
     );
-    render(<TableOfContents />);
+    const dataMock = [
+      {
+        type: "H2",
+        anchor: "/test-anchor",
+        active: true,
+        title: "Test - Anchor",
+        top: 1,
+      },
+    ];
+    vi.mocked(buildOptions).mockReturnValue(dataMock);
+    const spy = vi.fn();
+    vi.mocked(scrollToSection).mockImplementation(spy);
+    const { findByText } = render(<TableOfContents />);
+    const result = await findByText(dataMock[0].title);
+    expect(result).toBeTruthy();
+    fireEvent.click(result);
+    expect(spy).toBeCalledWith(dataMock[0].anchor);
   });
 });

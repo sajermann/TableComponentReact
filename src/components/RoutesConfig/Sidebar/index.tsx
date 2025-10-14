@@ -1,5 +1,4 @@
 import { useHomePage } from "~/hooks/useHomePage";
-import { testIdOnlyDev } from "~/packages/Table/utils/showInDevelopment";
 import { Config } from "./Config";
 import { Credits } from "./Credits";
 import { OtherComponents } from "./OtherComponents";
@@ -12,10 +11,7 @@ export function Sidebar() {
   }
   return (
     <div className="hidden min-w-[18rem] w-72 max-w-[18rem] xl:flex">
-      <aside
-        {...testIdOnlyDev("aside-sidebar")}
-        className="flex flex-col w-full gap-3 max-h-full sticky top-4 self-start overflow-y-auto"
-      >
+      <aside className="flex flex-col w-full gap-3 max-h-full sticky top-4 self-start overflow-y-auto">
         <Config />
         <Credits />
         <TableOfContents />
