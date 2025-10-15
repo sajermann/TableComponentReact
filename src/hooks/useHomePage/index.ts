@@ -1,3 +1,4 @@
+import { useLocation } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { create } from 'zustand';
 
@@ -18,6 +19,7 @@ export const store = create<{
 
 export function useHomePage() {
   const { isHomePage, setIsHomePage } = store();
+  const location = useLocation();
   useEffect(() => {
     if (HOME_URL.includes(location.hash)) {
       setIsHomePage(true);

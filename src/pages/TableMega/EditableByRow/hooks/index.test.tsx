@@ -1,7 +1,46 @@
-import { act, renderHook } from "@testing-library/react";
+import { act, fireEvent, render, renderHook } from "@testing-library/react";
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
 import { useEditableByRow } from ".";
+
+function TestTable({ spy }: { spy?: any }) {
+  const { columns, data, handleFormSubmit } = useEditableByRow();
+
+  return (
+    <form
+      onSubmit={(e) => {
+        handleFormSubmit(e);
+        spy?.(e);
+      }}
+    >
+      <table>
+        <tbody>
+          {data.map((row, rowIdx) => (
+            <tr key={row.id ?? rowIdx}>
+              {columns.map((col: any, colIdx) => {
+                // Use the cell renderer exactly as table-lib does
+                const Cell = col.cell;
+                const cellValue = row[col.accessorKey as keyof typeof row];
+                // Build info object that real table would pass
+                const info: any = {
+                  row: { index: rowIdx, original: row },
+                  cell: { getValue: () => cellValue },
+                  getValue: () => cellValue,
+                };
+                // Defensive check: only call cell if defined
+                return (
+                  <td key={colIdx}>
+                    {Cell ? Cell(info) : cellValue?.toString()}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </form>
+  );
+}
 
 vi.mock("~/hooks", () => ({
   useTranslation: () => ({
@@ -20,6 +59,18 @@ vi.mock("~/hooks", () => ({
   }),
 }));
 
+vi.mock("~/components", () => ({
+  Button: (props: any) => <button data-testid={props.id} {...props} />,
+  Checkbox: (props: any) => (
+    <input type="checkbox" data-testid={props.id} {...props} />
+  ),
+  ContainerInput: (props: any) => <div {...props} />,
+  Datepicker: (props: any) => (
+    <input type="date" data-testid={props.id} {...props} />
+  ),
+  Input: (props: any) => <input data-testid={props.id} {...props} />,
+}));
+
 vi.mock("~/utils", () => ({
   makeData: {
     person: () =>
@@ -36,7 +87,9 @@ vi.mock("~/utils", () => ({
         })),
   },
   showInDevelopment: (props: object) => props,
+  managerClassNames: (props: object) => props,
 }));
+
 describe("pages/TableMega/EditableByRow/hooks/useEditableByRow", () => {
   it("initializes with 10 persons and no update line", () => {
     const { result } = renderHook(() => useEditableByRow());
@@ -121,5 +174,51 @@ describe("pages/TableMega/EditableByRow/hooks/useEditableByRow", () => {
     // This is a limitation of testing hooks with internal state,
     // More detailed testing requires the component using this hook.
     expect(result.current.columns.length).toBeGreaterThan(0);
+  });
+
+  it("renders all non-editable cells for first row", () => {
+    const { getByTestId, getAllByText } = render(<TestTable />);
+    // Expect update buttons for default, non-edit rows
+    expect(getByTestId("update-button-0")).toBeInTheDocument();
+    // Check basic text for name, lastName, email etc.
+    expect(getAllByText(/^[a-zA-Z0-9]+$/).length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("renders all editable cells for row 0 after activating edit", () => {
+    const { getByTestId, getAllByRole } = render(<TestTable />);
+    // Activate edit mode for row 0
+    fireEvent.click(getByTestId("update-button-0"));
+    // Save/cancel buttons should appear
+    expect(getByTestId("save-button")).toBeInTheDocument();
+    expect(getByTestId("cancel-button")).toBeInTheDocument();
+    // Editable inputs for name, lastName, email
+    expect(getByTestId("input-name-0")).toBeTruthy();
+    // Select should appear for role field
+    expect(getAllByRole("combobox").length).toBeGreaterThanOrEqual(1);
+    // Checkbox for isActive
+    expect(getByTestId("checkbox-isActive-0")).toBeInTheDocument();
+  });
+
+  it("should call handleFormSubmit", () => {
+    const spy = vi.fn();
+    const { getByTestId } = render(<TestTable spy={spy} />);
+    // Activate edit mode for row 0
+    fireEvent.click(getByTestId("update-button-0"));
+    fireEvent.change(getByTestId("input-name-0"), {
+      target: { value: "Test Name" },
+    });
+    fireEvent.click(getByTestId("save-button"));
+    // Save/cancel buttons should appear
+    expect(spy).toBeCalled();
+  });
+
+  it("should cancel update", () => {
+    const { getByTestId, queryByTestId } = render(<TestTable />);
+    fireEvent.click(getByTestId("update-button-0"));
+    expect(queryByTestId("input-name-0")).toBeTruthy();
+    expect(queryByTestId("update-button-0")).toBeFalsy();
+    fireEvent.click(getByTestId("cancel-button"));
+    expect(queryByTestId("input-name-0")).toBeFalsy();
+    expect(queryByTestId("update-button-0")).toBeTruthy();
   });
 });

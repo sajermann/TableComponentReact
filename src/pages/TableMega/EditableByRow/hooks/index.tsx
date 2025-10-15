@@ -12,7 +12,7 @@ import Select from "~/components/Select";
 import { ROLES } from "~/constants";
 import { useColumns, useTranslation } from "~/hooks";
 import { TPerson } from "~/types";
-import { makeData, showInDevelopment } from "~/utils";
+import { makeData } from "~/utils";
 
 export function useEditableByRow() {
   const { translate } = useTranslation();
@@ -35,9 +35,7 @@ export function useEditableByRow() {
           updateLine?.row === info.row.index ? (
             <div className="w-full flex items-center justify-center gap-2">
               <Button
-                {...showInDevelopment({
-                  "data-testid": `save-button`,
-                })}
+                id={`save-button`}
                 iconButton="rounded"
                 colorStyle="success"
                 variant="outlined"
@@ -46,9 +44,7 @@ export function useEditableByRow() {
               />
 
               <Button
-                {...showInDevelopment({
-                  "data-testid": `cancel-button`,
-                })}
+                id={`cancel-button`}
                 iconButton="rounded"
                 colorStyle="secondary"
                 variant="outlined"
@@ -59,9 +55,7 @@ export function useEditableByRow() {
           ) : (
             <div className="w-full flex items-center justify-center">
               <Button
-                {...showInDevelopment({
-                  "data-testid": `update-button-${info.row.index}`,
-                })}
+                id={`update-button-${info.row.index}`}
                 iconButton="rounded"
                 variant="outlined"
                 colorStyle="mono"
@@ -83,18 +77,16 @@ export function useEditableByRow() {
       { ...columns[1] },
       {
         ...columns[2],
-        cell: (info) =>
-          updateLine?.row === info.row.index ? (
+        cell: ({ row, cell }) =>
+          updateLine?.row === row.index ? (
             <Input
-              {...showInDevelopment({
-                "data-testid": `update-input`,
-              })}
+              id={`input-name-${row.index}`}
               type="text"
               name="name"
               defaultValue={updateLine?.data.name}
             />
           ) : (
-            info.cell.getValue()
+            cell.getValue()
           ),
       },
       {
@@ -102,9 +94,7 @@ export function useEditableByRow() {
         cell: ({ row, cell }) =>
           updateLine?.row === row.index ? (
             <Input
-              {...showInDevelopment({
-                "data-testid": `update-input`,
-              })}
+              id={`input-lastName-${row.index}`}
               type="text"
               name="lastName"
               defaultValue={updateLine?.data.lastName}
@@ -123,7 +113,7 @@ export function useEditableByRow() {
             const dateFormatted = `${year}-${month}-${day}`;
             return (
               <Datepicker
-                id="birthday"
+                id={`datepicker-birthday-${row.index}`}
                 name="birthday"
                 defaultValue={dateFormatted}
               />
@@ -137,9 +127,7 @@ export function useEditableByRow() {
         cell: ({ row, cell }) =>
           updateLine?.row === row.index ? (
             <Input
-              {...showInDevelopment({
-                "data-testid": `update-input`,
-              })}
+              id={`input-email-${row.index}`}
               type="text"
               name="email"
               defaultValue={updateLine?.data.email}
@@ -178,6 +166,7 @@ export function useEditableByRow() {
             return (
               <ContainerInput className="items-center">
                 <Checkbox
+                  id={`checkbox-isActive-${row.index}`}
                   defaultChecked={updateLine?.data.isActive}
                   name="isActive"
                 />
@@ -205,7 +194,6 @@ export function useEditableByRow() {
 
   const handleFormSubmit = useCallback(
     (event?: FormEvent<HTMLFormElement>) => {
-      console.log({ event });
       event?.preventDefault();
       const formData = new FormData(event?.currentTarget);
       const dataObj = Object.fromEntries(formData.entries());
