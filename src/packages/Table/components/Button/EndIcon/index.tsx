@@ -1,5 +1,4 @@
 import { DetailedHTMLProps, HTMLAttributes } from "react";
-import { showInDevelopment } from "~/packages/Table/utils";
 import { TFeedbackProps } from "../types";
 
 interface IEndIcon
@@ -14,9 +13,7 @@ export function EndIcon({ withFeedback, ...rest }: IEndIcon) {
     !withFeedback?.successOptions?.success &&
     !withFeedback?.failedOptions?.failed
   ) {
-    return (
-      <div {...showInDevelopment({ "data-content": "endIcon" })} {...rest} />
-    );
+    return <div {...rest} />;
   }
   return null;
 }

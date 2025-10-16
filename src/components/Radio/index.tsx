@@ -1,5 +1,5 @@
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import { ReactNode, forwardRef } from "react";
+import { ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
 const radioVariants = tv({

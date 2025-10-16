@@ -7,7 +7,6 @@ import { DetailedHTMLProps, HTMLAttributes, useEffect } from "react";
 import { useTableMega } from "~/packages/TableMega/hooks";
 import { RowsWithSort } from "../RowsWithSort";
 import { THeadDefaultInternal } from "../THeadDefaultInternal";
-import { ThWithSort } from "../ThWithSort";
 
 export type TSortProps = DetailedHTMLProps<
   HTMLAttributes<HTMLTableSectionElement>,
@@ -17,7 +16,6 @@ export type TSortProps = DetailedHTMLProps<
     sort: SortingState;
     setSort: OnChangeFn<SortingState>;
   };
-  // children?: React.ReactNode;
 };
 export function Sort({ controlled, ...rest }: TSortProps) {
   const { table } = useTableMega();

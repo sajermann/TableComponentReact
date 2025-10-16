@@ -1,5 +1,4 @@
 import { DetailedHTMLProps, HTMLAttributes } from "react";
-import { showInDevelopment } from "~/packages/Table/utils";
 import { TFeedbackProps } from "../types";
 
 interface IMainFeedback
@@ -13,12 +12,7 @@ export function MainFeedback({ withFeedback, ...rest }: IMainFeedback) {
     withFeedback?.successOptions?.success ||
     withFeedback?.failedOptions?.failed
   ) {
-    return (
-      <div
-        {...showInDevelopment({ "data-content": "mainFeedback" })}
-        {...rest}
-      />
-    );
+    return <div {...rest} />;
   }
   return null;
 }
