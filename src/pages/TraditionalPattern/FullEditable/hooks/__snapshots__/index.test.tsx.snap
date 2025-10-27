@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`pages/TableMega/FullEditable/hooks > initializes columns/data and covers cells 1`] = `
+<div>
+  <div
+    data-testid="select-container"
+  >
+    <select
+      data-testid="select-role"
+    >
+      <option
+        data-testid="select-option-Admin"
+        value="Admin"
+      >
+        Admin
+      </option>
+      <option
+        data-testid="select-option-User"
+        value="User"
+      >
+        User
+      </option>
+      <option
+        data-testid="select-option-Dev"
+        value="Dev"
+      >
+        Dev
+      </option>
+    </select>
+    <span
+      data-testid="select-arrow"
+    />
+  </div>
+</div>
+`;

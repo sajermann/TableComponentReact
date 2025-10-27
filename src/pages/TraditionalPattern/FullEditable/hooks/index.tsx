@@ -1,11 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 import { Checkbox, ContainerInput, Datepicker, Input } from "~/components";
 import Select from "~/components/Select";
 import { useTranslation } from "~/hooks";
 import { TPerson } from "~/types";
-import { makeData, showInDevelopment } from "~/utils";
-import { handleFormSubmit } from "../utils";
+import { makeData } from "~/utils";
 
 const DEFAULT_OPTIONS = [
   {
@@ -85,9 +84,6 @@ export function useFullEditable() {
         enableSorting: true,
         cell: (info) => (
           <Input
-            {...showInDevelopment({
-              "data-testid": `input-name-${info.row.index}`,
-            })}
             type="text"
             id="name"
             onChange={(e) => handleInput(e, info.row.index)}
@@ -105,9 +101,6 @@ export function useFullEditable() {
         },
         cell: (info) => (
           <Input
-            {...showInDevelopment({
-              "data-testid": `input-lastName-${info.row.index}`,
-            })}
             type="text"
             id="lastName"
             onChange={(e) => handleInput(e, info.row.index)}
@@ -197,9 +190,6 @@ export function useFullEditable() {
         cell: (info) => (
           <ContainerInput className="items-center">
             <Checkbox
-              {...showInDevelopment({
-                "data-testid": `checkbox-isActive-${info.row.index}`,
-              })}
               checked={info.getValue() as boolean}
               id="isActive"
               onCheckedChange={(e) => {

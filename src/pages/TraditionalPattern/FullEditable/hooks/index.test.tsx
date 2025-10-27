@@ -1,17 +1,16 @@
-import { act, renderHook } from "@testing-library/react";
-import React from "react";
+import { act, render, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import Select from "~/components/Select";
 import { useFullEditable } from ".";
-import { handleFormSubmit } from "../utils";
 
-// Mock translation hook
+type Any = any;
+
+// Mocks como no seu exemplo
 vi.mock("~/hooks", () => ({
   useTranslation: () => ({
     translate: (key: string) => key,
   }),
 }));
-
-// Mock data and utilities
 vi.mock("~/utils", () => ({
   makeData: {
     person: () => [
@@ -37,32 +36,130 @@ vi.mock("~/utils", () => ({
       },
     ],
   },
-  showInDevelopment: (props: object) => props,
-  handleFormSubmit: vi.fn(),
+}));
+
+// Mocks dos componentes
+vi.mock("~/components", () => ({
+  Input: (props: Any) => (
+    <input {...props} data-testid={`input-${props.id}-${props.value}`} />
+  ),
+  Datepicker: (props: Any) => (
+    <input type="date" {...props} data-testid={`datepicker-${props.value}`} />
+  ),
+  Checkbox: (props: Any) => (
+    <input
+      type="checkbox"
+      {...props}
+      data-testid={`checkbox-${props.id}-${props.checked}`}
+    />
+  ),
+  ContainerInput: (props: Any) => (
+    <div data-testid="container-input-test" {...props} />
+  ),
+}));
+
+vi.mock("~/components/Select", () => ({
+  __esModule: true,
+  default: {
+    Container: ({ children, ...props }: any) => (
+      <div data-testid="select-container" {...props}>
+        {children}
+      </div>
+    ),
+    Select: ({ children, ...props }: any) => (
+      <select data-testid="select-role" {...props}>
+        {children}
+      </select>
+    ),
+    Option: ({ children, ...props }: any) => (
+      <option data-testid={`select-option-${props.value}`} {...props}>
+        {children}
+      </option>
+    ),
+    Arrow: (props: any) => <span data-testid="select-arrow" {...props} />,
+  },
 }));
 
 describe("pages/TableMega/FullEditable/hooks", () => {
-  it("initializes with expected columns and data", () => {
+  it("initializes columns/data and covers cells", () => {
     const { result } = renderHook(() => useFullEditable());
+    const columns = result.current.columns as Any;
+    const row0 = { index: 0, original: result.current.data[0] };
 
-    expect(result.current.columns).toHaveLength(8);
-    expect(result.current.data).toHaveLength(2);
+    // avatar cell
+    const avatarCol = columns.find((c: Any) => c.accessorKey === "avatar");
+    const avatarCell = avatarCol.cell({
+      getValue: () => row0.original.avatar,
+      row: row0,
+    });
+    expect(avatarCell.props.className).toContain("w-14");
+
+    // name cell
+    const nameCol = columns.find((c: Any) => c.accessorKey === "name");
+    const nameCell = nameCol.cell({
+      getValue: () => row0.original.name,
+      row: row0,
+    });
+    expect(nameCell.props["id"]).toBe("name");
+
+    // lastName cell
+    const lastNameCol = columns.find((c: Any) => c.accessorKey === "lastName");
+    const lastNameCell = lastNameCol.cell({
+      getValue: () => row0.original.lastName,
+      row: row0,
+    });
+    expect(lastNameCell.props["id"]).toBe("lastName");
+
+    // birthday cell
+    const birthdayCol = columns.find((c: Any) => c.accessorKey === "birthday");
+    const birthdayCell = birthdayCol.cell({
+      getValue: () => row0.original.birthday,
+      row: row0,
+    });
+    expect(birthdayCell.props["value"]).toBe("1990-01-01");
+
+    // // role cell
+    const roleCol = columns.find((c: Any) => c.accessorKey === "role");
+    const roleCell = roleCol.cell({
+      getValue: () => row0.original.role,
+      row: row0,
+    });
+
+    const { container } = render(roleCell);
+    // expect(container).toMatchSnapshot();
+    expect(container.querySelector('[data-testid="select-role"]')).toBeTruthy();
+    expect(container.querySelector('[data-testid="select-role"]')).toBeTruthy();
+    expect(
+      container.querySelector('[data-testid="select-option-Admin"]')
+    ).toBeTruthy();
+    expect(
+      container.querySelector('[data-testid="select-arrow"]')
+    ).toBeTruthy();
+
+    // isActive cell
+    const isActiveCol = columns.find((c: Any) => c.accessorKey === "isActive");
+    const isActiveCell = isActiveCol.cell({
+      getValue: () => row0.original.isActive,
+      row: row0,
+    });
+    const { container: containerIsActive } = render(isActiveCell);
+    expect(
+      containerIsActive.querySelector('[data-testid="container-input-test"]')
+    ).toBeTruthy();
   });
 
-  it("renders Input component cell with expected test id", () => {
-    const { result } = renderHook(() => useFullEditable());
-    const columns = result.current.columns as any;
+  it("updates value via handleInput", () => {
+    const { result } = renderHook(() => useFullEditable()) as Any;
 
-    const nameColumn = columns.find((c: any) => c.accessorKey === "name");
-    expect(nameColumn).toBeDefined();
-
-    const mockRow = { index: 0, original: result.current.data[0] };
-    const mockGetValue = () => result.current.data[0].name;
-
-    const cellElement = nameColumn?.cell!({
-      row: mockRow,
-      getValue: mockGetValue,
+    act(() => {
+      result.current.columns[2]
+        ?.cell?.({
+          getValue: () => result.current.data[0].name,
+          row: { index: 0, original: result.current.data[0] },
+        })
+        .props.onChange({ target: { id: "name", value: "AliceUpdated" } });
     });
-    expect(cellElement.props["data-testid"]).toBe("input-name-0");
+
+    expect(result.current.data[0].name).toBe("AliceUpdated");
   });
 });
