@@ -2,11 +2,11 @@ import { Row } from "@tanstack/react-table";
 import { TExpandRow } from "../../types/expand-row.type";
 import { Tr } from "../Tr";
 
-type Props<T> = {
+type TExpandLineProps<T> = {
   row: Row<T>;
   expandRow?: TExpandRow<T>;
 };
-export function ExpandLine<T>({ row, expandRow }: Props<T>) {
+export function ExpandLine<T>({ row, expandRow }: TExpandLineProps<T>) {
   if (!row.getIsExpanded()) return null;
   return (
     <Tr row={row} {...expandRow?.expandedTrProps}>

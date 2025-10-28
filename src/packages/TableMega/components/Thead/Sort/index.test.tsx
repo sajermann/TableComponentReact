@@ -1,11 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { useTableMega } from "~/packages/TableMega/hooks";
 import { Sort, TSortProps } from ".";
 
-vi.mock("~/packages/TableMega/hooks", () => ({
-  useTableMega: vi.fn(),
-}));
+vi.mock("~/packages/TableMega/hooks");
 
 vi.mock("../RowsWithSort", () => ({
   RowsWithSort: () => <div data-testid="RowsWithSort" />,
@@ -20,50 +18,45 @@ vi.mock("../THeadDefaultInternal", () => ({
 }));
 
 describe("packages/TableMega/components/Thead/Sort", () => {
-  const mockTable = {
-    setOptions: vi.fn(),
-    setState: vi.fn(),
-  };
+  it("sets sorting state and options when controlled", () => {
+    const mockSetState = vi.fn();
+    const mockSetOptions = vi.fn();
+    vi.mocked(useTableMega).mockImplementation(
+      () =>
+        ({
+          table: {
+            setState: (e) => {
+              console.log(e());
+              mockSetState(e());
+            },
+            setOptions: (ee) => {
+              console.log(ee());
+              mockSetOptions(ee());
+            },
+          },
+        }) as any
+    );
+    const controlledProps: TSortProps["controlled"] = {
+      sort: [{ id: "name", desc: false }],
+      setSort: vi.fn(),
+    };
 
-  beforeEach(() => {
-    vi.clearAllMocks();
-    (useTableMega as any).mockReturnValue({
-      table: mockTable,
+    render(<Sort controlled={controlledProps} />);
+    expect(mockSetState).toBeCalledWith({
+      sorting: [{ id: "name", desc: false }],
     });
   });
 
-  // it("sets getSortedRowModel option when uncontrolled", () => {
-  //   render(<Sort />);
-  //   expect(mockTable.setOptions).toHaveBeenCalledTimes(1);
-  //   expect(mockTable.setOptions).toHaveBeenCalledWith(
-  //     expect.objectContaining({
-  //       getSortedRowModel: expect.any(Function),
-  //     })
-  //   );
-  // });
-
-  // it("sets sorting state and options when controlled", () => {
-  //   const controlledProps: TSortProps["controlled"] = {
-  //     sort: [{ id: "name", desc: false }],
-  //     setSort: vi.fn(),
-  //   };
-
-  //   render(<Sort controlled={controlledProps} />);
-  //   expect(mockTable.setState).toHaveBeenCalledWith(
-  //     expect.objectContaining({
-  //       sorting: controlledProps.sort,
-  //     })
-  //   );
-
-  //   expect(mockTable.setOptions).toHaveBeenCalledWith(
-  //     expect.objectContaining({
-  //       onSortingChange: controlledProps.setSort,
-  //     })
-  //   );
-  // });
+  it("renders THeadDefaultInternal and RowsWithSort controlled", () => {
+    render(<Sort data-testid="head" />);
+    expect(screen.getByTestId("head")).toBeInTheDocument();
+    expect(screen.getByTestId("RowsWithSort")).toBeInTheDocument();
+  });
 
   it("renders THeadDefaultInternal and RowsWithSort", () => {
-    render(<Sort data-testid="head" />);
+    render(
+      <Sort data-testid="head" controlled={{ sort: [], setSort: vi.fn() }} />
+    );
     expect(screen.getByTestId("head")).toBeInTheDocument();
     expect(screen.getByTestId("RowsWithSort")).toBeInTheDocument();
   });

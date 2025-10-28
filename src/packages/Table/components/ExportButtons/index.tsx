@@ -3,11 +3,11 @@ import { PrinterIcon } from "lucide-react";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 import { useTranslation } from "~/hooks/useTranslation";
 import { TDefTools } from "../../types";
-import { exportTo, showInDevelopment } from "../../utils";
+import { exportTo } from "../../utils";
 import { Button } from "../Button";
 import { Icons } from "../Icons";
 
-type Props<T> = {
+type TExportButtonsProps<T> = {
   table: Table<T>;
   tools?: TDefTools<T>;
   containerProps: DetailedHTMLProps<
@@ -15,7 +15,11 @@ type Props<T> = {
     HTMLDivElement
   >;
 };
-export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
+export function ExportButtons<T>({
+  tools,
+  table,
+  containerProps,
+}: TExportButtonsProps<T>) {
   const { translate } = useTranslation();
   const { rows } = table.getRowModel();
 
@@ -25,7 +29,6 @@ export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
     <div {...containerProps}>
       {tools?.defForPrint && (
         <Button
-          {...showInDevelopment({ "data-testid": "button-export-print" })}
           variant="outlined"
           colorStyle="mono"
           onClick={() =>
@@ -42,7 +45,6 @@ export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
 
       {tools?.defForPdf && (
         <Button
-          {...showInDevelopment({ "data-testid": "button-export-pdf" })}
           variant="outlined"
           colorStyle="mono"
           onClick={() =>
@@ -59,7 +61,6 @@ export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
 
       {tools?.defForPng && (
         <Button
-          {...showInDevelopment({ "data-testid": "button-export-png" })}
           variant="outlined"
           colorStyle="mono"
           onClick={() =>
@@ -76,11 +77,10 @@ export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
 
       {tools?.defForExcel && (
         <Button
-          {...showInDevelopment({ "data-testid": "button-export-excel" })}
           variant="outlined"
           colorStyle="mono"
           onClick={() =>
-            exportTo.excel({
+            exportTo.xls({
               data: rows.map((item) => item.original),
               defColumns: tools?.defForExcel,
             })
@@ -93,7 +93,6 @@ export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
 
       {tools?.defForCsv && (
         <Button
-          {...showInDevelopment({ "data-testid": "button-export-csv" })}
           variant="outlined"
           colorStyle="mono"
           onClick={() =>
@@ -111,7 +110,6 @@ export function ExportButtons<T>({ tools, table, containerProps }: Props<T>) {
 
       {tools?.defForXml && (
         <Button
-          {...showInDevelopment({ "data-testid": "button-export-xml" })}
           variant="outlined"
           colorStyle="mono"
           onClick={() =>

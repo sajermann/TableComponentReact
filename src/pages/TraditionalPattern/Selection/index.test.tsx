@@ -8,7 +8,7 @@ import { SelectionPage } from ".";
 
 describe("pages/TraditionalPattern/SelectionPage", () => {
   it(`must render `, async () => {
-    const { getAllByText } = render(
+    render(
       <InjectorProviders>
         <SelectionPage />
       </InjectorProviders>

@@ -1,5 +1,13 @@
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import {
+  Button,
+  Checkbox,
+  ContainerInput,
+  Datepicker,
+  Input,
+  Label,
+} from "~/components";
 import type { TPerson } from "~/types";
 import { ExpandRowUpdateData } from ".";
 
@@ -9,6 +17,9 @@ vi.mock("~/hooks", () => ({
     translate: (key: string) => key, // return key for easier assertions
   }),
 }));
+
+vi.mock("../Button");
+vi.mocked(Button).mockImplementation((props) => <button {...props} />);
 
 const DEFAULT_PERSON: TPerson = {
   avatar: "",
