@@ -8,7 +8,7 @@ vi.mock("~/hooks", () => ({
   useWindowSize: vi.fn(() => ({ width: 1024, height: 768 })),
 }));
 
-describe("components/Button/Children/hooks", () => {
+describe("packages/Table/components/Button/Children/hooks", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });

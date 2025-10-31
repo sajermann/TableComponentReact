@@ -1,13 +1,6 @@
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import {
-  Button,
-  Checkbox,
-  ContainerInput,
-  Datepicker,
-  Input,
-  Label,
-} from "~/components";
+import { Button } from "~/components";
 import type { TPerson } from "~/types";
 import { ExpandRowUpdateData } from ".";
 

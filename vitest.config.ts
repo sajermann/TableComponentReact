@@ -26,6 +26,7 @@ export default defineConfig({
         'src/index.tsx',
         '**/constants/**',
         'src/pages/TableMega/Sort/components/index.ts',
+        'src/components/Button/hooks/index.ts',
       ],
     },
     unstubEnvs: true,

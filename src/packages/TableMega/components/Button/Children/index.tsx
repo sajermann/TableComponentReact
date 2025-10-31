@@ -8,6 +8,7 @@ import {
 import { showInDevelopment } from "~/packages/Table/utils";
 import { useWindowSize } from "../hooks";
 import { TFeedbackProps } from "../types";
+import { useChildren } from "./hooks";
 
 interface IChildren
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -15,30 +16,10 @@ interface IChildren
 }
 
 export function Children({ withFeedback, ...rest }: IChildren) {
-  const [isEllipsisActive, setIsEllipsisActive] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const size = useWindowSize();
-
-  useEffect(() => {
-    const element = ref.current;
-
-    setIsEllipsisActive(
-      element
-        ? element.offsetWidth < element.scrollWidth ||
-            element.offsetHeight < element.scrollHeight
-        : false
-    );
-  }, [size]);
-
-  function verifyEllipsis() {
-    if (rest.title) {
-      return rest.title;
-    }
-    if (isEllipsisActive && typeof rest.children === "string") {
-      return rest.children;
-    }
-    return "";
-  }
+  const { ref, title } = useChildren({
+    title: rest.title,
+    children: rest.children,
+  });
 
   if (!rest.children) {
     return null;
@@ -61,12 +42,5 @@ export function Children({ withFeedback, ...rest }: IChildren) {
   ) {
     return null;
   }
-  return (
-    <div
-      {...showInDevelopment({ "data-content": "children" })}
-      ref={ref}
-      title={verifyEllipsis()}
-      {...rest}
-    />
-  );
+  return <div ref={ref} title={title} {...rest} />;
 }

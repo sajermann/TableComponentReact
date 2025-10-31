@@ -1,9 +1,6 @@
 import * as PopoverRadix from "@radix-ui/react-popover";
-
-import { XIcon } from "lucide-react";
 import { managerClassNames } from "~/utils";
-import { Icons } from "../Icons";
-import { Show } from "../Show";
+import { CloseButton } from "./components/CloseButton";
 
 type Props = {
   children: React.ReactNode;
@@ -40,20 +37,7 @@ export function Popover({
             ])}
           >
             {children}
-            <Show condition={!!closeButton}>
-              <PopoverRadix.Close
-                onClick={onClose}
-                className={managerClassNames([
-                  "w-7 h-7 absolute top-3.5 right-3.5 inline-flex items-center justify-center rounded-full p-1",
-                  "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75",
-                  "hover:opacity-50 transition-all duration-500",
-                ])}
-                aria-label="Close"
-              >
-                <XIcon className="w-full h-full" />
-              </PopoverRadix.Close>
-            </Show>
-
+            <CloseButton onClose={onClose} show={!!closeButton} />
             <PopoverRadix.Arrow className="fill-black dark:fill-white" />
           </PopoverRadix.Content>
         </PopoverRadix.Portal>
