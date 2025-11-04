@@ -1,22 +1,10 @@
-import type { Table as ITable } from "@tanstack/react-table";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import { SelectionType } from "~/components/SelectionType";
 import { useColumns, useTranslation } from "~/hooks";
 import { TPerson } from "~/types";
 import { TConfig, TSelectionRow } from "../types";
-
-function verifyIndeterminate<T>(table: ITable<T>) {
-  if (table.getIsAllRowsSelected()) {
-    return true;
-  }
-
-  if (table.getIsSomeRowsSelected()) {
-    return "indeterminate";
-  }
-
-  return false;
-}
+import { verifyIndeterminate } from "../utils";
 
 export function useSelection() {
   const { translate } = useTranslation();
