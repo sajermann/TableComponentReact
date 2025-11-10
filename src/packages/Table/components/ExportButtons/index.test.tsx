@@ -1,8 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ExportButtons } from ".";
-
 import { exportTo } from "../../utils";
+
+type Any = any;
 
 // Mocks
 const mockPrint = vi.fn();
@@ -15,7 +16,7 @@ const mockXml = vi.fn();
 vi.mock("../../utils");
 
 vi.mock("../Icons", () => ({
-  Icons: (props: any) => <span data-testid={props.nameIcon} />,
+  Icons: (props: Any) => <span data-testid={props.nameIcon} />,
 }));
 
 vi.mock("~/hooks/useTranslation", () => ({
@@ -25,7 +26,7 @@ vi.mock("~/hooks/useTranslation", () => ({
 }));
 
 vi.mock("../Button", () => ({
-  Button: (props: any) => (
+  Button: (props: Any) => (
     <button
       data-testid={props.startIcon && props.title ? props.title : "button"}
       onClick={props.onClick}
@@ -35,7 +36,7 @@ vi.mock("../Button", () => ({
   ),
 }));
 
-function createMockTable() {
+function createMockTable(): Any {
   return {
     getRowModel: () => ({
       rows: [
@@ -46,7 +47,7 @@ function createMockTable() {
   };
 }
 
-const mockTools = {
+const mockTools: Any = {
   defForPrint: [{ id: "printCol" }],
   defForPdf: [{ id: "pdfCol" }],
   defForPng: [{ id: "pngCol" }],

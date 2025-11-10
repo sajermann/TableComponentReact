@@ -3,6 +3,8 @@ import { describe, expect, it, vi } from "vitest";
 import { useTableMega } from "~/packages/TableMega/hooks";
 import { Sort, TSortProps } from ".";
 
+type Any = any;
+
 vi.mock("~/packages/TableMega/hooks");
 
 vi.mock("../RowsWithSort", () => ({
@@ -10,7 +12,7 @@ vi.mock("../RowsWithSort", () => ({
 }));
 
 vi.mock("../THeadDefaultInternal", () => ({
-  THeadDefaultInternal: ({ children, ...props }: any) => (
+  THeadDefaultInternal: ({ children, ...props }: Any) => (
     <thead data-testid="THeadDefaultInternal" {...props}>
       {children}
     </thead>
@@ -25,16 +27,16 @@ describe("packages/TableMega/components/Thead/Sort", () => {
       () =>
         ({
           table: {
-            setState: (e) => {
+            setState: (e: Any) => {
               console.log(e());
               mockSetState(e());
             },
-            setOptions: (ee) => {
+            setOptions: (ee: Any) => {
               console.log(ee());
               mockSetOptions(ee());
             },
           },
-        }) as any
+        }) as Any
     );
     const controlledProps: TSortProps["controlled"] = {
       sort: [{ id: "name", desc: false }],

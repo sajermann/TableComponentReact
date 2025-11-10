@@ -6,7 +6,7 @@ import { ChangeEvent } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { onChangeCustom } from '.';
 
-describe('Components/Input/Utils', () => {
+describe('packages/TableMega/components/Input/utils/onChangeCustom', () => {
   it(`must remove removeLowerCase`, async () => {
     const spyOnChange = vi.fn();
     onChangeCustom({

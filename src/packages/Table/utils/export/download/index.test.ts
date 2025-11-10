@@ -5,8 +5,10 @@ import { download } from '.';
 const originalCreateObjectURL = URL.createObjectURL;
 const originalRevokeObjectURL = URL.revokeObjectURL;
 
+type Any = any;
+
 describe('packages/Table/utils/export/download', () => {
-  let createElementSpy: any;
+  let createElementSpy: Any;
   let clickMock: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
@@ -16,16 +18,16 @@ describe('packages/Table/utils/export/download', () => {
     // Mock anchor element with click
     createElementSpy.mockReturnValue({
       set href(val) {
-        this._href = val;
+        (this as Any)._href = val;
       },
       get href() {
-        return this._href;
+        return (this as Any)._href;
       },
       set download(val) {
-        this._download = val;
+        (this as Any)._download = val;
       },
       get download() {
-        return this._download;
+        return (this as Any)._download;
       },
       click: clickMock,
     } as unknown as HTMLAnchorElement);

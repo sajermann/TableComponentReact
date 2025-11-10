@@ -1,7 +1,6 @@
-import { forwardRef, useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
-import { TInput } from "./types";
-import { onChangeCustom, preOnChange } from "./utils";
+import { useInput } from "./hooks";
+import { TInput, TInputDebounced } from "./types";
 
 const input = tv({
   slots: {
@@ -32,47 +31,27 @@ const input = tv({
   },
 });
 
-export const Input = forwardRef<HTMLInputElement, TInput>(
-  (
-    { iserror, onBeforeChange, onChange, debounce, className, ...rest },
-    ref
-  ) => {
-    const [event, setEvent] = useState<React.ChangeEvent<HTMLInputElement>>();
-    const { inputPropsInternal } = input({
-      color: iserror ? "error" : "primary",
-    });
+export function Input({
+  isError,
+  onBeforeChange,
+  className,
+  onChange,
+  ...rest
+}: TInput) {
+  const { debounce } = rest as TInputDebounced;
+  const { inputPropsInternal } = input({
+    color: isError ? "error" : "primary",
+  });
 
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        if (debounce && event) {
-          onChangeCustom({
-            e: event,
-            onBeforeChange,
-            onChange,
-          });
-        }
-      }, debounce);
+  const { onChangeInternal } = useInput({ debounce, onChange, onBeforeChange });
 
-      return () => clearTimeout(timer);
-    }, [event]);
-
-    return (
-      <input
-        {...rest}
-        ref={ref}
-        className={inputPropsInternal({
-          class: className,
-        })}
-        onChange={(e) =>
-          preOnChange({
-            e,
-            setEvent,
-            debounce,
-            onBeforeChange,
-            onChange,
-          })
-        }
-      />
-    );
-  }
-);
+  return (
+    <input
+      {...rest}
+      className={inputPropsInternal({
+        class: className,
+      })}
+      onChange={onChangeInternal}
+    />
+  );
+}

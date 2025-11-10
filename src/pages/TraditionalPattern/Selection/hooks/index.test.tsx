@@ -134,7 +134,7 @@ describe("pages/TraditionalPattern/Selection/hooks", () => {
       }));
     });
 
-    const Header = result.current.columns.find(
+    const Header: any = result.current.columns.find(
       (c) => c.id === "selection"
     )?.header;
     const tableMock = {

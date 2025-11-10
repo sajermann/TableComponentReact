@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { buildTable } from '../buildTable';
-import { download } from '../download';
-
 import { print } from '.';
+import { buildTable } from '../buildTable';
+
+type Any = any;
 
 // Mock buildTable to return a table element
 vi.mock('../buildTable', () => ({
@@ -39,9 +39,9 @@ describe('packages/Table/utils/export/print', () => {
 
   it('should build table with data and defColumns', () => {
     const data = [{ foo: 'bar' }];
-    const defColumns = [
+    const defColumns: Any = [
       { header: 'Header', align: 'left', accessor: 'foo' },
-    ] as any;
+    ];
 
     print({ data, defColumns });
 
@@ -55,15 +55,15 @@ describe('packages/Table/utils/export/print', () => {
 
   it('should call print and close on windowForPrint after timeouts and onfocus', () => {
     const data = [{ foo: 'bar' }];
-    const defColumns = [
+    const defColumns: Any = [
       { header: 'Header', align: 'left', accessor: 'foo' },
-    ] as any;
+    ];
 
     // Chama a função print normalmente
     print({ data, defColumns });
 
     // Recupera a chamada do mock de window.open
-    const windowForPrint = (window.open as unknown as jest.Mock).mock.results[0]
+    const windowForPrint = (window.open as unknown as Any).mock.results[0]
       .value;
 
     // Avança o timer para disparar windowForPrint.print()

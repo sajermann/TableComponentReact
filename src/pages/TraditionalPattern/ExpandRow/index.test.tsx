@@ -1,9 +1,10 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Table } from "~/packages/Table";
-import { TPerson } from "~/types";
 import { TraditionalExpandRowPage } from "./";
+
+type Any = any;
 
 // Mock dependencies
 const mockMakeData = vi.fn();
@@ -28,13 +29,13 @@ vi.mock("~/hooks", () => ({
 }));
 
 vi.mock("~/components", () => ({
-  Section: ({ children, title }: any) => (
+  Section: ({ children, title }: Any) => (
     <div data-testid="section">
       <h2>{title}</h2>
       {children}
     </div>
   ),
-  Button: ({ onClick, endIcon }: any) => (
+  Button: ({ onClick, endIcon }: Any) => (
     <button onClick={onClick} data-testid="expand-button">
       {endIcon}
     </button>
@@ -47,7 +48,7 @@ const mockOnCancel = vi.fn();
 const mockOnSave = vi.fn();
 
 vi.mock("~/components/ExpandRowUpdateData", () => ({
-  ExpandRowUpdateData: ({ row, onCancel, onSave }: any) => (
+  ExpandRowUpdateData: ({ row, onCancel, onSave }: Any) => (
     <div data-testid="expand-row-update-data">
       <span>Row index: {row?.index}</span>
       <button
@@ -81,7 +82,7 @@ vi.mock("lucide-react", () => ({
 }));
 
 describe("TraditionalExpandRowPage - expandRow render", () => {
-  const mockPersonData: TPerson[] = [
+  const mockPersonData: Any[] = [
     {
       id: 1,
       name: "John Doe",
@@ -110,7 +111,7 @@ describe("TraditionalExpandRowPage - expandRow render", () => {
   });
 
   it("should render ExpandRowUpdateData component", () => {
-    vi.mocked(Table).mockImplementation(({ expandRow, data }: any) => {
+    vi.mocked(Table).mockImplementation(({ expandRow, data }: Any) => {
       const mockRow = {
         index: 0,
         getToggleExpandedHandler: vi.fn(() => vi.fn()),
@@ -161,7 +162,7 @@ describe("TraditionalExpandRowPage - expandRow render", () => {
     const mockGetToggleHandler = vi.fn(() => vi.fn());
 
     // Mock Table to execute cell function
-    vi.mocked(Table).mockImplementation(({ columns }: any) => {
+    vi.mocked(Table).mockImplementation(({ columns }: Any) => {
       const expandColumn = columns[0];
 
       // Test with collapsed state

@@ -1,5 +1,5 @@
 import { Row } from "@tanstack/react-table";
-import React from "react";
+import React, { cloneElement } from "react";
 import { useTableMega } from "../../../../../hooks";
 import { Tr } from "../../../../Tr";
 import { TCommonProps } from "../../types";
@@ -17,7 +17,7 @@ export function ExpandRow<T>({ row, expandedTrProps }: Props<T>) {
   return (
     <Tr row={row} {...expandedTrProps}>
       <td colSpan={row.getVisibleCells().length}>
-        {React.cloneElement(expandedComponent, { row } as any)}
+        {cloneElement(expandedComponent, { row } as any)}
       </td>
     </Tr>
   );

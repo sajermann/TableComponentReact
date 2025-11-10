@@ -1,7 +1,6 @@
-import { act, renderHook } from "@testing-library/react";
+import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { useFullEditable } from ".";
-import { handleFormSubmit } from "../utils";
 
 type Any = any;
 
@@ -55,18 +54,17 @@ vi.mock("~/components/Select", () => {
     Arrow: () => <span data-testid="select-arrow" />,
   };
 });
-const handleFormSubmitMock = vi.fn();
+
 vi.mock("../utils");
 
-// TESTES
 describe("pages/TableMega/FullEditable/hooks", () => {
   it("abrange todos os cells customizados", () => {
-    const { result } = renderHook(() => useFullEditable());
+    const { result } = renderHook(() => useFullEditable()) as Any;
     const columns = result.current.columns as Any;
     const row0 = { index: 0, original: result.current.data[0] };
     const getValue = (key: string) => result.current.data[0][key];
 
-    // Coluna avatar
+    // Column avatar
     const avatarCol = columns.find((c: Any) => c.accessorKey === "avatar");
     const avatarCell = avatarCol.cell({
       row: row0,
@@ -74,7 +72,7 @@ describe("pages/TableMega/FullEditable/hooks", () => {
     });
     expect(avatarCell.props.className).toContain("w-14");
 
-    // Coluna name
+    // Column name
     const nameCol = columns.find((c: Any) => c.accessorKey === "name");
     const nameCell = nameCol.cell({
       row: row0,
@@ -84,7 +82,7 @@ describe("pages/TableMega/FullEditable/hooks", () => {
     expect(nameCell.props.id).toBe("name-0");
     expect(nameCell.props.defaultValue).toBe("Alice");
 
-    // Coluna lastName
+    // Column lastName
     const lastNameCol = columns.find((c: Any) => c.accessorKey === "lastName");
     const lastNameCell = lastNameCol.cell({
       row: row0,
@@ -93,7 +91,7 @@ describe("pages/TableMega/FullEditable/hooks", () => {
     expect(lastNameCell.props["data-testid"]).toBe("input-lastName-0");
     expect(lastNameCell.props.defaultValue).toBe("Smith");
 
-    // Coluna birthday
+    // Column birthday
     const birthdayCol = columns.find((c: Any) => c.accessorKey === "birthday");
     const birthdayCell = birthdayCol.cell({
       row: row0,
@@ -102,16 +100,7 @@ describe("pages/TableMega/FullEditable/hooks", () => {
     expect(birthdayCell.props.defaultValue).toBe("1990-01-01");
     expect(birthdayCell.props.id).toBe("birthday-0");
 
-    // Coluna role
-    const roleCol = columns.find((c: Any) => c.accessorKey === "role");
-    const roleCell = roleCol.cell({ row: row0 });
-    // Container e Arrow
-    // expect(roleCell.type).toBeDefined();
-    // expect(roleCell.props.children[1].props["data-testid"]).toBe(
-    //   "select-arrow"
-    // );
-
-    // Coluna isActive
+    // Column isActive
     const isActiveCol = columns.find((c: Any) => c.accessorKey === "isActive");
     const isActiveCell = isActiveCol.cell({
       row: row0,
@@ -123,16 +112,4 @@ describe("pages/TableMega/FullEditable/hooks", () => {
     );
     expect(isActiveCell.props.children.props.defaultChecked).toBe(true);
   });
-
-  // it("executa handleFormSubmit", () => {
-  //   vi.mocked(handleFormSubmit).mockImplementation(() => ({
-  //     handleFormSubmit: handleFormSubmitMock,
-  //   }));
-  //   const { result } = renderHook(() => useFullEditable());
-  //   // Garante que handleFormSubmit chama função utilitária com setData
-  //   act(() => {
-  //     result.current.handleFormSubmit();
-  //   });
-  //   expect(handleFormSubmitMock).toHaveBeenCalled();
-  // });
 });

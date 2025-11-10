@@ -3,9 +3,11 @@ import { describe, expect, it, vi } from "vitest";
 import { ExpandRow } from ".";
 import { useTableMega } from "../../../../../hooks";
 
+type Any = any;
+
 // Mock Tr
 vi.mock("../../../../Tr", () => ({
-  Tr: ({ children }: any) => <tr data-testid="Tr">{children}</tr>,
+  Tr: ({ children }: Any) => <tr data-testid="Tr">{children}</tr>,
 }));
 
 // Mock useTableMega
@@ -21,33 +23,35 @@ const mockRow = (
 });
 
 // Dummy expanded component
-const DummyComponent = ({ row }: any) => (
+const DummyComponent = () => (
   <div data-testid="dummy">Expanded Content for Row</div>
 );
 
 describe("packages/TableMega/components/Rows/Default/Expand/ExpandRow", () => {
   it("renders nothing if row is not expanded", () => {
-    (useTableMega as any).mockReturnValue({
+    (useTableMega as Any).mockReturnValue({
       expandedComponent: <DummyComponent />,
     });
-    render(<ExpandRow row={mockRow({ expanded: false })} />);
+    render(<ExpandRow row={mockRow({ expanded: false }) as Any} />);
     expect(screen.queryByTestId("Tr")).toBeNull();
   });
 
   it("renders nothing if expandedComponent is not a valid React element", () => {
-    (useTableMega as any).mockReturnValue({
+    (useTableMega as Any).mockReturnValue({
       expandedComponent: null,
     });
-    render(<ExpandRow row={mockRow({ expanded: true })} />);
+    render(<ExpandRow row={mockRow({ expanded: true }) as Any} />);
     expect(screen.queryByTestId("Tr")).toBeNull();
   });
 
   it("renders Tr with correct colSpan and passes row to expandedComponent", () => {
-    (useTableMega as any).mockReturnValue({
+    (useTableMega as Any).mockReturnValue({
       expandedComponent: <DummyComponent />,
     });
 
-    render(<ExpandRow row={mockRow({ expanded: true, cellCount: 3 })} />);
+    render(
+      <ExpandRow row={mockRow({ expanded: true, cellCount: 3 }) as Any} />
+    );
     const tr = screen.getByTestId("Tr");
     expect(tr).toBeInTheDocument();
 
@@ -58,20 +62,4 @@ describe("packages/TableMega/components/Rows/Default/Expand/ExpandRow", () => {
     // Check that DummyComponent rendered inside td
     expect(screen.getByTestId("dummy")).toBeInTheDocument();
   });
-
-  // it("passes expandedTrProps to Tr component", () => {
-  //   (useTableMega as any).mockReturnValue({
-  //     expandedComponent: <DummyComponent />,
-  //   });
-
-  //   const expandedTrProps = { "data-extra": "test" };
-  //   render(
-  //     <ExpandRow
-  //       row={mockRow({ expanded: true })}
-  //       expandedTrProps={expandedTrProps}
-  //     />
-  //   );
-  //   const tr = screen.getByTestId("Tr");
-  //   expect(tr).toHaveAttribute("data-extra", "test");
-  // });
 });

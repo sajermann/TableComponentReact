@@ -1,11 +1,25 @@
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { TBeforeChange } from '.';
 
-export type TInput = DetailedHTMLProps<
+type Input = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
-> & {
-  iserror?: boolean;
+>;
+
+type TCommon = {
+  isError?: boolean;
   onBeforeChange?: TBeforeChange;
-  debounce?: number;
 };
+
+export type TInputDebounced = Omit<Input, 'value'> &
+  TCommon & {
+    debounce: number;
+    value?: never;
+  };
+
+export type TInputControlled = Input &
+  TCommon & {
+    debounce?: never;
+  };
+
+export type TInput = TInputDebounced | TInputControlled;

@@ -4,6 +4,8 @@ import { useSelection } from ".";
 import { TConfig } from "../types";
 import { verifyIndeterminate } from "../utils";
 
+type Any = any;
+
 vi.mock("../utils");
 
 // Mock the dependencies
@@ -22,7 +24,7 @@ vi.mock("~/hooks", () => ({
       {
         id: "name",
         header: "Name",
-        cell: ({ row }: any) => row.name,
+        cell: ({ row }: Any) => row.name,
       },
     ],
   }),
@@ -32,7 +34,7 @@ vi.mock("~/hooks", () => ({
 }));
 
 vi.mock("~/components/SelectionType", () => ({
-  SelectionType: (props: any) => (
+  SelectionType: (props: Any) => (
     <select
       data-testid="selection-type"
       data-is-activated={props.isActivated}
@@ -93,7 +95,7 @@ describe("pages/TableMega/Selection/hooks", () => {
     const onToggleAllRowsSelected = vi.fn();
     const Header = result.current.columns.find(
       (c) => c.id === "selection"
-    ) as any;
+    ) as Any;
 
     // Mock que retorna funcao para toggle all rows
     const tableMock = {
@@ -134,7 +136,7 @@ describe("pages/TableMega/Selection/hooks", () => {
       }));
     });
 
-    const Header = result.current.columns.find(
+    const Header: Any = result.current.columns.find(
       (c) => c.id === "selection"
     )?.header;
     const tableMock = {
@@ -165,7 +167,7 @@ describe("pages/TableMega/Selection/hooks", () => {
     const spyTggleSelected = vi.fn();
     const Column = result.current.columns.find(
       (c) => c.id === "selection"
-    ) as any;
+    ) as Any;
 
     // Mock que retorna funcao para toggle all rows
     const tableMock = {

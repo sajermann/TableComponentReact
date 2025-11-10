@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
-import { TInput } from "./types";
-import { onChangeCustom, preOnChange } from "./utils";
+import { useInput } from "./hooks";
+import { TInput, TInputDebounced } from "./types";
 
 const input = tv({
   slots: {
@@ -33,31 +32,18 @@ const input = tv({
 });
 
 export function Input({
-  iserror,
+  isError,
   onBeforeChange,
-  onChange,
-  debounce,
   className,
+  onChange,
   ...rest
 }: TInput) {
-  const [event, setEvent] = useState<React.ChangeEvent<HTMLInputElement>>();
+  const { debounce } = rest as TInputDebounced;
   const { inputPropsInternal } = input({
-    color: iserror ? "error" : "primary",
+    color: isError ? "error" : "primary",
   });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (debounce && event) {
-        onChangeCustom({
-          e: event,
-          onBeforeChange,
-          onChange,
-        });
-      }
-    }, debounce);
-
-    return () => clearTimeout(timer);
-  }, [event]);
+  const { onChangeInternal } = useInput({ debounce, onChange, onBeforeChange });
 
   return (
     <input
@@ -65,15 +51,7 @@ export function Input({
       className={inputPropsInternal({
         class: className,
       })}
-      onChange={(e) =>
-        preOnChange({
-          e,
-          setEvent,
-          debounce,
-          onBeforeChange,
-          onChange,
-        })
-      }
+      onChange={onChangeInternal}
     />
   );
 }

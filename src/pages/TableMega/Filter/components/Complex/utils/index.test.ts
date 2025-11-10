@@ -6,6 +6,8 @@ import {
   globalFilterFn,
 } from './'; // Update with correct path
 
+type Any = any;
+
 describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
   // Test custom json-logic operations
   describe('Custom json-logic operations', () => {
@@ -56,7 +58,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
   describe('convertComplexFilterToJsonLogic', () => {
     it('should convert filter with "equals" type correctly', () => {
       // Test equals operator conversion
-      const filter: TComplexFilter = {
+      const filter: Any = {
         input: '',
         custom: [{ type: 'equals', column: 'name', value: 'John' }],
       };
@@ -71,7 +73,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should convert filter with "different" type correctly', () => {
       // Test not-equals operator conversion
-      const filter: TComplexFilter = {
+      const filter: Any = {
         input: '',
         custom: [{ type: 'different', column: 'status', value: 'inactive' }],
       };
@@ -85,7 +87,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should convert filter with "bigger" type correctly', () => {
       // Test greater-than operator conversion
-      const filter: TComplexFilter = {
+      const filter: Any = {
         input: '',
         custom: [{ type: 'bigger', column: 'age', value: 18 }],
       };
@@ -99,7 +101,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should convert filter with "smaller" type correctly', () => {
       // Test less-than operator conversion
-      const filter: TComplexFilter = {
+      const filter: Any = {
         input: '',
         custom: [{ type: 'smaller', column: 'age', value: 65 }],
       };
@@ -113,7 +115,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should convert filter with "starts" type correctly', () => {
       // Test startsWith operator conversion
-      const filter: TComplexFilter = {
+      const filter: Any = {
         input: '',
         custom: [{ type: 'starts', column: 'email', value: 'admin' }],
       };
@@ -127,7 +129,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should convert filter with "ends" type correctly', () => {
       // Test endsWith operator conversion
-      const filter: TComplexFilter = {
+      const filter: Any = {
         input: '',
         custom: [{ type: 'ends', column: 'email', value: '@test.com' }],
       };
@@ -141,7 +143,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should convert filter with "contains" type with reversed operand order', () => {
       // Test contains operator - note the reversed order of operands
-      const filter: TComplexFilter = {
+      const filter: Any = {
         input: '',
         custom: [{ type: 'contains', column: 'description', value: 'test' }],
       };
@@ -156,7 +158,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should handle multiple custom filters combined with AND logic', () => {
       // Test multiple filters are combined correctly
-      const filter: TComplexFilter = {
+      const filter: Any = {
         input: 'search',
         custom: [
           { type: 'equals', column: 'status', value: 'active' },
@@ -174,7 +176,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should always add OR clause for email and friends input filter', () => {
       // Test that input filter is always added to search email and friends
-      const filter: TComplexFilter = {
+      const filter: Any = {
         input: 'john',
         custom: [],
       };
@@ -194,8 +196,8 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
   // Test globalFilterFn
   describe('globalFilterFn', () => {
-    let mockRow: any;
-    let consoleLogSpy: any;
+    let mockRow: Any;
+    let consoleLogSpy: Any;
 
     beforeEach(() => {
       // Create a mock row with typical person data
@@ -215,7 +217,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should return true when filter matches email', () => {
       // Test email field filtering
-      const filters: TComplexFilter = {
+      const filters: Any = {
         input: 'john.doe',
         custom: [],
       };
@@ -227,7 +229,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should return true when filter matches friends', () => {
       // Test friends field filtering (joined with pipe separator)
-      const filters: TComplexFilter = {
+      const filters: Any = {
         input: 'Alice',
         custom: [],
       };
@@ -239,7 +241,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should return false when no fields match the input filter', () => {
       // Test when input does not match any field
-      const filters: TComplexFilter = {
+      const filters: Any = {
         input: 'nonexistent',
         custom: [],
       };
@@ -251,9 +253,9 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should apply custom filter with equals condition', () => {
       // Test custom filter logic with equals
-      const filters: TComplexFilter = {
+      const filters: Any = {
         input: '',
-        custom: [{ type: 'equals', column: 'name', value: 'John Doe' } as any],
+        custom: [{ type: 'equals', column: 'name', value: 'John Doe' }],
       };
 
       const result = globalFilterFn(mockRow, null, filters);
@@ -263,7 +265,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should apply custom filter with bigger condition', () => {
       // Test numeric comparison (greater than)
-      const filters: TComplexFilter = {
+      const filters: Any = {
         input: '',
         custom: [{ type: 'bigger', column: 'age', value: 25 }],
       };
@@ -275,7 +277,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should return false when custom filter does not match', () => {
       // Test failed filter condition
-      const filters: TComplexFilter = {
+      const filters: Any = {
         input: '',
         custom: [{ type: 'equals', column: 'age', value: 40 }],
       };
@@ -287,7 +289,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should combine input filter and custom filters with AND logic', () => {
       // Test that both input and custom filters must match
-      const filters: TComplexFilter = {
+      const filters: Any = {
         input: 'john',
         custom: [{ type: 'bigger', column: 'age', value: 25 }],
       };
@@ -299,7 +301,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should return false when input matches but custom filter fails', () => {
       // Test AND logic - all conditions must be true
-      const filters: TComplexFilter = {
+      const filters: Any = {
         input: 'john',
         custom: [{ type: 'smaller', column: 'age', value: 20 }],
       };
@@ -311,7 +313,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should properly join friends array with pipe separator', () => {
       // Verify friends are formatted correctly for searching
-      const filters: TComplexFilter = {
+      const filters: Any = {
         input: 'Alice | Bob',
         custom: [],
       };
@@ -323,12 +325,12 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should return true and log error when json-logic throws exception', () => {
       // Test error handling - should not crash and return true
-      const filters: TComplexFilter = {
+      const filters: Any = {
         input: 'test',
         custom: [{ type: 'equals', column: 'invalidColumn', value: undefined }],
       };
 
-      const result = globalFilterFn({ potato: [] as any }, null, filters);
+      const result = globalFilterFn({ potato: [] } as Any, null, filters);
 
       // Should return true on error to avoid hiding rows
       expect(result).toBe(true);
@@ -337,7 +339,7 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
     it('should return true when json-logic result is undefined', () => {
       // Test undefined result handling (treats as true)
       // Create a scenario where result might be undefined
-      const filters: TComplexFilter = {
+      const filters: Any = {
         input: '',
         custom: [],
       };
@@ -350,15 +352,15 @@ describe('pages/TraditionalPattern/Filter/components/Complex/utils', () => {
 
     it('should handle empty friends array correctly', () => {
       // Test with row that has no friends
-      const rowWithoutFriends = {
+      const rowWithoutFriends: Any = {
         original: {
           id: 2,
           email: 'solo@example.com',
           friends: [],
         },
-      } as any;
+      };
 
-      const filters: TComplexFilter = {
+      const filters: Any = {
         input: 'solo',
         custom: [],
       };

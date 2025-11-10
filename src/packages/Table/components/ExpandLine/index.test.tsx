@@ -3,9 +3,11 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { ExpandLine } from ".";
 
+type Any = any;
+
 // Mock Tr component used inside ExpandLine
 vi.mock("../Tr", () => ({
-  Tr: ({ children, ...props }: any) => (
+  Tr: ({ children, ...props }: Any) => (
     <tr data-testid="tr-mock" {...props}>
       {children}
     </tr>
@@ -13,7 +15,7 @@ vi.mock("../Tr", () => ({
 }));
 
 // Helper mock for Row with relevant methods
-function createMockRow({ isExpanded, visibleCellsCount = 1 }) {
+function createMockRow({ isExpanded, visibleCellsCount = 1 }: Any): Any {
   return {
     getIsExpanded: () => isExpanded,
     getVisibleCells: () => new Array(visibleCellsCount),
@@ -33,7 +35,7 @@ describe("packages/Table/components/ExpandLine", () => {
     const expandedTrProps = { "data-expanded": "true" };
     const expandedContentText = "Expanded Content";
 
-    const expandRow = {
+    const expandRow: Any = {
       expandedTrProps,
       render: () => <div>{expandedContentText}</div>,
     };
