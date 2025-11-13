@@ -17,13 +17,3 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     />
   </React.StrictMode>
 );
-
-// ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-//   <RouterProvider
-//     router={router}
-//     defaultPendingMs={0}
-//     defaultPendingMinMs={0}
-//     defaultErrorComponent={ErrorComponent}
-//     defaultPendingComponent={LoadingComponent}
-//   />
-// );

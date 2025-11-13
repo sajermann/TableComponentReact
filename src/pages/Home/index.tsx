@@ -15,18 +15,30 @@ export function Home() {
           <strong>{`${translate("WELCOME")} - ${APPLICATION_NAME}`}</strong>
         </h1>
         <p>{translate("HOME_MESSAGE_PRESENTATION")}</p>
-        <a
-          href="https://github.com/sajermann/BoilerplateComponentReact/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img
-            src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"
-            alt="github"
-            height="18"
-            style={{ borderRadius: 5, marginRight: 5 }}
-          />
-        </a>
+        <div className="flex gap-2">
+          <a
+            href="https://github.com/sajermann/TableComponentReact"
+            target="_blank"
+            rel="noreferrer"
+            className="bg-black rounded-sm p-2 flex gap-2 h-7 items-center text-sm font-bold !text-white"
+          >
+            <img src="./github.png" alt="github" className="w-4.5" />
+            Github
+          </a>
+          <a
+            href="https://codesandbox.io/p/github/sajermann/TableComponentReact/develop"
+            target="_blank"
+            rel="noreferrer"
+            className="bg-black rounded-sm p-2 flex gap-2 h-7 items-center text-sm font-bold !text-white"
+          >
+            <img
+              src="./codesandbox.webp"
+              alt="codesandbox"
+              className="w-4 invert"
+            />
+            Codesandbox
+          </a>
+        </div>
       </div>
       <CenterOptions options={data?.options || []} />
     </main>
