@@ -63,8 +63,8 @@ describe('pages/TableMega/FullEditable/utils/handleFormSubmit', () => {
     } as unknown as React.FormEvent<HTMLFormElement>;
 
     // Patch global FormData temporarily for this test
-    const OriginalFormData = global.FormData;
-    global.FormData = class {
+    const OriginalFormData = globalThis.FormData;
+    globalThis.FormData = class {
       constructor() {
         return mockFormData;
       }
@@ -101,7 +101,7 @@ describe('pages/TableMega/FullEditable/utils/handleFormSubmit', () => {
     });
 
     // Restore original FormData
-    global.FormData = OriginalFormData;
+    globalThis.FormData = OriginalFormData;
   });
 
   it('handles missing event gracefully', () => {

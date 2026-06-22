@@ -28,7 +28,7 @@ export function LoadingBar({ show, external, internal }: TProps) {
   }
 
   useEffect(() => {
-    let timerId: NodeJS.Timeout | null = null;
+    let timerId: number | null = null;
     if (show) {
       timerId = setInterval(frame, 0.01);
     } else {

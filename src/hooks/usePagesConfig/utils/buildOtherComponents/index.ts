@@ -1,25 +1,37 @@
 import { Dispatch, SetStateAction } from 'react';
 import { TOtherComponents } from '~/hooks/useOtherComponents/types';
 
+type TAny = any;
+
 type TBuildOtherComponentsProps = {
-  flatRoutes: any;
+  routes: TAny;
+  pathname: string;
   setOtherComponents: Dispatch<SetStateAction<TOtherComponents>>;
 };
 
 export const buildOtherComponents = ({
-  flatRoutes,
+  routes,
+  pathname,
   setOtherComponents,
 }: TBuildOtherComponentsProps) => {
-  const currentRoute = flatRoutes.find(
-    (route: { _fullPath: string }) => route._fullPath === location.pathname,
-  );
+  if (!pathname) {
+    setOtherComponents({
+      prev: null,
+      next: null,
+    });
+    return;
+  }
+  const allRoutes = routes
+    .filter((route: TAny) => route.options?.staticData?.routerName) // apenas rotas com nome
+    .sort((a: TAny, b: TAny) => {
+      return a.fullPath.localeCompare(b.fullPath);
+    });
 
-  const prevRoute = flatRoutes.find(
-    (route: { rank: number }) => route.rank === currentRoute?.rank - 1,
+  const currentIndex = allRoutes.findIndex(
+    (route: TAny) => route._fullPath === pathname,
   );
-  const nextRoute = flatRoutes.find(
-    (route: { rank: number }) => route.rank === currentRoute?.rank + 1,
-  );
+  const prevRoute = allRoutes[currentIndex - 1];
+  const nextRoute = allRoutes[currentIndex + 1];
 
   setOtherComponents({
     prev: prevRoute?.options?.staticData?.routerName

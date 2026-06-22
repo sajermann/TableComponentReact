@@ -10,11 +10,14 @@ afterEach(() => {
 });
 
 beforeEach(() => {
-	global.ResizeObserver = vi.fn().mockImplementation(() => ({
-		observe: vi.fn(),
-		unobserve: vi.fn(),
-		disconnect: vi.fn(),
-	}));
+  vi.stubGlobal(
+    'ResizeObserver',
+    class {
+      observe = vi.fn();
+      unobserve = vi.fn();
+      disconnect = vi.fn();
+    },
+  );
 
 	Object.defineProperty(window, 'matchMedia', {
 		writable: true,

@@ -1,6 +1,5 @@
-import { beforeEach } from "node:test";
 import { render } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi, beforeEach } from "vitest";
 import { Datepicker } from ".";
 import { Input } from "../Input";
 
@@ -16,7 +15,7 @@ describe("components/Datepicker", () => {
       <input {...props} type="date" />
     ));
     const { getByTestId } = render(
-      <Datepicker data-testid="test-datepicker" />
+      <Datepicker data-testid="test-datepicker" />,
     );
     expect(getByTestId("test-datepicker")).toBeInTheDocument();
   });

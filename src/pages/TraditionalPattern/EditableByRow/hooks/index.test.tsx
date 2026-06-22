@@ -134,9 +134,9 @@ describe("pages/TraditionalPattern/EditableByRow/hooks/useEditableByRow", () => 
       ["isActive", "on"],
     ];
     // Save original FormData
-    const OriginalFormData = global.FormData;
+    const OriginalFormData = globalThis.FormData;
 
-    global.FormData = class {
+    globalThis.FormData = class {
       constructor(form: any) {
         // Accept anything, ignore form argument
       }
@@ -155,7 +155,7 @@ describe("pages/TraditionalPattern/EditableByRow/hooks/useEditableByRow", () => 
     });
 
     // Restore original FormData after test
-    global.FormData = OriginalFormData;
+    globalThis.FormData = OriginalFormData;
 
     // Since updateLine was not set, no data change expected
     expect(result.current.data[0].name).not.toBe("New Name");
