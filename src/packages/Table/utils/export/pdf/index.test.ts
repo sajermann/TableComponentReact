@@ -33,7 +33,7 @@ describe('packages/Table/utils/export/pdf', () => {
   it('should call buildTable with data and columns', () => {
     const mockDate = new Date();
     vi.setSystemTime(mockDate);
-    vi.mocked(JsPdf).mockImplementation(() => {
+    vi.mocked(JsPdf).mockImplementation(function () {
       return {
         save: saveMock,
       } as any;
