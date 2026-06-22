@@ -5,11 +5,11 @@ import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { store, useHomePage } from "."; // Adjust the import path
 
-// Simulate Vite's import.meta.env for testing purposes
-beforeEach(() => {
-  // @ts-ignore
-  import.meta.env = { VITE_URL_BASENAME: "testbase" };
-});
+// // Simulate Vite's import.meta.env for testing purposes
+// beforeEach(() => {
+//   // @ts-ignore
+//   import.meta.env = { VITE_URL_BASENAME: "testbase" };
+// });
 
 vi.mock("@tanstack/react-router");
 describe("hooks/useHomePage", () => {
@@ -18,13 +18,13 @@ describe("hooks/useHomePage", () => {
     store.setState({ isHomePage: true });
   });
 
-  it("should set isHomePage to true when location.hash matches HOME_URL", () => {
-    // Arrange: set location.hash to match HOME_URL
+  it("should set isHomePage to true when location.href matches HOME_URL", () => {
+    // Arrange: set location.href to match HOME_URL
     vi.mocked(useLocation).mockImplementation(
       () =>
         ({
-          hash: "#/",
-        }) as any
+          href: "#/",
+        }) as any,
     );
 
     // Act: render hook
@@ -34,12 +34,12 @@ describe("hooks/useHomePage", () => {
     expect(result.current.isHomePage).toBe(true);
   });
 
-  it("should set isHomePage to false when location.hash does not match HOME_URL", () => {
+  it("should set isHomePage to false when location.href does not match HOME_URL", () => {
     vi.mocked(useLocation).mockImplementation(
       () =>
         ({
-          hash: "#/not-home",
-        }) as any
+          href: "#/not-home",
+        }) as any,
     );
     const { result } = renderHook(() => useHomePage());
     expect(result.current.isHomePage).toBe(false);

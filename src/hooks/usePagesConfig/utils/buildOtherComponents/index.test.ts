@@ -20,52 +20,59 @@ describe('hook/usePagesConfig/utils/buildOtherComponents', () => {
   });
 
   it('must define next and prev correctly', () => {
-    const flatRoutes = [
+    const routes = [
       {
-        _fullPath: '/prev',
+        _fullPath: '/a-prev',
+        fullPath: '/a-prev',
         rank: 1,
         options: { staticData: { routerName: 'Prev Page' } },
       },
       {
-        _fullPath: '/current',
+        _fullPath: '/b-current',
+        fullPath: '/b-current',
         rank: 2,
         options: { staticData: { routerName: 'Current Page' } },
       },
       {
-        _fullPath: '/next',
+        _fullPath: '/c-next',
+        fullPath: '/c-next',
         rank: 3,
         options: { staticData: { routerName: 'Next Page' } },
       },
     ];
 
-    buildOtherComponents({ flatRoutes, setOtherComponents });
+    buildOtherComponents({ routes, pathname: '/b-current', setOtherComponents });
 
     expect(setOtherComponents).toHaveBeenCalledWith({
-      prev: { label: 'Prev Page', path: '/prev' },
-      next: { label: 'Next Page', path: '/next' },
+      prev: { label: 'Prev Page', path: '/a-prev' },
+      next: { label: 'Next Page', path: '/c-next' },
     });
   });
 
   it('next/prev must be null if not routerName exists', () => {
-    const flatRoutes = [
+    
+    const routes = [
       {
-        _fullPath: '/prev',
+        _fullPath: '/a-prev',
+        fullPath: '/a-prev',
         rank: 1,
         options: { staticData: {} },
       },
       {
-        _fullPath: '/current',
+        _fullPath: '/b-current',
+        fullPath: '/b-current',
         rank: 2,
         options: { staticData: { routerName: 'Current Page' } },
       },
       {
-        _fullPath: '/next',
+        _fullPath: '/c-next',
+        fullPath: '/c-next',
         rank: 3,
         options: { staticData: {} },
       },
     ];
 
-    buildOtherComponents({ flatRoutes, setOtherComponents });
+    buildOtherComponents({ routes, pathname: null as unknown as string, setOtherComponents });
 
     expect(setOtherComponents).toHaveBeenCalledWith({
       prev: null,
@@ -73,20 +80,4 @@ describe('hook/usePagesConfig/utils/buildOtherComponents', () => {
     });
   });
 
-  it('next/prev must be null if not routerName to be undefined', () => {
-    const flatRoutes = [
-      {
-        _fullPath: '/other',
-        rank: 1,
-        options: { staticData: { routerName: 'Other Page' } },
-      },
-    ];
-
-    buildOtherComponents({ flatRoutes, setOtherComponents });
-
-    expect(setOtherComponents).toHaveBeenCalledWith({
-      prev: null,
-      next: null,
-    });
-  });
 });

@@ -28,6 +28,7 @@ const buildOtherComponents = vi.fn();
 
 const useMatchesMock = vi.mocked(Router.useMatches);
 const useRouterMock = vi.mocked(Router.useRouter);
+const useLocationMock = vi.mocked(Router.useLocation);
 
 describe("hooks/usePagesConfig", () => {
   beforeEach(() => {
@@ -37,7 +38,10 @@ describe("hooks/usePagesConfig", () => {
       { staticData: { routerName: "Home" }, pathname: "/" },
     ] as any);
     useRouterMock.mockReturnValue({
-      flatRoutes: [{ _fullPath: "/", rank: 1 }],
+      routesById: [{ _fullPath: "/", rank: 1 }],
+    } as any);
+    useLocationMock.mockReturnValue({
+      pathname: "/",
     } as any);
 
     mockTranslate.mockImplementation((label) => label);
@@ -53,7 +57,8 @@ describe("hooks/usePagesConfig", () => {
     });
 
     expect(buildOtherComponents).toHaveBeenCalledWith({
-      flatRoutes: [{ _fullPath: "/", rank: 1 }],
+      pathname: "/",
+      routes: [{ _fullPath: "/", rank: 1 }],
       setOtherComponents: mockSetOtherComponents,
     });
   });

@@ -21,12 +21,12 @@ export function useHomePage() {
   const { isHomePage, setIsHomePage } = store();
   const location = useLocation();
   useEffect(() => {
-    if (HOME_URL.includes(location.hash)) {
+    if (HOME_URL.includes(location.href)) {
       setIsHomePage(true);
     } else {
       setIsHomePage(false);
     }
-  }, [location.hash]);
+  }, [location.href]);
 
   return { isHomePage };
 }
