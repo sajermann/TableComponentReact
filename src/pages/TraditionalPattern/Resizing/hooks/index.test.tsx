@@ -50,7 +50,7 @@ describe("pages/TraditionalPattern/Resizing/hooks", () => {
 
   it("should save column sizes to localStorage when onResizing is called", () => {
     const { result } = renderHook(() => useResizing());
-    const setItemSpy = vi.spyOn(Storage.prototype, "setItem");
+    const setItemSpy = vi.spyOn(window.localStorage, "setItem");
 
     act(() => {
       result.current.onResizing({
@@ -63,11 +63,11 @@ describe("pages/TraditionalPattern/Resizing/hooks", () => {
 
     expect(setItemSpy).toHaveBeenCalledWith(
       IDENTIFIER,
-      expect.stringContaining('"id":120')
+      expect.stringContaining('"id":120'),
     );
     expect(setItemSpy).toHaveBeenCalledWith(
       IDENTIFIER,
-      expect.stringContaining('"name":180')
+      expect.stringContaining('"name":180'),
     );
 
     setItemSpy.mockRestore();
@@ -75,7 +75,7 @@ describe("pages/TraditionalPattern/Resizing/hooks", () => {
 
   it("should not update localStorage when onResizing is called with empty object", () => {
     const { result } = renderHook(() => useResizing());
-    const setItemSpy = vi.spyOn(Storage.prototype, "setItem");
+    const setItemSpy = vi.spyOn(window.localStorage, "setItem");
 
     act(() => {
       result.current.onResizing({
@@ -116,7 +116,7 @@ describe("pages/TraditionalPattern/Resizing/hooks", () => {
   it("should remove localStorage item and reload window when handleReset is called", () => {
     localStorage.setItem(IDENTIFIER, JSON.stringify({ id: 100 }));
 
-    const removeItemSpy = vi.spyOn(Storage.prototype, "removeItem");
+    const removeItemSpy = vi.spyOn(window.localStorage, "removeItem");
     const reloadSpy = vi.fn();
 
     Object.defineProperty(window, "location", {

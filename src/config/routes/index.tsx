@@ -1,11 +1,10 @@
 import {
-  CatchBoundary,
-  Outlet,
   createHashHistory,
   createRootRoute,
   createRoute,
   createRouter,
   lazyRouteComponent,
+  Outlet,
 } from "@tanstack/react-router";
 import { InjectorProviders, RoutesConfig } from "~/components";
 import { Home } from "~/pages/Home";
@@ -19,7 +18,7 @@ const rootRoute = createRootRoute({
   ),
   notFoundComponent: lazyRouteComponent(
     () => import("~/pages/NotFound"),
-    "NotFoundPage"
+    "NotFoundPage",
   ),
 });
 
@@ -61,7 +60,7 @@ const tableTraditionalRootRoute = createRoute({
   path: "/",
   component: lazyRouteComponent(
     () => import("~/pages/TraditionalPattern"),
-    "TraditionalPattern"
+    "TraditionalPattern",
   ),
 });
 
@@ -79,7 +78,7 @@ const tableCompositionRootRoute = createRoute({
   path: "/",
   component: lazyRouteComponent(
     () => import("~/pages/TableMega"),
-    "TableMegaPage"
+    "TableMegaPage",
   ),
 });
 
@@ -89,7 +88,7 @@ export const compositionChilds = [
     path: "/column-order",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/ColumnOrder"),
-      "TableMegaColumnOrderPage"
+      "TableMegaColumnOrderPage",
     ),
     staticData: {
       routerName: "COLUMN_ORDER",
@@ -100,7 +99,7 @@ export const compositionChilds = [
     path: "/column-visibility",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/ColumnVisibility"),
-      "TableMegaColumnVisibilityPage"
+      "TableMegaColumnVisibilityPage",
     ),
     staticData: {
       routerName: "COLUMN_VISIBILITY",
@@ -111,7 +110,7 @@ export const compositionChilds = [
     path: "/default",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/Default"),
-      "TableMegaDefaultPage"
+      "TableMegaDefaultPage",
     ),
     staticData: {
       routerName: "DEFAULT",
@@ -122,7 +121,7 @@ export const compositionChilds = [
     path: "/editable-by-row",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/EditableByRow"),
-      "TableMegaEditableByRowPage"
+      "TableMegaEditableByRowPage",
     ),
     staticData: {
       routerName: "EDITABLE_BY_ROW",
@@ -133,7 +132,7 @@ export const compositionChilds = [
     path: "/ellipsis",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/Ellipsis"),
-      "TableMegaEllipsisPage"
+      "TableMegaEllipsisPage",
     ),
 
     staticData: {
@@ -145,7 +144,7 @@ export const compositionChilds = [
     path: "/expand-row",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/ExpandRow"),
-      "TableMegaExpandRowPage"
+      "TableMegaExpandRowPage",
     ),
 
     staticData: {
@@ -157,7 +156,7 @@ export const compositionChilds = [
     path: "/export",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/Export"),
-      "TableMegaExportPage"
+      "TableMegaExportPage",
     ),
 
     staticData: {
@@ -169,7 +168,7 @@ export const compositionChilds = [
     path: "/filter",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/Filter"),
-      "TableMegaFilterPage"
+      "TableMegaFilterPage",
     ),
     staticData: {
       routerName: "FILTER",
@@ -180,7 +179,7 @@ export const compositionChilds = [
     path: "/footer",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/Footer"),
-      "TableMegaFooterPage"
+      "TableMegaFooterPage",
     ),
     staticData: {
       routerName: "FOOTER",
@@ -191,7 +190,7 @@ export const compositionChilds = [
     path: "/full-editable",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/FullEditable"),
-      "TableMegaFullEditablePage"
+      "TableMegaFullEditablePage",
     ),
     staticData: {
       routerName: "FULL_EDITABLE",
@@ -202,7 +201,7 @@ export const compositionChilds = [
     path: "/loading",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/Loading"),
-      "TableMegaLoadingPage"
+      "TableMegaLoadingPage",
     ),
     staticData: {
       routerName: "LOADING",
@@ -213,7 +212,7 @@ export const compositionChilds = [
     path: "/pagination",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/Pagination"),
-      "TableMegaPaginationPage"
+      "TableMegaPaginationPage",
     ),
     staticData: {
       routerName: "PAGINATION",
@@ -224,7 +223,7 @@ export const compositionChilds = [
     path: "/resizing",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/Resizing"),
-      "TableMegaResizingPage"
+      "TableMegaResizingPage",
     ),
     staticData: {
       routerName: "RESIZING",
@@ -235,7 +234,7 @@ export const compositionChilds = [
     path: "/selection",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/Selection"),
-      "TableMegaSelectionPage"
+      "TableMegaSelectionPage",
     ),
     staticData: {
       routerName: "SELECTION",
@@ -246,7 +245,7 @@ export const compositionChilds = [
     path: "/sort",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/Sort"),
-      "TableMegaSortPage"
+      "TableMegaSortPage",
     ),
     staticData: {
       routerName: "SORT",
@@ -257,7 +256,7 @@ export const compositionChilds = [
     path: "/virtualization",
     component: lazyRouteComponent(
       () => import("~/pages/TableMega/Virtualization"),
-      "TableMegaVirtualizationPage"
+      "TableMegaVirtualizationPage",
     ),
     staticData: {
       routerName: "VIRTUALIZATION",
@@ -279,7 +278,7 @@ export const traditionalChilds = [
     path: "/column-order",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/ColumnOrder"),
-      "ColumnOrderPage"
+      "ColumnOrderPage",
     ),
     staticData: {
       routerName: "COLUMN_ORDER",
@@ -290,7 +289,7 @@ export const traditionalChilds = [
     path: "/default",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/Default"),
-      "DefaultPage"
+      "DefaultPage",
     ),
     staticData: {
       routerName: "DEFAULT",
@@ -301,7 +300,7 @@ export const traditionalChilds = [
     path: "/column-visibility",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/ColumnVisibility"),
-      "ColumnVisibilityPage"
+      "ColumnVisibilityPage",
     ),
     staticData: {
       routerName: "COLUMN_VISIBILITY",
@@ -312,7 +311,7 @@ export const traditionalChilds = [
     path: "/editable",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/EditableByRow"),
-      "TraditionalEditableByRowPage"
+      "TraditionalEditableByRowPage",
     ),
     staticData: {
       routerName: "EDITABLE_BY_ROW",
@@ -323,7 +322,7 @@ export const traditionalChilds = [
     path: "/ellipsis",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/Ellipsis"),
-      "EllipsisPage"
+      "EllipsisPage",
     ),
     staticData: {
       routerName: "ELLIPSIS",
@@ -334,7 +333,7 @@ export const traditionalChilds = [
     path: "/expand-line",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/ExpandRow"),
-      "TraditionalExpandRowPage"
+      "TraditionalExpandRowPage",
     ),
     staticData: {
       routerName: "EXPAND_ROW",
@@ -345,7 +344,7 @@ export const traditionalChilds = [
     path: "/export",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/Export"),
-      "ExportPage"
+      "ExportPage",
     ),
     staticData: {
       routerName: "EXPORT",
@@ -356,7 +355,7 @@ export const traditionalChilds = [
     path: "/filter",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/Filter"),
-      "FilterPage"
+      "FilterPage",
     ),
     staticData: {
       routerName: "FILTER",
@@ -367,7 +366,7 @@ export const traditionalChilds = [
     path: "/footer",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/Footer"),
-      "FooterPage"
+      "FooterPage",
     ),
     staticData: {
       routerName: "FOOTER",
@@ -378,7 +377,7 @@ export const traditionalChilds = [
     path: "/full-editable",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/FullEditable"),
-      "FullEditablePage"
+      "FullEditablePage",
     ),
     staticData: {
       routerName: "FULL_EDITABLE",
@@ -389,7 +388,7 @@ export const traditionalChilds = [
     path: "/loading",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/Loading"),
-      "LoadingPage"
+      "LoadingPage",
     ),
     staticData: {
       routerName: "LOADING",
@@ -400,7 +399,7 @@ export const traditionalChilds = [
     path: "/pagination",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/Pagination"),
-      "PaginationPage"
+      "PaginationPage",
     ),
     staticData: {
       routerName: "PAGINATION",
@@ -411,7 +410,7 @@ export const traditionalChilds = [
     path: "/resizing",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/Resizing"),
-      "ResizingPage"
+      "ResizingPage",
     ),
     staticData: {
       routerName: "RESIZING",
@@ -422,7 +421,7 @@ export const traditionalChilds = [
     path: "/selection",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/Selection"),
-      "SelectionPage"
+      "SelectionPage",
     ),
     staticData: {
       routerName: "SELECTION",
@@ -433,7 +432,7 @@ export const traditionalChilds = [
     path: "/sort",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/Sort"),
-      "SortPage"
+      "SortPage",
     ),
 
     staticData: {
@@ -445,7 +444,7 @@ export const traditionalChilds = [
     path: "/virtualization",
     component: lazyRouteComponent(
       () => import("~/pages/TraditionalPattern/Virtualization"),
-      "VirtualizationPage"
+      "VirtualizationPage",
     ),
     staticData: {
       routerName: "VIRTUALIZATION",
