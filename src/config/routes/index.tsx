@@ -1,3 +1,4 @@
+import { TanStackDevtools } from '@tanstack/react-devtools';
 import {
   createHashHistory,
   createRootRoute,
@@ -5,39 +6,43 @@ import {
   createRouter,
   lazyRouteComponent,
   Outlet,
-} from "@tanstack/react-router";
-import { InjectorProviders, RoutesConfig } from "~/components";
-import { Home } from "~/pages/Home";
-import { _sortCustomName, _sortCustomOrder } from "./utils";
+} from '@tanstack/react-router';
+import { tableDevtoolsPlugin } from '@tanstack/react-table-devtools';
+import { InjectorProviders, RoutesConfig } from '~/components';
+import { Home } from '~/pages/Home';
+import { _sortCustomName, _sortCustomOrder } from './utils';
 
 const rootRoute = createRootRoute({
   component: () => (
     <InjectorProviders>
       <RoutesConfig />
+      {import.meta.env.DEV && (
+        <TanStackDevtools plugins={[tableDevtoolsPlugin()]} />
+      )}
     </InjectorProviders>
   ),
   notFoundComponent: lazyRouteComponent(
-    () => import("~/pages/NotFound"),
-    "NotFoundPage",
+    () => import('~/pages/NotFound'),
+    'NotFoundPage',
   ),
 });
 
 const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/",
+  path: '/',
   loader: async () => {
     return {
       options: [
         {
-          path: "/traditional-pattern",
+          path: '/traditional-pattern',
           staticData: {
-            routerName: "TRADITIONAL_PATTERN",
+            routerName: 'TRADITIONAL_PATTERN',
           },
         },
         {
-          path: "/composition-pattern",
+          path: '/composition-pattern',
           staticData: {
-            routerName: "COMPOSITION_PATTERN",
+            routerName: 'COMPOSITION_PATTERN',
           },
         },
       ],
@@ -48,218 +53,218 @@ const homeRoute = createRoute({
 
 const tableTraditionalOutletRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/traditional-pattern",
+  path: '/traditional-pattern',
   component: Outlet,
   staticData: {
-    routerName: "TRADITIONAL_PATTERN",
+    routerName: 'TRADITIONAL_PATTERN',
   },
 });
 
 const tableTraditionalRootRoute = createRoute({
   getParentRoute: () => tableTraditionalOutletRoute,
-  path: "/",
+  path: '/',
   component: lazyRouteComponent(
-    () => import("~/pages/TraditionalPattern"),
-    "TraditionalPattern",
+    () => import('~/pages/TraditionalPattern'),
+    'TraditionalPattern',
   ),
 });
 
 const tableCompositionOutletRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/composition-pattern",
+  path: '/composition-pattern',
   component: Outlet,
   staticData: {
-    routerName: "COMPOSITION_PATTERN",
+    routerName: 'COMPOSITION_PATTERN',
   },
 });
 
 const tableCompositionRootRoute = createRoute({
   getParentRoute: () => tableCompositionOutletRoute,
-  path: "/",
+  path: '/',
   component: lazyRouteComponent(
-    () => import("~/pages/TableMega"),
-    "TableMegaPage",
+    () => import('~/pages/TableMega'),
+    'TableMegaPage',
   ),
 });
 
 export const compositionChilds = [
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/column-order",
+    path: '/column-order',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/ColumnOrder"),
-      "TableMegaColumnOrderPage",
+      () => import('~/pages/TableMega/ColumnOrder'),
+      'TableMegaColumnOrderPage',
     ),
     staticData: {
-      routerName: "COLUMN_ORDER",
+      routerName: 'COLUMN_ORDER',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/column-visibility",
+    path: '/column-visibility',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/ColumnVisibility"),
-      "TableMegaColumnVisibilityPage",
+      () => import('~/pages/TableMega/ColumnVisibility'),
+      'TableMegaColumnVisibilityPage',
     ),
     staticData: {
-      routerName: "COLUMN_VISIBILITY",
+      routerName: 'COLUMN_VISIBILITY',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/default",
+    path: '/default',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/Default"),
-      "TableMegaDefaultPage",
+      () => import('~/pages/TableMega/Default'),
+      'TableMegaDefaultPage',
     ),
     staticData: {
-      routerName: "DEFAULT",
+      routerName: 'DEFAULT',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/editable-by-row",
+    path: '/editable-by-row',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/EditableByRow"),
-      "TableMegaEditableByRowPage",
+      () => import('~/pages/TableMega/EditableByRow'),
+      'TableMegaEditableByRowPage',
     ),
     staticData: {
-      routerName: "EDITABLE_BY_ROW",
+      routerName: 'EDITABLE_BY_ROW',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/ellipsis",
+    path: '/ellipsis',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/Ellipsis"),
-      "TableMegaEllipsisPage",
+      () => import('~/pages/TableMega/Ellipsis'),
+      'TableMegaEllipsisPage',
     ),
 
     staticData: {
-      routerName: "ELLIPSIS",
+      routerName: 'ELLIPSIS',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/expand-row",
+    path: '/expand-row',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/ExpandRow"),
-      "TableMegaExpandRowPage",
+      () => import('~/pages/TableMega/ExpandRow'),
+      'TableMegaExpandRowPage',
     ),
 
     staticData: {
-      routerName: "EXPAND_ROW",
+      routerName: 'EXPAND_ROW',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/export",
+    path: '/export',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/Export"),
-      "TableMegaExportPage",
+      () => import('~/pages/TableMega/Export'),
+      'TableMegaExportPage',
     ),
 
     staticData: {
-      routerName: "EXPORT",
+      routerName: 'EXPORT',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/filter",
+    path: '/filter',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/Filter"),
-      "TableMegaFilterPage",
+      () => import('~/pages/TableMega/Filter'),
+      'TableMegaFilterPage',
     ),
     staticData: {
-      routerName: "FILTER",
+      routerName: 'FILTER',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/footer",
+    path: '/footer',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/Footer"),
-      "TableMegaFooterPage",
+      () => import('~/pages/TableMega/Footer'),
+      'TableMegaFooterPage',
     ),
     staticData: {
-      routerName: "FOOTER",
+      routerName: 'FOOTER',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/full-editable",
+    path: '/full-editable',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/FullEditable"),
-      "TableMegaFullEditablePage",
+      () => import('~/pages/TableMega/FullEditable'),
+      'TableMegaFullEditablePage',
     ),
     staticData: {
-      routerName: "FULL_EDITABLE",
+      routerName: 'FULL_EDITABLE',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/loading",
+    path: '/loading',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/Loading"),
-      "TableMegaLoadingPage",
+      () => import('~/pages/TableMega/Loading'),
+      'TableMegaLoadingPage',
     ),
     staticData: {
-      routerName: "LOADING",
+      routerName: 'LOADING',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/pagination",
+    path: '/pagination',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/Pagination"),
-      "TableMegaPaginationPage",
+      () => import('~/pages/TableMega/Pagination'),
+      'TableMegaPaginationPage',
     ),
     staticData: {
-      routerName: "PAGINATION",
+      routerName: 'PAGINATION',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/resizing",
+    path: '/resizing',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/Resizing"),
-      "TableMegaResizingPage",
+      () => import('~/pages/TableMega/Resizing'),
+      'TableMegaResizingPage',
     ),
     staticData: {
-      routerName: "RESIZING",
+      routerName: 'RESIZING',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/selection",
+    path: '/selection',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/Selection"),
-      "TableMegaSelectionPage",
+      () => import('~/pages/TableMega/Selection'),
+      'TableMegaSelectionPage',
     ),
     staticData: {
-      routerName: "SELECTION",
+      routerName: 'SELECTION',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/sort",
+    path: '/sort',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/Sort"),
-      "TableMegaSortPage",
+      () => import('~/pages/TableMega/Sort'),
+      'TableMegaSortPage',
     ),
     staticData: {
-      routerName: "SORT",
+      routerName: 'SORT',
     },
   },
   {
     getParentRoute: () => tableCompositionOutletRoute,
-    path: "/virtualization",
+    path: '/virtualization',
     component: lazyRouteComponent(
-      () => import("~/pages/TableMega/Virtualization"),
-      "TableMegaVirtualizationPage",
+      () => import('~/pages/TableMega/Virtualization'),
+      'TableMegaVirtualizationPage',
     ),
     staticData: {
-      routerName: "VIRTUALIZATION",
+      routerName: 'VIRTUALIZATION',
     },
   },
 ]
@@ -275,179 +280,179 @@ for (const item of compositionChilds) {
 export const traditionalChilds = [
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/column-order",
+    path: '/column-order',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/ColumnOrder"),
-      "ColumnOrderPage",
+      () => import('~/pages/TraditionalPattern/ColumnOrder'),
+      'ColumnOrderPage',
     ),
     staticData: {
-      routerName: "COLUMN_ORDER",
+      routerName: 'COLUMN_ORDER',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/default",
+    path: '/default',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/Default"),
-      "DefaultPage",
+      () => import('~/pages/TraditionalPattern/Default'),
+      'DefaultPage',
     ),
     staticData: {
-      routerName: "DEFAULT",
+      routerName: 'DEFAULT',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/column-visibility",
+    path: '/column-visibility',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/ColumnVisibility"),
-      "ColumnVisibilityPage",
+      () => import('~/pages/TraditionalPattern/ColumnVisibility'),
+      'ColumnVisibilityPage',
     ),
     staticData: {
-      routerName: "COLUMN_VISIBILITY",
+      routerName: 'COLUMN_VISIBILITY',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/editable",
+    path: '/editable',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/EditableByRow"),
-      "TraditionalEditableByRowPage",
+      () => import('~/pages/TraditionalPattern/EditableByRow'),
+      'TraditionalEditableByRowPage',
     ),
     staticData: {
-      routerName: "EDITABLE_BY_ROW",
+      routerName: 'EDITABLE_BY_ROW',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/ellipsis",
+    path: '/ellipsis',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/Ellipsis"),
-      "EllipsisPage",
+      () => import('~/pages/TraditionalPattern/Ellipsis'),
+      'EllipsisPage',
     ),
     staticData: {
-      routerName: "ELLIPSIS",
+      routerName: 'ELLIPSIS',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/expand-line",
+    path: '/expand-line',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/ExpandRow"),
-      "TraditionalExpandRowPage",
+      () => import('~/pages/TraditionalPattern/ExpandRow'),
+      'TraditionalExpandRowPage',
     ),
     staticData: {
-      routerName: "EXPAND_ROW",
+      routerName: 'EXPAND_ROW',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/export",
+    path: '/export',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/Export"),
-      "ExportPage",
+      () => import('~/pages/TraditionalPattern/Export'),
+      'ExportPage',
     ),
     staticData: {
-      routerName: "EXPORT",
+      routerName: 'EXPORT',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/filter",
+    path: '/filter',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/Filter"),
-      "FilterPage",
+      () => import('~/pages/TraditionalPattern/Filter'),
+      'FilterPage',
     ),
     staticData: {
-      routerName: "FILTER",
+      routerName: 'FILTER',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/footer",
+    path: '/footer',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/Footer"),
-      "FooterPage",
+      () => import('~/pages/TraditionalPattern/Footer'),
+      'FooterPage',
     ),
     staticData: {
-      routerName: "FOOTER",
+      routerName: 'FOOTER',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/full-editable",
+    path: '/full-editable',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/FullEditable"),
-      "FullEditablePage",
+      () => import('~/pages/TraditionalPattern/FullEditable'),
+      'FullEditablePage',
     ),
     staticData: {
-      routerName: "FULL_EDITABLE",
+      routerName: 'FULL_EDITABLE',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/loading",
+    path: '/loading',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/Loading"),
-      "LoadingPage",
+      () => import('~/pages/TraditionalPattern/Loading'),
+      'LoadingPage',
     ),
     staticData: {
-      routerName: "LOADING",
+      routerName: 'LOADING',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/pagination",
+    path: '/pagination',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/Pagination"),
-      "PaginationPage",
+      () => import('~/pages/TraditionalPattern/Pagination'),
+      'PaginationPage',
     ),
     staticData: {
-      routerName: "PAGINATION",
+      routerName: 'PAGINATION',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/resizing",
+    path: '/resizing',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/Resizing"),
-      "ResizingPage",
+      () => import('~/pages/TraditionalPattern/Resizing'),
+      'ResizingPage',
     ),
     staticData: {
-      routerName: "RESIZING",
+      routerName: 'RESIZING',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/selection",
+    path: '/selection',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/Selection"),
-      "SelectionPage",
+      () => import('~/pages/TraditionalPattern/Selection'),
+      'SelectionPage',
     ),
     staticData: {
-      routerName: "SELECTION",
+      routerName: 'SELECTION',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/sort",
+    path: '/sort',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/Sort"),
-      "SortPage",
+      () => import('~/pages/TraditionalPattern/Sort'),
+      'SortPage',
     ),
 
     staticData: {
-      routerName: "SORT",
+      routerName: 'SORT',
     },
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: "/virtualization",
+    path: '/virtualization',
     component: lazyRouteComponent(
-      () => import("~/pages/TraditionalPattern/Virtualization"),
-      "VirtualizationPage",
+      () => import('~/pages/TraditionalPattern/Virtualization'),
+      'VirtualizationPage',
     ),
     staticData: {
-      routerName: "VIRTUALIZATION",
+      routerName: 'VIRTUALIZATION',
     },
   },
 ]

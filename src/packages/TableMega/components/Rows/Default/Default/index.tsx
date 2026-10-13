@@ -1,17 +1,17 @@
-import { Row } from "@tanstack/react-table";
-import { Fragment } from "react";
-import { useTableMega } from "~/packages/TableMega/hooks";
-import { TrComplete } from "../TrComplete";
+import { Row } from '@tanstack/react-table';
+import { Fragment } from 'react';
+import { useTableMega } from '~/packages/TableMega/hooks';
+import { TrComplete } from '../TrComplete';
 
 export type TDefaultProps<T> = {
   enableEllipsis?: boolean;
   onClickRow?: ({ row }: { row: Row<T> }) => void;
 };
 export function Default<T>({ enableEllipsis, onClickRow }: TDefaultProps<T>) {
-  const { table } = useTableMega();
+  const { table } = useTableMega<T>();
   return (
     <>
-      {table.getRowModel().rows.map((row) => (
+      {table.getRowModel().rows.map(row => (
         <Fragment key={row.id}>
           <TrComplete
             row={row}

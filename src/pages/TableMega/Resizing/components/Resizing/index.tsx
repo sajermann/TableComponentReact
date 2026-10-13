@@ -1,7 +1,7 @@
-import { Header, Table } from "@tanstack/react-table";
-import { useEffect } from "react";
-import styles from "./index.module.css";
-import { onResizing } from "./utils";
+import { Header, Table } from '@tanstack/react-table';
+import { useEffect } from 'react';
+import styles from './index.module.css';
+import { onResizing } from './utils';
 
 export function Resizing<T>({
   header,
@@ -12,15 +12,17 @@ export function Resizing<T>({
 }) {
   if (!header.column.getCanResize()) return null;
 
+  const columnSizing = table.state?.columnSizing;
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       onResizing({
-        columnSizing: table.getState().columnSizing,
+        columnSizing,
       });
     }, 1000);
 
     return () => clearTimeout(timeout);
-  }, [table.getState().columnSizing]);
+  }, [columnSizing]);
 
   return (
     <div
@@ -28,7 +30,7 @@ export function Resizing<T>({
         onMouseDown: header.getResizeHandler(),
         onTouchStart: header.getResizeHandler(),
         className: `${styles.resizer} ${
-          header.column.getIsResizing() ? styles.isResizing : ""
+          header.column.getIsResizing() ? styles.isResizing : ''
         }`,
       }}
     />

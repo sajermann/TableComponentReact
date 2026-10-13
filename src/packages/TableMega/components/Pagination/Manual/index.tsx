@@ -1,7 +1,6 @@
 import {
   OnChangeFn,
   PaginationState,
-  getPaginationRowModel,
 } from "@tanstack/react-table";
 import { useEffect } from "react";
 import { useTableMega } from "../../../hooks";
@@ -25,20 +24,20 @@ export function Manual({
   const { table } = useTableMega();
 
   useEffect(() => {
-    table.setState((prev) => ({
-      ...prev,
-      pagination: {
-        pageIndex,
-        pageSize,
-      },
-    }));
     table.setOptions((prev) => ({
       ...prev,
       onPaginationChange,
       rowCount,
       manualPagination: true,
+      state: {
+        ...prev?.state,
+        pagination: {
+          pageIndex,
+          pageSize,
+        },
+      },
     }));
-  }, [pageIndex, pageSize, rowCount]);
+  }, [pageIndex, pageSize, rowCount, onPaginationChange]);
 
   return <Main disabled={disabled} />;
 }

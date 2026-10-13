@@ -1,7 +1,7 @@
-import * as path from 'path';
 import tailwindcss from '@tailwindcss/vite';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
+import * as path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import Pages from 'vite-plugin-pages';
 
@@ -35,6 +35,11 @@ export default defineConfig(({ mode }) => {
         '~': path.resolve(__dirname, 'src'),
         html2canvas: 'html2canvas-pro',
       },
+    },
+    define: {
+      'import.meta.env.VITE_PROJECT_ROOT': JSON.stringify(
+        process.cwd().replace(/\\/g, '/'),
+      ),
     },
   };
 });

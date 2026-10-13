@@ -1,7 +1,7 @@
 import { Row } from '@tanstack/react-table';
 import { stringToDate } from '../stringToDate';
 
-type Props<T> = {
+type Props<T extends Record<string, unknown>> = {
   row: Row<T>;
   columnId: string;
   valueFilter: {
@@ -9,7 +9,11 @@ type Props<T> = {
     to: string;
   };
 };
-export function filterRangeDate<T>({ row, columnId, valueFilter }: Props<T>) {
+export function filterRangeDate<T extends Record<string, unknown>>({
+  row,
+  columnId,
+  valueFilter,
+}: Props<T>) {
   if (valueFilter.from === '' && valueFilter.to === '') {
     return true;
   }

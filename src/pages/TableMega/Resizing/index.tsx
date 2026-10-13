@@ -1,15 +1,16 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
-import { Button, Section } from "~/components";
-import { useColumns, useTranslation } from "~/hooks";
-import * as TableMega from "~/packages/TableMega";
-import { TPerson } from "~/types";
-import { makeData } from "~/utils";
-import { Resizing } from "./components/Resizing";
+import { ColumnDef } from '@tanstack/react-table';
+import { useMemo, useState } from 'react';
+import { Button, Section } from '~/components';
+import { useColumns, useTranslation } from '~/hooks';
+import * as TableMega from '~/packages/TableMega';
+import { TPerson } from '~/types';
+import { makeData } from '~/utils';
+import { getEnv } from '~/utils/getEnv';
+import { Resizing } from './components/Resizing';
 
 const DATA = makeData.person(5);
 
-const IDENTIFIER = `${import.meta.env.VITE_APPLICATION_IDENTIFIER}:resizing`;
+const IDENTIFIER = `${getEnv('VITE_APPLICATION_IDENTIFIER')}:resizing`;
 
 const DEFAULT = {
   id: 100,
@@ -36,7 +37,6 @@ export function TableMegaResizingPage() {
   });
 
   const { columns } = useColumns(columnSize);
-
   const columnsInternal = useMemo<ColumnDef<TPerson>[]>(
     () => [
       columns[0],
@@ -72,14 +72,14 @@ export function TableMegaResizingPage() {
       columns[6],
       columns[7],
     ],
-    [columns, translate]
+    [columns, translate],
   );
 
   return (
-    <Section title={translate("RESIZING")} variant="h1">
-      {translate("IMPLEMENTS_RESIZING_MODE")}
+    <Section title={translate('RESIZING')} variant="h1">
+      {translate('IMPLEMENTS_RESIZING_MODE')}
       <div className="flex flex-col gap-2">
-        {translate("SAVE_COLUMN_SIZE_STATE_AFTER_ONE_SECOND_IN_LOCAL_STORAGE")}
+        {translate('SAVE_COLUMN_SIZE_STATE_AFTER_ONE_SECOND_IN_LOCAL_STORAGE')}
         <div>
           <Button
             variant="outlined"
@@ -89,7 +89,7 @@ export function TableMegaResizingPage() {
               window.location.reload();
             }}
           >
-            {translate("RESET")}
+            {translate('RESET')}
           </Button>
         </div>
         <TableMega.Root data={DATA} columns={columnsInternal}>

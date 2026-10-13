@@ -1,24 +1,13 @@
+import { useContext } from 'react';
 import {
-  OnChangeFn,
-  SortingState,
-  TableOptions,
-  getSortedRowModel,
-} from '@tanstack/react-table';
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
-import { Context } from '../../components/ContextProvider';
+  Context,
+  TContextProviderType,
+} from '../../components/ContextProvider';
 
 type TUseTableMegaProps = {};
 
-export function useTableMega(props?: TUseTableMegaProps) {
-  const { ...rest } = useContext(Context);
+export function useTableMega<T = unknown>(props?: TUseTableMegaProps) {
+  const context = useContext(Context);
 
-  return {
-    ...rest,
-  };
+  return context as unknown as TContextProviderType<T>;
 }

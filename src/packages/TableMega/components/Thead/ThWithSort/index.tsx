@@ -1,28 +1,30 @@
-import { Header, Table } from "@tanstack/react-table";
-import { managerClassNames } from "~/packages/TableMega/utils/managerClassNames";
-import { ResizingElement } from "../ResizingElement";
-import { ThContent } from "../ThContent";
-import { ThWithoutSort } from "../ThWithoutSort";
+import { Header, Table } from '@tanstack/react-table';
+import { managerClassNames } from '~/packages/TableMega/utils/managerClassNames';
+import { ResizingElement } from '../ResizingElement';
+import { ThContent } from '../ThContent';
+import { ThWithoutSort } from '../ThWithoutSort';
 
-type TThWithSortProps<T> = {
+type TThWithSortProps<T = unknown> = {
   table: Table<T>;
   header: Header<T, unknown>;
 };
 
-export function ThWithSort<T>({ header, table }: TThWithSortProps<T>) {
-  if (!header.column.getCanSort()) {
+export function ThWithSort<T = unknown>({
+  header,
+  table,
+}: TThWithSortProps<T>) {
+  if (!header.column.getCanSort?.()) {
     return <ThWithoutSort table={table} header={header} />;
   }
+  const meta = header.getContext().column.columnDef.meta;
   return (
     <th
       className={managerClassNames([
-        "p-4 relative",
+        'p-4 relative',
         {
-          "text-left": !header.getContext().column.columnDef.meta?.align,
-          "text-center":
-            header.getContext().column.columnDef.meta?.align === "center",
-          "text-right":
-            header.getContext().column.columnDef.meta?.align === "right",
+          'text-left': !meta?.align,
+          'text-center': meta?.align === 'center',
+          'text-right': meta?.align === 'right',
         },
       ])}
       key={header.id}

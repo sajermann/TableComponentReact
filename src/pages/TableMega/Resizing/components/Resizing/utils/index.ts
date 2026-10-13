@@ -1,6 +1,6 @@
 import { getEnv } from '~/utils/getEnv';
 
-const IDENTIFIER = `${getEnv('APPLICATION_IDENTIFIER')}:resizing`;
+const IDENTIFIER = `${getEnv('VITE_APPLICATION_IDENTIFIER')}:resizing`;
 
 const DEFAULT = {
   id: 100,

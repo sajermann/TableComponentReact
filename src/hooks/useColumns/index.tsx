@@ -1,4 +1,4 @@
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Row } from "@tanstack/react-table";
 import { CheckIcon, XIcon } from "lucide-react";
 import { useMemo } from "react";
 import { TPerson } from "~/types";
@@ -69,7 +69,11 @@ export function useColumns(columnSizeDefault?: Record<string, number>) {
         meta: {
           align: "center",
         },
-        sortingFn: (rowA, rowB, columnId) => {
+        sortingFn: (
+          rowA: Row<TPerson>,
+          rowB: Row<TPerson>,
+          columnId: string
+        ) => {
           const dateA = stringToDate(rowA.getValue(columnId));
           const dateB = stringToDate(rowB.getValue(columnId));
           return dateB < dateA ? 1 : -1;

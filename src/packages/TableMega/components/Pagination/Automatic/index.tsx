@@ -1,11 +1,7 @@
-import {
-  OnChangeFn,
-  PaginationState,
-  getPaginationRowModel,
-} from "@tanstack/react-table";
-import { useEffect } from "react";
-import { useTableMega } from "../../../hooks";
-import { Main } from "../Main";
+import { OnChangeFn, PaginationState } from '@tanstack/react-table';
+import { useEffect } from 'react';
+import { useTableMega } from '../../../hooks';
+import { Main } from '../Main';
 
 export type TPaginationAutomaticProps = {
   disabled?: boolean;
@@ -23,22 +19,19 @@ export function Automatic({
   const { table } = useTableMega();
 
   useEffect(() => {
-    if (typeof pageIndex === "number" && typeof pageSize === "number") {
-      table.setState((prev) => ({
-        ...prev,
-        pagination: {
-          pageIndex: pageIndex,
-          pageSize: pageSize,
-        },
-      }));
-    }
-
-    table.setOptions((prev) => ({
+    table.setOptions(prev => ({
       ...prev,
+      manualPagination: false,
       ...(onPaginationChange ? { onPaginationChange } : {}),
-      getPaginationRowModel: getPaginationRowModel(),
+      state: {
+        ...prev.state,
+        pagination: {
+          pageIndex,
+          pageSize,
+        },
+      },
     }));
-  }, [pageIndex, pageSize]);
+  }, [pageIndex, pageSize, onPaginationChange]);
 
   return <Main disabled={disabled} />;
 }

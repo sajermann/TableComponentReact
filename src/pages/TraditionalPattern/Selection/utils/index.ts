@@ -1,5 +1,7 @@
-import type { Table } from '@tanstack/react-table';
-export function verifyIndeterminate<T>(table: Table<T>) {
+export function verifyIndeterminate(table: {
+  getIsAllRowsSelected: () => boolean;
+  getIsSomeRowsSelected: () => boolean;
+}) {
   if (table.getIsAllRowsSelected()) {
     return true;
   }

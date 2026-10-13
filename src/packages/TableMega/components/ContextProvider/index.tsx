@@ -1,22 +1,34 @@
 import {
   ColumnDef,
   ColumnOrderState,
+  createExpandedRowModel,
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  createSortedRowModel,
   FilterFnOption,
   OnChangeFn,
   RowSelectionState,
+  stockFeatures,
   Table,
   TableMeta,
-  getCoreRowModel,
-  getFilteredRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import React, { JSX } from "react";
-import { ReactNode, createContext, useMemo } from "react";
-import { OnExpanded } from "../OnExpanded";
+  tableFeatures,
+  useTable,
+} from '@tanstack/react-table';
+import { useTanStackTableDevtools } from '@tanstack/react-table-devtools';
+import React, { createContext, JSX, ReactNode, useMemo } from 'react';
+import { OnExpanded } from '../OnExpanded';
+
+const features = tableFeatures({
+  ...stockFeatures,
+  filteredRowModel: createFilteredRowModel(),
+  sortedRowModel: createSortedRowModel(),
+  paginatedRowModel: createPaginatedRowModel(),
+  expandedRowModel: createExpandedRowModel(),
+});
 
 function getExpandComponent(children: ReactNode) {
   let expandedComponent: JSX.Element | null = null;
-  React.Children.forEach(children, (child) => {
+  React.Children.forEach(children, child => {
     if (React.isValidElement(child) && child.type === OnExpanded) {
       expandedComponent = (child?.props as any)?.children;
     }
@@ -24,7 +36,7 @@ function getExpandComponent(children: ReactNode) {
   return expandedComponent;
 }
 
-type TContextProviderType<T> = {
+export type TContextProviderType<T> = {
   data: T[];
   columns: ColumnDef<T, unknown>[];
   meta?: TableMeta<T>;
@@ -32,9 +44,10 @@ type TContextProviderType<T> = {
   expandedComponent?: React.ReactNode;
 };
 
-export const Context = createContext({} as TContextProviderType<any>);
+export const Context = createContext({} as TContextProviderType<unknown>);
 
 export type TContextProviderProps<T, U = undefined> = {
+  tableKey?: string;
   children: ReactNode;
   data: T[];
   columns: ColumnDef<T, unknown>[];
@@ -47,13 +60,14 @@ export type TContextProviderProps<T, U = undefined> = {
     globalFilterFn?: FilterFnOption<T>;
   };
   selection?: {
-    type: "multi" | "single";
-    rowSelection: { [index: number]: boolean };
+    type: 'multi' | 'single';
+    rowSelection: RowSelectionState;
     setRowSelection: OnChangeFn<RowSelectionState>;
   };
 };
 
-export function ContextProvider<T, U>({
+export function ContextProvider<T extends Record<string, unknown>, U>({
+  tableKey,
   data,
   children,
   columns,
@@ -63,15 +77,14 @@ export function ContextProvider<T, U>({
   globalFilter,
   selection,
 }: TContextProviderProps<T, U>) {
-  const table = useReactTable({
+  const table = useTable({
+    key: tableKey || 'TableMega',
+    features,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    ...(columns.some((col) => col.meta?.resizingElement) && {
-      columnResizeMode: "onChange",
-    }),
-    ...((columns.some((col) => col.filterFn) || !!globalFilter) && {
-      getFilteredRowModel: getFilteredRowModel(),
+    manualPagination: true,
+    ...(columns.some(col => col.meta?.resizingElement) && {
+      columnResizeMode: 'onChange',
     }),
     state: {
       ...(!!selection && {
@@ -90,15 +103,19 @@ export function ContextProvider<T, U>({
     }),
 
     ...(!!globalFilter && {
-      globalFilterFn: globalFilter.globalFilterFn || "auto",
+      globalFilterFn: globalFilter.globalFilterFn || 'auto',
     }),
 
     ...(!!selection && {
       onRowSelectionChange: selection.setRowSelection,
       enableRowSelection: true,
-      enableMultiRowSelection: selection?.type === "multi",
+      enableMultiRowSelection: selection?.type === 'multi',
     }),
     meta,
+  }) as unknown as Table<T>;
+
+  useTanStackTableDevtools(table, {
+    enabled: import.meta.env.DEV && import.meta.env.MODE !== 'test',
   });
 
   const expandedComponent = getExpandComponent(children);
@@ -111,11 +128,18 @@ export function ContextProvider<T, U>({
       meta,
       expandedComponent,
     }),
-    [table, columns, data, meta, expandedComponent]
+    [table, columns, data, meta, expandedComponent],
   );
 
   return (
-    <Context.Provider value={{ ...memoizedValue, expandedComponent }}>
+    <Context.Provider
+      value={
+        {
+          ...memoizedValue,
+          expandedComponent,
+        } as unknown as TContextProviderType<unknown>
+      }
+    >
       {children}
     </Context.Provider>
   );

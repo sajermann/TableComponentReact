@@ -1,20 +1,15 @@
-/* eslint-disable react/button-has-type */
-
-import { Table } from "@tanstack/react-table";
+import { Table } from '@tanstack/react-table';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronsLeftIcon,
   ChevronsRightIcon,
-} from "lucide-react";
-import { useTranslation } from "~/hooks/useTranslation";
-import { Button } from "../Button";
-import { ContainerInput } from "../ContainerInput";
-import { Input } from "../Input";
-import { Label } from "../Label";
-import Select from "../Select";
-
-//import { Select } from "../Select";
+} from 'lucide-react';
+import { useTranslation } from '~/hooks/useTranslation';
+import { Button } from '../Button';
+import { ContainerInput } from '../ContainerInput';
+import { Label } from '../Label';
+import Select from '../Select';
 
 type Props<T> = {
   table: Table<T>;
@@ -52,27 +47,27 @@ function ButtonPagination({
 const DEFAULT_OPTIONS = [
   {
     value: 10,
-    label: "10",
+    label: '10',
   },
   {
     value: 20,
-    label: "20",
+    label: '20',
   },
   {
     value: 30,
-    label: "30",
+    label: '30',
   },
   {
     value: 40,
-    label: "40",
+    label: '40',
   },
   {
     value: 50,
-    label: "50",
+    label: '50',
   },
   {
     value: 100,
-    label: "100",
+    label: '100',
   },
 ];
 
@@ -108,16 +103,14 @@ export function Pagination<T>({ table, pagination }: Props<T>) {
           <ChevronsRightIcon />
         </ButtonPagination>
         <span className="flex items-center gap-1">
-          <span>{translate("PAGE")}</span>
-          <strong>
-            {Math.ceil(table.getState().pagination.pageIndex + 1)}
-          </strong>
-          <span>{translate("OF")}</span>{" "}
-          <strong>{Math.ceil(table.getPageCount()) || "?"}</strong>
+          <span>{translate('PAGE')}</span>
+          <strong>{Math.ceil(table.state.pagination.pageIndex + 1)}</strong>
+          <span>{translate('OF')}</span>{' '}
+          <strong>{Math.ceil(table.getPageCount()) || '?'}</strong>
         </span>
 
         <ContainerInput className="w-max flex-row items-center">
-          <Label htmlFor="rows">{translate("ROWS")}</Label>
+          <Label htmlFor="rows">{translate('ROWS')}</Label>
           <Select.Container>
             <Select.Select
               disabled={pagination.disabledActions}
@@ -128,11 +121,11 @@ export function Pagination<T>({ table, pagination }: Props<T>) {
               }
               value={
                 DEFAULT_OPTIONS.find(
-                  (item) => item.value === table.getState().pagination.pageSize
+                  item => item.value === table.state.pagination.pageSize,
                 )?.value
               }
             >
-              {DEFAULT_OPTIONS.map((opt) => (
+              {DEFAULT_OPTIONS.map(opt => (
                 <Select.Option key={opt.value} value={opt.value}>
                   {opt.label}
                 </Select.Option>
