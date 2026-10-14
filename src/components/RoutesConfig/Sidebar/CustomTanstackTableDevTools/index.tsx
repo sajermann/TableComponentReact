@@ -7,9 +7,11 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useTranslation } from '~/hooks';
 import { managerClassNames } from '~/utils';
 
 export function CustomTanstackTableDevTools() {
+  const { translate } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -26,7 +28,9 @@ export function CustomTanstackTableDevTools() {
         <div className="flex items-center gap-2 truncate">
           <TableProperties className="w-4 h-4 text-orange-500 shrink-0" />
           <span className="truncate">
-            {isOpen ? 'Fechar Table DevTools' : 'Abrir Table DevTools'}
+            {isOpen
+              ? translate('CLOSE_TABLE_DEV_TOOLS')
+              : translate('OPEN_TABLE_DEV_TOOLS')}
           </span>
         </div>
         {isOpen ? (
@@ -38,10 +42,7 @@ export function CustomTanstackTableDevTools() {
 
       {isOpen &&
         createPortal(
-          <div
-            className="absolute bottom-0 left-0 right-0 h-1/2 z-50 bg-[#1f1f1f] p-4 rounded-2xl"
-            onScroll={() => console.log('scroll')}
-          >
+          <div className="absolute bottom-0 left-0 right-0 h-1/2 z-50 bg-[#1f1f1f] p-4 rounded-2xl">
             <button
               type="button"
               onClick={() => setIsOpen(false)}

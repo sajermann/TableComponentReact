@@ -14,17 +14,13 @@ import { useFileCoverage } from './hooks/useFileCoverage';
 import { resolveRouteToFile } from './utils/resolveRouteToFile';
 
 export function DevTools() {
-  if (!import.meta.env.DEV) {
-    return null;
-  }
-
   const { translate } = useTranslation();
   const { pathname } = useLocation();
   const fileInfo = resolveRouteToFile(pathname);
   const { coverage } = useFileCoverage(fileInfo?.filePath);
   const [copied, setCopied] = useState(false);
 
-  if (!fileInfo) {
+  if (!fileInfo || !import.meta.env.DEV) {
     return null;
   }
 
@@ -81,9 +77,7 @@ export function DevTools() {
           {translate('DEV_TOOLS')}
         </span>
 
-        <div className="flex items-center gap-1.5">
-          {renderCoverageBadge()}
-        </div>
+        <div className="flex items-center gap-1.5">{renderCoverageBadge()}</div>
       </div>
 
       <div className="flex flex-col gap-2">

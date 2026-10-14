@@ -55,7 +55,6 @@ export default defineConfig({
         '**/interface/**',
         'src/index.tsx',
         '**/constants/**',
-        'src/components/OpenInEditor/**',
         'src/components/RoutesConfig/Sidebar/DevTools/**',
         'src/components/RoutesConfig/Sidebar/CustomTanstackTableDevTools/**',
         'src/pages/TableMega/Sort/components/index.ts',

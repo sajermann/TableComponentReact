@@ -15,7 +15,6 @@ export * from './Label';
 export * from './Layout';
 export * from './LoadingSelector';
 export * from './Modal';
-export * from './OpenInEditor';
 export * from './Popover';
 export * from './Radio';
 export * from './RoutesConfig';

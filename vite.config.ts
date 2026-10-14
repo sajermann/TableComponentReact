@@ -8,7 +8,6 @@ import Pages from 'vite-plugin-pages';
 
 export default defineConfig(({ mode }) => {
   const { VITE_URL_BASENAME } = { ...loadEnv(mode, process.cwd()) };
-  console.log({ VITE_URL_BASENAME, mode });
 
   return {
     base: `/${VITE_URL_BASENAME}`,
