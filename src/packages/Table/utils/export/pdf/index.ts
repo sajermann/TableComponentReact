@@ -9,7 +9,6 @@ type TPrintProps<T> = {
 };
 
 export function pdf<T>({ data, defColumns = [] }: TPrintProps<T>) {
-  // TODO: Fix friends column
   const table = buildTable({ data, defColumns });
   applyPlugin(JsPdf);
   const doc = new JsPdf({
@@ -20,6 +19,15 @@ export function pdf<T>({ data, defColumns = [] }: TPrintProps<T>) {
     floatPrecision: 16,
   });
 
-  autoTable(doc, { html: table });
+  autoTable(doc, {
+    html: table,
+    didParseCell: (hookData) => {
+      if (hookData.cell.text) {
+        hookData.cell.text = hookData.cell.text.map((text) =>
+          text.replace(/[\t\r\n]+/g, ' ').replace(/\s+/g, ' ').trim()
+        );
+      }
+    },
+  });
   doc.save(`Data-${new Date().toISOString()}.pdf`);
 }

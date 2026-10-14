@@ -10,7 +10,7 @@ type TPdfProps<T> = {
 };
 export function Pdf<T>({ defColumns }: TPdfProps<T>) {
   const { translate } = useTranslation();
-  const { table } = useTableMega();
+  const { table } = useTableMega<T>();
   const { rows } = table.getRowModel();
 
   return (

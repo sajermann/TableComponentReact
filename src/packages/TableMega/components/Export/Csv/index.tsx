@@ -10,7 +10,7 @@ type TCsvProps<T> = {
 };
 export function Csv<T>({ defColumns }: TCsvProps<T>) {
   const { translate } = useTranslation();
-  const { table } = useTableMega();
+  const { table } = useTableMega<T>();
   const { rows } = table.getRowModel();
 
   return (

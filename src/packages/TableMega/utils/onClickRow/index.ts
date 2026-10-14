@@ -1,11 +1,14 @@
 import { Row } from '@tanstack/react-table';
 import { TSelection } from '../../types';
 
-type Props<T> = {
+type Props<T extends Record<string, unknown>> = {
   selection?: Omit<TSelection<T>, 'disableCheckbox'>;
   row?: Row<T>;
 };
-export function onClickRow<T>({ selection, row }: Props<T>) {
+export function onClickRow<T extends Record<string, unknown>>({
+  selection,
+  row,
+}: Props<T>) {
   if (!selection || !row) {
     return;
   }

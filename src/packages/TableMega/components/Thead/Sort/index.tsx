@@ -1,12 +1,8 @@
-import {
-  OnChangeFn,
-  SortingState,
-  getSortedRowModel,
-} from "@tanstack/react-table";
-import { DetailedHTMLProps, HTMLAttributes, useEffect } from "react";
-import { useTableMega } from "~/packages/TableMega/hooks";
-import { RowsWithSort } from "../RowsWithSort";
-import { THeadDefaultInternal } from "../THeadDefaultInternal";
+import { OnChangeFn, SortingState } from '@tanstack/react-table';
+import { DetailedHTMLProps, HTMLAttributes, useEffect } from 'react';
+import { useTableMega } from '~/packages/TableMega/hooks';
+import { RowsWithSort } from '../RowsWithSort';
+import { THeadDefaultInternal } from '../THeadDefaultInternal';
 
 export type TSortProps = DetailedHTMLProps<
   HTMLAttributes<HTMLTableSectionElement>,
@@ -16,26 +12,36 @@ export type TSortProps = DetailedHTMLProps<
     sort: SortingState;
     setSort: OnChangeFn<SortingState>;
   };
+  manualSorting?: boolean;
 };
-export function Sort({ controlled, ...rest }: TSortProps) {
+export function Sort({ controlled, manualSorting, ...rest }: TSortProps) {
   const { table } = useTableMega();
 
   useEffect(() => {
     if (!controlled) {
-      table.setOptions((prev) => ({
-        ...prev,
-        getSortedRowModel: getSortedRowModel(),
-      }));
       return;
     }
 
     if (controlled && controlled.sort) {
-      table.setState((prev) => ({
+      if (
+        'setState' in table &&
+        typeof (
+          table as { setState?: (fn: () => { sorting: SortingState }) => void }
+        ).setState === 'function'
+      ) {
+        (
+          table as { setState: (fn: () => { sorting: SortingState }) => void }
+        ).setState(() => ({
+          sorting: controlled.sort,
+        }));
+      }
+      table.setOptions(prev => ({
         ...prev,
-        sorting: controlled.sort,
-      }));
-      table.setOptions((prev) => ({
-        ...prev,
+        manualSorting: !!manualSorting,
+        state: {
+          ...prev?.state,
+          sorting: controlled.sort,
+        },
         onSortingChange: controlled.setSort,
       }));
     }

@@ -162,6 +162,12 @@
     "ENGLISH": "Inglês",
     "PORTUGUESE": "Português",
     "LANGUAGE": "Linguagem",
-    "THEME": "Tema"
+    "THEME": "Tema",
+    "OPEN_FILE": "Abrir Arquivo",
+    "OPEN_TEST": "Abrir Teste",
+    "COPIED_TO_CLIPBOARD": "Copiado para o clipboard!",
+    "DEV_TOOLS": "Dev Tools",
+    "OPEN_TABLE_DEV_TOOLS": "Abrir Table Dev Tools",
+    "CLOSE_TABLE_DEV_TOOLS": "Fechar Table Dev Tools"
   }
 }

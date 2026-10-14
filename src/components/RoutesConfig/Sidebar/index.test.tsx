@@ -4,12 +4,14 @@ import { useHomePage } from "~/hooks/useHomePage";
 import { Sidebar } from ".";
 import { Config } from "./Config";
 import { Credits } from "./Credits";
+import { DevTools } from "./DevTools";
 import { OtherComponents } from "./OtherComponents";
 import { TableOfContents } from "./TableOfContents";
 
 vi.mock("~/hooks/useHomePage");
 vi.mock("./Credits");
 vi.mock("./Config");
+vi.mock("./DevTools");
 vi.mock("./OtherComponents");
 vi.mock("./TableOfContents");
 
@@ -26,6 +28,7 @@ describe("components/RoutesConfig/Sidebar", () => {
     vi.mocked(useHomePage).mockReturnValue({ isHomePage: false });
     vi.mocked(Config).mockImplementation(() => <div>Config Test</div>);
     vi.mocked(Credits).mockImplementation(() => <div>Credits Test</div>);
+    vi.mocked(DevTools).mockImplementation(() => <div>DevTools Test</div>);
     vi.mocked(TableOfContents).mockImplementation(() => (
       <div>TableOfContents Test</div>
     ));
@@ -35,10 +38,12 @@ describe("components/RoutesConfig/Sidebar", () => {
     const { findByText } = render(<Sidebar />);
     const configResult = await findByText("Config Test");
     const creditsResult = await findByText("Credits Test");
+    const devToolsResult = await findByText("DevTools Test");
     const tableOfContentsResult = await findByText("TableOfContents Test");
     const otherComponentsResult = await findByText("OtherComponents Test");
     expect(configResult).toBeTruthy();
     expect(creditsResult).toBeTruthy();
+    expect(devToolsResult).toBeTruthy();
     expect(tableOfContentsResult).toBeTruthy();
     expect(otherComponentsResult).toBeTruthy();
   });

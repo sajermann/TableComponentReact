@@ -51,6 +51,7 @@ export function RowsWithVirtualization<T>({
       )}
       {getVirtualItems().map((virtualRow) => {
         const row = rows[virtualRow.index];
+        if (!row) return null;
         return (
           <Fragment key={row.id}>
             <Tr

@@ -1,18 +1,18 @@
-import { DetailedHTMLProps, HTMLAttributes, memo } from "react";
-import { managerClassNames } from "~/utils";
+import { DetailedHTMLProps, HTMLAttributes, memo } from 'react';
+import { managerClassNames } from '~/utils';
 
-interface CustomHeadingProps {
+interface ICustomHeadingProps {
   title: string;
-  variant: "h1" | "h2" | "h3";
+  variant: 'h1' | 'h2' | 'h3';
 }
 
-const variantClassMap: Record<CustomHeadingProps["variant"], string> = {
-  h1: "text-3xl",
-  h2: "text-2xl",
-  h3: "text-xl",
+const variantClassMap: Record<ICustomHeadingProps['variant'], string> = {
+  h1: 'text-3xl',
+  h2: 'text-2xl',
+  h3: 'text-xl',
 };
 
-const CustomHeading = memo(({ title, variant }: CustomHeadingProps) => {
+const CustomHeading = memo(({ title, variant }: ICustomHeadingProps) => {
   const Tag = variant;
 
   return (
@@ -24,19 +24,21 @@ const CustomHeading = memo(({ title, variant }: CustomHeadingProps) => {
 
 type Props = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
   title?: string;
-  variant?: "h1" | "h2" | "h3";
+  variant?: 'h1' | 'h2' | 'h3';
 };
 
 export const Section = memo(
-  ({ children, className, title, variant }: Props) => (
-    <section
-      className={managerClassNames([
-        "flex flex-col gap-2 w-fit",
-        { [className as string]: className },
-      ])}
-    >
-      {title && variant && <CustomHeading title={title} variant={variant} />}
-      {children}
-    </section>
-  )
+  ({ children, className, title, variant }: Props) => {
+    return (
+      <section
+        className={managerClassNames([
+          'flex flex-col gap-2 w-fit relative',
+          { [className as string]: className },
+        ])}
+      >
+        {title && variant && <CustomHeading title={title} variant={variant} />}
+        {children}
+      </section>
+    );
+  },
 );

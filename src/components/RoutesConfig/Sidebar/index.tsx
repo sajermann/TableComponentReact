@@ -1,6 +1,7 @@
 import { useHomePage } from "~/hooks/useHomePage";
 import { Config } from "./Config";
 import { Credits } from "./Credits";
+import { DevTools } from "./DevTools";
 import { OtherComponents } from "./OtherComponents";
 import { TableOfContents } from "./TableOfContents";
 
@@ -16,6 +17,7 @@ export function Sidebar() {
         <Credits />
         <TableOfContents />
         <OtherComponents />
+        <DevTools />
       </aside>
     </div>
   );

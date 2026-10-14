@@ -1,34 +1,63 @@
 import {
   ColumnDef,
-  ColumnSizingInfoState,
+  ColumnResizingState,
   ColumnSizingState,
+  columnFilteringFeature,
+  columnOrderingFeature,
+  columnResizingFeature,
+  columnSizingFeature,
+  columnVisibilityFeature,
+  createExpandedRowModel,
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  createSortedRowModel,
+  filterFns,
+  globalFilteringFeature,
+  Table as ReactTableType,
+  rowExpandingFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
   SortingState,
+  sortFns,
+  stockFeatures,
   TableMeta,
-  getCoreRowModel,
-  getExpandedRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import { useEffect, useMemo, useRef, useState } from "react";
+  tableFeatures,
+  useTable,
+} from '@tanstack/react-table';
+import { useTanStackTableDevtools } from '@tanstack/react-table-devtools';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { managerClassNames } from '~/packages/Table/utils/managerClassNames';
+import { TDefTools, TPagination, TSelection } from '../types';
+import { TExpandRow } from '../types/expand-row.type';
+import { TGlobalFilter } from '../types/global-filter.type';
+import { Header } from './Header';
+import styles from './index.module.css';
+import { Pagination } from './Pagination';
+import { Tbody } from './Tbody';
+import { Tfoot } from './Tfoot';
+import { Thead } from './Thead';
 
-import { TDefTools, TPagination, TSelection } from "../types";
+const tableFeaturesConfig = tableFeatures({
+  columnVisibilityFeature,
+  columnResizingFeature,
+  columnSizingFeature,
+  columnOrderingFeature,
+  rowSortingFeature,
+  rowSelectionFeature,
+  rowExpandingFeature,
+  rowPaginationFeature,
+  columnFilteringFeature,
+  globalFilteringFeature,
+  sortFns,
+  filterFns,
+  filteredRowModel: createFilteredRowModel(),
+  sortedRowModel: createSortedRowModel(),
+  expandedRowModel: createExpandedRowModel(),
+});
 
-import { Header } from "./Header";
-import { Pagination } from "./Pagination";
-import { Tbody } from "./Tbody";
-import { Tfoot } from "./Tfoot";
-import { Thead } from "./Thead";
-
-import { managerClassNames } from "~/packages/Table/utils/managerClassNames";
-import { TExpandRow } from "../types/expand-row.type";
-
-import { TGlobalFilter } from "../types/global-filter.type";
-import styles from "./index.module.css";
-
-type Props<T, U = undefined> = {
-  selection?: TSelection<T>;
+type Props<T extends Record<string, unknown>, U = undefined> = {
+  selection?: TSelection;
 
   columns: ColumnDef<T, unknown>[];
   data: T[];
@@ -42,7 +71,8 @@ type Props<T, U = undefined> = {
   meta?: TableMeta<T>;
   onResizing?: (data: {
     columnSizing: ColumnSizingState;
-    columnSizingInfo: ColumnSizingInfoState;
+    columnSizingInfo?: ColumnResizingState;
+    columnResizing?: ColumnResizingState;
   }) => void;
 
   columnVisibility?: Record<string, boolean>;
@@ -52,6 +82,7 @@ type Props<T, U = undefined> = {
   maxHeight?: string;
   showFooter?: boolean;
 
+  tableKey?: string;
   tools?: TDefTools<T>;
   sorting?: {
     manualSorting?: {
@@ -61,7 +92,8 @@ type Props<T, U = undefined> = {
   };
 };
 
-export function Table<T, U = undefined>({
+export function Table<T extends Record<string, unknown>, U = undefined>({
+  tableKey,
   selection,
   columns,
   data,
@@ -82,14 +114,12 @@ export function Table<T, U = undefined>({
   sorting,
 }: Props<T, U>) {
   const [sortingInternal, setSortingInternal] = useState<SortingState>([]);
-  const [globalFilterInternal, setGlobalFilterInternal] = useState("");
+  const [globalFilterInternal, setGlobalFilterInternal] = useState('');
 
   const paginationState = useMemo(() => {
-    if (!pagination || typeof pagination?.automatic === "boolean") {
+    if (!pagination || typeof pagination?.automatic === 'boolean') {
       return {
         onChange: undefined,
-        getPaginationRowModel:
-          pagination?.automatic === true ? getPaginationRowModel() : undefined,
       };
     }
 
@@ -100,7 +130,6 @@ export function Table<T, U = undefined>({
           pageSize: pagination.automatic.controlled.pageSize || 0,
         },
         onPaginationChange: pagination.automatic.controlled.onChange,
-        getPaginationRowModel: getPaginationRowModel(),
       };
     }
 
@@ -117,12 +146,20 @@ export function Table<T, U = undefined>({
     }
   }, [pagination]);
 
-  const table = useReactTable({
+  const features = useMemo(
+    () => ({
+      ...tableFeaturesConfig,
+      ...(pagination ? { paginatedRowModel: createPaginatedRowModel() } : {}),
+    }),
+    [pagination],
+  );
+
+  const table = useTable({
+    key: tableKey || 'Table',
+    features: features as unknown as typeof stockFeatures,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    columnResizeMode: "onChange",
-    getFilteredRowModel: getFilteredRowModel(),
+    columnResizeMode: 'onChange',
     state: {
       ...paginationState,
       sorting: sorting?.disabled ? undefined : sortingInternal,
@@ -138,44 +175,47 @@ export function Table<T, U = undefined>({
       : globalFilter?.controlled?.setFilter || setGlobalFilterInternal,
     onRowSelectionChange: selection?.setRowSelection,
     enableRowSelection: !!selection,
-    enableMultiRowSelection: selection?.type === "multi",
+    enableMultiRowSelection: selection?.type === 'multi',
     onSortingChange: sorting?.disabled
       ? undefined
-      : (funcUpdater) => {
+      : funcUpdater => {
           if (sorting?.manualSorting) {
             const resultSorts = (
               funcUpdater as unknown as (
-                dataTempOldSort: SortingState
+                dataTempOldSort: SortingState,
               ) => Record<string, unknown>[]
             )(sortingInternal);
             sorting.manualSorting.fn(resultSorts);
           }
           return setSortingInternal(funcUpdater);
         },
-    getSortedRowModel: getSortedRowModel(),
     getRowCanExpand: () => !!expandRow,
-    getExpandedRowModel: getExpandedRowModel(),
     ...paginationState,
     meta,
     globalFilterFn: !globalFilter
       ? undefined
-      : globalFilter?.controlled?.globalFilterFn || "auto",
+      : globalFilter?.controlled?.globalFilterFn || 'auto',
     manualSorting: !!sorting?.manualSorting,
     enableMultiSort: true,
+  }) as unknown as ReactTableType<T>;
+
+  useTanStackTableDevtools(table, {
+    enabled: import.meta.env.DEV && import.meta.env.MODE !== 'test',
   });
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (onResizing) {
         onResizing({
-          columnSizing: table.getState().columnSizing,
-          columnSizingInfo: table.getState().columnSizingInfo,
+          columnSizing: table.state.columnSizing,
+          columnSizingInfo: table.state.columnResizing,
+          columnResizing: table.state.columnResizing,
         });
       }
     }, 1000);
 
     return () => clearTimeout(timeout);
-  }, [table.getState().columnSizing]);
+  }, [table.state.columnSizing]);
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
@@ -188,9 +228,11 @@ export function Table<T, U = undefined>({
           value:
             (globalFilter?.controlled?.filter as string) ||
             globalFilterInternal,
-          onChange: (e) => {
+          onChange: e => {
             if (globalFilter?.controlled?.setFilter) {
-              globalFilter?.controlled?.setFilter(e.target.value as any);
+              globalFilter?.controlled?.setFilter(
+                e.target.value as unknown as U,
+              );
               return;
             }
             setGlobalFilterInternal(e.target.value);
@@ -201,12 +243,12 @@ export function Table<T, U = undefined>({
       <div
         ref={tableContainerRef}
         className={managerClassNames([
-          "scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-300",
-          "scrollbar-thumb-rounded-full scrollbar-track-rounded-full",
+          'scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-300',
+          'scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
           styles.customContainer,
         ])}
         style={{
-          overflow: isLoading ? "hidden" : "auto",
+          overflow: isLoading ? 'hidden' : 'auto',
           height: height || undefined,
           minHeight: minHeight || undefined,
           maxHeight: maxHeight || undefined,

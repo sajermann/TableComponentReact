@@ -1,8 +1,8 @@
 import { Row } from '@tanstack/react-table';
-import { filterByType } from '..';
 import { TFilterActive } from '../../types';
+import { filterByType } from '..';
 
-export function globalFilterFnCustom<T>(
+export function globalFilterFnCustom<T extends Record<string, unknown>>(
   row: Row<T>,
   columnId: string,
   filters: TFilterActive[],

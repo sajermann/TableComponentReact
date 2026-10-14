@@ -1,16 +1,16 @@
-import { Row, flexRender } from "@tanstack/react-table";
-import { useVirtualizer } from "@tanstack/react-virtual";
-import { Fragment, RefObject, useEffect, useState } from "react";
-import { useTableMega } from "~/packages/TableMega/hooks";
-import { Td } from "../../Td";
-import { Tr } from "../../Tr";
+import { flexRender } from '@tanstack/react-table';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { Fragment, RefObject, useEffect, useState } from 'react';
+import { useTableMega } from '~/packages/TableMega/hooks';
+import { Td } from '../../Td';
+import { Tr } from '../../Tr';
 
 type TRowsVirtualizedProps = {
   containerRef: RefObject<HTMLDivElement | null>;
 };
 export function Virtualized({ containerRef }: TRowsVirtualizedProps) {
   const { table } = useTableMega();
-  const { rows } = table.getRowModel();
+  const { rows } = table.getPrePaginatedRowModel?.() ?? table.getRowModel();
   const [_, setFisrtRender] = useState(false);
 
   const { getVirtualItems, getTotalSize } = useVirtualizer({
@@ -41,13 +41,13 @@ export function Virtualized({ containerRef }: TRowsVirtualizedProps) {
           <td style={{ height: `${paddingTop}px` }} />
         </tr>
       )}
-      {getVirtualItems().map((virtualRow) => {
+      {getVirtualItems().map(virtualRow => {
         const row = rows[virtualRow.index];
 
         return (
           <Fragment key={row.id}>
             <Tr row={row}>
-              {row.getVisibleCells().map((cell) => (
+              {row.getVisibleCells().map(cell => (
                 <Td
                   {...{
                     style: {
