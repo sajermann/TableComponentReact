@@ -198,7 +198,6 @@ export function TableMegaExportPage() {
   return (
     <Section title={translate("EXPORT")} variant="h1">
       {translate("IMPLEMENTS_EXPORT_MODE")}
-      <span className="text-xs">{translate("PDF_EXPORT_IS_BUGGED")}</span>
 
       <TableMega.Root data={DATA} columns={columns}>
         <div className="w-full flex gap-2 justify-end">

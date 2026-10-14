@@ -2,7 +2,7 @@ import { Row } from '@tanstack/react-table';
 import { TFilterActive } from '~/types';
 import { filterByType } from '../filterByType';
 
-export function globalFilterFnCustom<T>(
+export function globalFilterFnCustom<T extends Record<string, unknown>>(
   rows: Row<T>,
   columnId: string,
   filters: TFilterActive[],

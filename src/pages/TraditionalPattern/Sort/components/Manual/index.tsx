@@ -1,9 +1,9 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { useState } from "react";
-import { Section } from "~/components";
-import { useColumns, useTranslation } from "~/hooks";
-import { Table } from "~/packages/Table";
-import { TPerson } from "~/types";
+import { ColumnDef } from '@tanstack/react-table';
+import { useState } from 'react';
+import { Section } from '~/components';
+import { useTranslation } from '~/hooks';
+import { Table } from '~/packages/Table';
+import { TPerson } from '~/types';
 
 type TAutomaticProps = {
   columns: ColumnDef<TPerson>[];
@@ -16,12 +16,12 @@ export function Manual({ columns, data }: TAutomaticProps) {
   >([]);
 
   return (
-    <Section title={translate("MANUAL_SORT")} variant="h2">
-      {translate("THIS_IS_USEFUL_IF_YOU_ARE_DOING_SERVER_SIDE_SORTING")}
+    <Section title={translate('MANUAL_SORT')} variant="h2">
+      {translate('THIS_IS_USEFUL_IF_YOU_ARE_DOING_SERVER_SIDE_SORTING')}
       <p>State: {JSON.stringify(sortingInternal)}</p>
       <Table
         columns={columns}
-        data={[data[0], data[1]]}
+        data={data}
         sorting={{
           manualSorting: {
             fn: setSortingInternal,

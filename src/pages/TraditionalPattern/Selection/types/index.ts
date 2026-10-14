@@ -1,3 +1,5 @@
+import type { RowSelectionState } from '@tanstack/react-table';
+
 export type TConfig = {
   mode: 'single' | 'multi';
   componentType: 'checkbox' | 'radio' | 'switch' | 'favorite';
@@ -9,4 +11,4 @@ export type TOptions<T> = {
   label: string;
 };
 
-export type TSelectionRow = Record<string | number, boolean>;
+export type TSelectionRow = RowSelectionState;

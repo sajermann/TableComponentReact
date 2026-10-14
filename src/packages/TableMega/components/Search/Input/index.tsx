@@ -1,13 +1,13 @@
-import { FilterFnOption, getFilteredRowModel } from "@tanstack/react-table";
+import { FilterFnOption } from '@tanstack/react-table';
 import {
   DetailedHTMLProps,
   InputHTMLAttributes,
   useEffect,
   useState,
-} from "react";
-import { useTranslation } from "~/hooks/useTranslation";
-import { useTableMega } from "~/packages/TableMega/hooks";
-import { Input } from "../../Input";
+} from 'react';
+import { useTranslation } from '~/hooks/useTranslation';
+import { useTableMega } from '~/packages/TableMega/hooks';
+import { Input } from '../../Input';
 
 type TInputProps<T> = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -26,8 +26,8 @@ export function SearchInput<T>({
   ...rest
 }: TInputProps<T>) {
   const { translate } = useTranslation();
-  const { table } = useTableMega();
-  const [filter, setFilter] = useState("");
+  const { table } = useTableMega<T>();
+  const [filter, setFilter] = useState('');
 
   const filterInternal = controlled?.filter ? controlled.filter : filter;
   const setFilterInternal = controlled?.setFilter
@@ -35,26 +35,24 @@ export function SearchInput<T>({
     : setFilter;
 
   useEffect(() => {
-    table.setOptions((prev) => ({
+    table.setOptions(prev => ({
       ...prev,
       onGlobalFilterChange: controlled?.setFilter
         ? controlled.setFilter
         : setFilter,
-      getFilteredRowModel: getFilteredRowModel(),
-      globalFilterFn: globalFilterFn || "auto",
-    }));
-
-    table.setState((prev) => ({
-      ...prev,
-      globalFilter: filterInternal,
+      globalFilterFn: globalFilterFn || 'auto',
+      state: {
+        ...prev.state,
+        globalFilter: filterInternal,
+      },
     }));
   }, [filterInternal, setFilterInternal]);
 
   return (
     <Input
       value={filterInternal}
-      onChange={(e) => setFilterInternal(e.target.value)}
-      placeholder={translate("SEARCH")}
+      onChange={e => setFilterInternal(e.target.value)}
+      placeholder={translate('SEARCH')}
       type="search"
       {...rest}
     />

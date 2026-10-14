@@ -1,6 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { onResizing } from '.';
 
+vi.mock('~/utils/getEnv', () => ({
+  getEnv: () => 'table-test',
+}));
+
 const DEFAULT = {
   id: 100,
   avatar: 60,
@@ -15,9 +19,6 @@ const DEFAULT = {
 
 describe('pages/TableMega/Resizing/components/Resizing/utils', () => {
   let storage: Record<string, string>;
-  vi.mock('~/utils/getEnv', () => ({
-    getEnv: () => 'table-test',
-  }));
 
   beforeEach(() => {
     storage = {};

@@ -1,12 +1,12 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { Resizing } from ".";
-import { onResizing } from "./utils";
+import { act, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { Resizing } from '.';
+import { onResizing } from './utils';
 
 // Mock do onResizing
-vi.mock("./utils");
+vi.mock('./utils');
 
-describe("pages/TableMega/Resizing/components/Resizing", () => {
+describe('pages/TableMega/Resizing/components/Resizing', () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -15,23 +15,26 @@ describe("pages/TableMega/Resizing/components/Resizing", () => {
     vi.useRealTimers();
   });
 
-  it("dont render it getCanResize is false", () => {
+  it('dont render it getCanResize is false', () => {
     const header = { column: { getCanResize: () => false } } as any;
 
     const { container } = render(
-      <Resizing header={header} table={{} as any} />
+      <Resizing header={header} table={{} as any} />,
     );
     expect(container.firstChild).toBeNull();
   });
 
-  it("should test timeout", async () => {
+  it('should test timeout', async () => {
     const spy = vi.fn();
     vi.mocked(onResizing).mockImplementation(spy);
     const mock = {
-      id: "test",
+      id: 'test',
       size: 10,
     };
     const table = {
+      state: {
+        columnSizing: mock,
+      },
       getState: () => ({
         columnSizing: mock,
       }),
@@ -43,10 +46,10 @@ describe("pages/TableMega/Resizing/components/Resizing", () => {
     } as any;
 
     const { container } = render(<Resizing header={header} table={table} />);
-    const resizer = container?.querySelector("div");
+    const resizer = container?.querySelector('div');
     expect(resizer).toBeTruthy();
-    expect(resizer?.className).toContain("resizer");
-    expect(resizer?.className).not.toContain("is-resizing");
+    expect(resizer?.className).toContain('resizer');
+    expect(resizer?.className).not.toContain('is-resizing');
 
     // Avança o tempo para disparar useEffect
     act(() => {
@@ -58,8 +61,11 @@ describe("pages/TableMega/Resizing/components/Resizing", () => {
     });
   });
 
-  it("clear timeout in unmmount", () => {
+  it('clear timeout in unmmount', () => {
     const table = {
+      state: {
+        columnSizing: 1,
+      },
       getState: () => ({
         columnSizing: 1,
       }),

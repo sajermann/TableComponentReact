@@ -54,7 +54,11 @@ export const convertComplexFilterToJsonLogic = (filter: TComplexFilter) => {
   return filterRule;
 };
 
-export const globalFilterFn = (row: Row<TPerson>, _: any, filters: any) => {
+export const globalFilterFn = (
+  row: Row<TPerson>,
+  _columnId: string | null | undefined,
+  filters: TComplexFilter,
+): boolean => {
   try {
     const filterRule = convertComplexFilterToJsonLogic(filters);
     const result = jsonLogic.apply(filterRule, {

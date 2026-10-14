@@ -1,7 +1,7 @@
-import { Link } from "@tanstack/react-router";
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
-import { useOtherComponents } from "~/hooks";
-import { useTranslation } from "~/hooks/useTranslation";
+import { Link } from '@tanstack/react-router';
+import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
+import { useOtherComponents } from '~/hooks';
+import { useTranslation } from '~/hooks/useTranslation';
 
 export function OtherComponents() {
   const { translate } = useTranslation();
@@ -12,8 +12,8 @@ export function OtherComponents() {
   }
 
   return (
-    <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2">
-      <p>{translate("OTHERS_COMPONENTS")}</p>
+    <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2 overflow-hidden">
+      <p>{translate('OTHERS_COMPONENTS')}</p>
       <div className="flex gap-2 justify-between items-center">
         {otherComponents.prev && (
           <Link
