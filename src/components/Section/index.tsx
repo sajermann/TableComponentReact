@@ -1,12 +1,5 @@
-import {
-  DetailedHTMLProps,
-  HTMLAttributes,
-  memo,
-  useEffect,
-  useRef,
-} from 'react';
+import { DetailedHTMLProps, HTMLAttributes, memo } from 'react';
 import { managerClassNames } from '~/utils';
-import { useDevToolsStore } from '../RoutesConfig/Sidebar/DevTools/store';
 
 interface ICustomHeadingProps {
   title: string;
@@ -36,21 +29,6 @@ type Props = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
 
 export const Section = memo(
   ({ children, className, title, variant }: Props) => {
-    const isFirstMount = useRef(true);
-    const increment = useDevToolsStore(s => s.incrementRenderCount);
-
-    useEffect(() => {
-      if (!import.meta.env.DEV) return;
-      if (isFirstMount.current) {
-        isFirstMount.current = false;
-        return;
-      }
-      // Rastreia apenas a Section principal da página (h1 ou h2) para não duplicar em sub-sections
-      if (variant === 'h1' || variant === 'h2') {
-        increment();
-      }
-    });
-
     return (
       <section
         className={managerClassNames([

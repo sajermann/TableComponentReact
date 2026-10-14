@@ -52,15 +52,6 @@ const tableFeaturesConfig = tableFeatures({
   expandedRowModel: createExpandedRowModel(),
 });
 
-// const features = tableFeatures({
-//   ...stockFeatures,
-
-//   filteredRowModel: createFilteredRowModel(),
-//   sortedRowModel: createSortedRowModel(),
-//   paginatedRowModel: createPaginatedRowModel(),
-//   expandedRowModel: createExpandedRowModel(),
-// });
-
 function getExpandComponent(children: ReactNode) {
   let expandedComponent: JSX.Element | null = null;
   React.Children.forEach(children, child => {

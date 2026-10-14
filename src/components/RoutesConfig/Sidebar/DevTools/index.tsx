@@ -6,12 +6,11 @@ import {
   FileCode,
   FlaskConical,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from '~/hooks';
 import { getEditorUrl, managerClassNames } from '~/utils';
 import { CustomTanstackTableDevTools } from '../CustomTanstackTableDevTools';
 import { useFileCoverage } from './hooks/useFileCoverage';
-import { useDevToolsStore } from './store';
 import { resolveRouteToFile } from './utils/resolveRouteToFile';
 
 export function DevTools() {
@@ -23,12 +22,7 @@ export function DevTools() {
   const { pathname } = useLocation();
   const fileInfo = resolveRouteToFile(pathname);
   const { coverage } = useFileCoverage(fileInfo?.filePath);
-  const { renderCount, resetRenderCount } = useDevToolsStore();
   const [copied, setCopied] = useState(false);
-
-  useEffect(() => {
-    resetRenderCount();
-  }, [pathname, resetRenderCount]);
 
   if (!fileInfo) {
     return null;
@@ -88,13 +82,6 @@ export function DevTools() {
         </span>
 
         <div className="flex items-center gap-1.5">
-          <span
-            title="Quantidade de re-renderizações da página ativa"
-            className="px-2 py-0.5 text-xs rounded-md bg-blue-500/10 text-blue-500 border border-blue-500/20 font-mono font-medium"
-          >
-            Renders: {renderCount}
-          </span>
-
           {renderCoverageBadge()}
         </div>
       </div>

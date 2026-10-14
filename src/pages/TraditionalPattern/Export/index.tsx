@@ -198,7 +198,6 @@ export function ExportPage() {
   return (
     <Section title={translate("EXPORT")} variant="h1">
       {translate("IMPLEMENTS_EXPORT_MODE")}
-      <span className="text-xs">{translate("PDF_EXPORT_IS_BUGGED")}</span>
       <Table
         columns={columns}
         data={DATA}
