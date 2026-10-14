@@ -7,7 +7,6 @@ import {
   lazyRouteComponent,
   Outlet,
 } from '@tanstack/react-router';
-import { tableDevtoolsPlugin } from '@tanstack/react-table-devtools';
 import { InjectorProviders, RoutesConfig } from '~/components';
 import { Home } from '~/pages/Home';
 import { _sortCustomName, _sortCustomOrder } from './utils';
@@ -16,9 +15,6 @@ const rootRoute = createRootRoute({
   component: () => (
     <InjectorProviders>
       <RoutesConfig />
-      {import.meta.env.DEV && (
-        <TanStackDevtools plugins={[tableDevtoolsPlugin()]} />
-      )}
     </InjectorProviders>
   ),
   notFoundComponent: lazyRouteComponent(
@@ -313,7 +309,7 @@ export const traditionalChilds = [
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: '/editable',
+    path: '/editable-by-row',
     component: lazyRouteComponent(
       () => import('~/pages/TraditionalPattern/EditableByRow'),
       'TraditionalEditableByRowPage',
@@ -335,7 +331,7 @@ export const traditionalChilds = [
   },
   {
     getParentRoute: () => tableTraditionalOutletRoute,
-    path: '/expand-line',
+    path: '/expand-row',
     component: lazyRouteComponent(
       () => import('~/pages/TraditionalPattern/ExpandRow'),
       'TraditionalExpandRowPage',

@@ -1,6 +1,12 @@
-import { DetailedHTMLProps, HTMLAttributes, memo } from 'react';
+import {
+  DetailedHTMLProps,
+  HTMLAttributes,
+  memo,
+  useEffect,
+  useRef,
+} from 'react';
 import { managerClassNames } from '~/utils';
-import { OpenInEditor } from '../OpenInEditor';
+import { useDevToolsStore } from '../RoutesConfig/Sidebar/DevTools/store';
 
 interface ICustomHeadingProps {
   title: string;
@@ -26,20 +32,35 @@ const CustomHeading = memo(({ title, variant }: ICustomHeadingProps) => {
 type Props = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
   title?: string;
   variant?: 'h1' | 'h2' | 'h3';
-  url?: string;
 };
 
 export const Section = memo(
-  ({ children, className, title, url, variant }: Props) => (
-    <section
-      className={managerClassNames([
-        'flex flex-col gap-2 w-fit relative',
-        { [className as string]: className },
-      ])}
-    >
-      <OpenInEditor url={url} />
-      {title && variant && <CustomHeading title={title} variant={variant} />}
-      {children}
-    </section>
-  ),
+  ({ children, className, title, variant }: Props) => {
+    const isFirstMount = useRef(true);
+    const increment = useDevToolsStore(s => s.incrementRenderCount);
+
+    useEffect(() => {
+      if (!import.meta.env.DEV) return;
+      if (isFirstMount.current) {
+        isFirstMount.current = false;
+        return;
+      }
+      // Rastreia apenas a Section principal da página (h1 ou h2) para não duplicar em sub-sections
+      if (variant === 'h1' || variant === 'h2') {
+        increment();
+      }
+    });
+
+    return (
+      <section
+        className={managerClassNames([
+          'flex flex-col gap-2 w-fit relative',
+          { [className as string]: className },
+        ])}
+      >
+        {title && variant && <CustomHeading title={title} variant={variant} />}
+        {children}
+      </section>
+    );
+  },
 );

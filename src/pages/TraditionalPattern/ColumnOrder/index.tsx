@@ -14,7 +14,6 @@ export function ColumnOrderPage() {
     <Section
       title={translate('COLUMNS_ORDER')}
       variant="h2"
-      url={import.meta.url}
     >
       {translate('IMPLEMENTS_COLUMNS_ORDER_MODE')}
       <div>{translate('COLUMN_ORDER_WITH_STATE_FULLY_CONTROLLED')}</div>

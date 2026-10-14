@@ -163,6 +163,10 @@
     "ENGLISH": "English",
     "PORTUGUESE": "Portuguese",
     "LANGUAGE": "Language",
-    "THEME": "Theme"
+    "THEME": "Theme",
+    "OPEN_FILE": "Open File",
+    "OPEN_TEST": "Open Test",
+    "COPIED_TO_CLIPBOARD": "Copied to clipboard!",
+    "DEV_TOOLS": "Dev Tools"
   }
 }
