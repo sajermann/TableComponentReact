@@ -2,12 +2,24 @@ import {
   ColumnDef,
   ColumnResizingState,
   ColumnSizingState,
+  columnFilteringFeature,
+  columnOrderingFeature,
+  columnResizingFeature,
+  columnSizingFeature,
+  columnVisibilityFeature,
   createExpandedRowModel,
   createFilteredRowModel,
   createPaginatedRowModel,
   createSortedRowModel,
+  filterFns,
+  globalFilteringFeature,
   Table as ReactTableType,
+  rowExpandingFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
   SortingState,
+  sortFns,
   stockFeatures,
   TableMeta,
   tableFeatures,
@@ -25,6 +37,24 @@ import { Pagination } from './Pagination';
 import { Tbody } from './Tbody';
 import { Tfoot } from './Tfoot';
 import { Thead } from './Thead';
+
+const tableFeaturesConfig = tableFeatures({
+  columnVisibilityFeature,
+  columnResizingFeature,
+  columnSizingFeature,
+  columnOrderingFeature,
+  rowSortingFeature,
+  rowSelectionFeature,
+  rowExpandingFeature,
+  rowPaginationFeature,
+  columnFilteringFeature,
+  globalFilteringFeature,
+  sortFns,
+  filterFns,
+  filteredRowModel: createFilteredRowModel(),
+  sortedRowModel: createSortedRowModel(),
+  expandedRowModel: createExpandedRowModel(),
+});
 
 type Props<T extends Record<string, unknown>, U = undefined> = {
   selection?: TSelection;
@@ -117,20 +147,16 @@ export function Table<T extends Record<string, unknown>, U = undefined>({
   }, [pagination]);
 
   const features = useMemo(
-    () =>
-      tableFeatures({
-        ...stockFeatures,
-        filteredRowModel: createFilteredRowModel(),
-        sortedRowModel: createSortedRowModel(),
-        expandedRowModel: createExpandedRowModel(),
-        ...(pagination ? { paginatedRowModel: createPaginatedRowModel() } : {}),
-      }),
+    () => ({
+      ...tableFeaturesConfig,
+      ...(pagination ? { paginatedRowModel: createPaginatedRowModel() } : {}),
+    }),
     [pagination],
   );
 
   const table = useTable({
     key: tableKey || 'Table',
-    features,
+    features: features as unknown as typeof stockFeatures,
     data,
     columns,
     columnResizeMode: 'onChange',

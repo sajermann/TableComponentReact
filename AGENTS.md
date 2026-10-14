@@ -1,8 +1,6 @@
 Você deve conversar comigo em porguês do Brasil, porém os códigos gerados devem seguir essas regras:
 - Deve estar no padrão inglês, inclusive os nomes de variáveis, métodos, classes, comentários, etc. (Exemplo: ```const world = "World"; console.log($"Hello {world}"); // Example string with interpolation```)
 - Os comentários que você colocar no código, devem estar no idioma inglês.
-- Se você ver algo muito fora do comum em meus códigos, por favor sempre me alerte informando como desenvolvedores experientes aplicam a mesma situação no padrão de mercado, apenas o que realmente faz sentido de mudar ou de começar do zero já no padrão de mercado correto como uma feat nova por exemplo.
-
 
 <!-- intent-skills:start -->
 ## Skill Loading

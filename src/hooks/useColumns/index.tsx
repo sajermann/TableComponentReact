@@ -1,33 +1,33 @@
-import { ColumnDef, Row } from "@tanstack/react-table";
-import { CheckIcon, XIcon } from "lucide-react";
-import { useMemo } from "react";
-import { TPerson } from "~/types";
-import { formatDate, stringToDate } from "~/utils";
-import { useTranslation } from "..";
+import { ColumnDef, Row } from '@tanstack/react-table';
+import { CheckIcon, XIcon } from 'lucide-react';
+import { useMemo } from 'react';
+import { TPerson } from '~/types';
+import { formatDate, stringToDate } from '~/utils';
+import { useTranslation } from '..';
 
 export function useColumns(columnSizeDefault?: Record<string, number>) {
   const { translate } = useTranslation();
-  const columns = useMemo<ColumnDef<TPerson>[]>(
-    () => [
+  const columns = useMemo(
+    (): ColumnDef<TPerson>[] => [
       {
-        accessorKey: "id",
-        accessorFn: (e) => Number(e.id),
-        header: "Id",
+        accessorKey: 'id',
+        accessorFn: e => Number(e.id),
+        header: 'Id',
         minSize: 100,
         size: 100,
         meta: {
-          align: "center",
+          align: 'center',
         },
         enableResizing: false,
         enableMultiSort: true,
       },
       {
-        accessorKey: "avatar",
-        header: "Avatar",
+        accessorKey: 'avatar',
+        header: 'Avatar',
         minSize: 60,
         size: 60,
         meta: {
-          align: "center",
+          align: 'center',
         },
         cell: ({ getValue }) => (
           <div className="w-full flex items-center justify-center">
@@ -41,69 +41,65 @@ export function useColumns(columnSizeDefault?: Record<string, number>) {
         enableGlobalFilter: false,
       },
       {
-        accessorKey: "name",
-        header: translate("NAME"),
+        accessorKey: 'name',
+        header: translate('NAME'),
         minSize: 100,
         size: columnSizeDefault ? columnSizeDefault?.name : 100,
         enableSorting: true,
         enableMultiSort: true,
         meta: {
-          align: "center",
+          align: 'center',
         },
       },
       {
-        accessorKey: "lastName",
-        header: translate("LAST_NAME"),
+        accessorKey: 'lastName',
+        header: translate('LAST_NAME'),
         minSize: 100,
         size: columnSizeDefault ? columnSizeDefault?.lastName : 100,
         meta: {
-          align: "center",
+          align: 'center',
         },
       },
       {
-        accessorFn: (row) => formatDate(new Date(row.birthday)),
-        accessorKey: "birthday",
-        header: translate("BIRTHDAY"),
+        accessorFn: row => formatDate(new Date(row.birthday)),
+        accessorKey: 'birthday',
+        header: translate('BIRTHDAY'),
         minSize: 100,
         size: columnSizeDefault ? columnSizeDefault?.birthday : 100,
         meta: {
-          align: "center",
+          align: 'center',
         },
-        sortingFn: (
-          rowA: Row<TPerson>,
-          rowB: Row<TPerson>,
-          columnId: string
-        ) => {
-          const dateA = stringToDate(rowA.getValue(columnId));
-          const dateB = stringToDate(rowB.getValue(columnId));
-          return dateB < dateA ? 1 : -1;
+        sortFn: (rowA: Row<TPerson>, rowB: Row<TPerson>, columnId: string) => {
+          const timeA = stringToDate(rowA.getValue(columnId)).getTime();
+          const timeB = stringToDate(rowB.getValue(columnId)).getTime();
+          return timeA < timeB ? -1 : timeA > timeB ? 1 : 0;
         },
       },
       {
-        accessorKey: "email",
-        header: "Email",
+        accessorKey: 'email',
+        header: 'Email',
         minSize: 100,
         size: columnSizeDefault ? columnSizeDefault?.email : 100,
         meta: {
-          align: "center",
+          align: 'center',
         },
       },
       {
-        accessorKey: "role",
-        header: "Role",
+        accessorKey: 'role',
+        header: 'Role',
         minSize: 100,
         size: columnSizeDefault?.role || 100,
         meta: {
-          align: "center",
+          align: 'center',
         },
       },
       {
-        accessorKey: "isActive",
-        header: translate("ACTIVE"),
+        accessorKey: 'isActive',
+        header: translate('ACTIVE'),
         minSize: 100,
         size: 100,
         meta: {
-          align: "center",
+          align: 'center',
         },
         cell: ({ row }) =>
           row.original.isActive ? (
@@ -118,7 +114,7 @@ export function useColumns(columnSizeDefault?: Record<string, number>) {
         enableResizing: false,
       },
     ],
-    [translate]
+    [translate],
   );
 
   return { columns };

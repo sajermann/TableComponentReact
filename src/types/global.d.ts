@@ -101,6 +101,10 @@ declare module '@tanstack/react-table' {
     import('@tanstack/table-core').StockFeatures,
     TData & import('@tanstack/table-core').RowData
   >;
+  export function createColumnHelper<TData>(): import('@tanstack/table-core').ColumnHelper<
+    import('@tanstack/table-core').StockFeatures,
+    TData & import('@tanstack/table-core').RowData
+  >;
 }
 
 declare module '@tanstack/react-router' {

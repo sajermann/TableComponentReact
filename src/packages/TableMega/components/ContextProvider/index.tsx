@@ -1,13 +1,29 @@
 import {
   ColumnDef,
   ColumnOrderState,
+  ColumnResizingState,
+  ColumnSizingState,
+  columnFilteringFeature,
+  columnOrderingFeature,
+  columnResizingFeature,
+  columnSizingFeature,
+  columnVisibilityFeature,
   createExpandedRowModel,
   createFilteredRowModel,
   createPaginatedRowModel,
   createSortedRowModel,
   FilterFnOption,
+  filterFns,
+  globalFilteringFeature,
   OnChangeFn,
+  Table as ReactTableType,
   RowSelectionState,
+  rowExpandingFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
+  SortingState,
+  sortFns,
   stockFeatures,
   Table,
   TableMeta,
@@ -18,13 +34,32 @@ import { useTanStackTableDevtools } from '@tanstack/react-table-devtools';
 import React, { createContext, JSX, ReactNode, useMemo } from 'react';
 import { OnExpanded } from '../OnExpanded';
 
-const features = tableFeatures({
-  ...stockFeatures,
+const tableFeaturesConfig = tableFeatures({
+  columnVisibilityFeature,
+  columnResizingFeature,
+  columnSizingFeature,
+  columnOrderingFeature,
+  rowSortingFeature,
+  rowSelectionFeature,
+  rowExpandingFeature,
+  rowPaginationFeature,
+  columnFilteringFeature,
+  globalFilteringFeature,
+  sortFns,
+  filterFns,
   filteredRowModel: createFilteredRowModel(),
   sortedRowModel: createSortedRowModel(),
-  paginatedRowModel: createPaginatedRowModel(),
   expandedRowModel: createExpandedRowModel(),
 });
+
+// const features = tableFeatures({
+//   ...stockFeatures,
+
+//   filteredRowModel: createFilteredRowModel(),
+//   sortedRowModel: createSortedRowModel(),
+//   paginatedRowModel: createPaginatedRowModel(),
+//   expandedRowModel: createExpandedRowModel(),
+// });
 
 function getExpandComponent(children: ReactNode) {
   let expandedComponent: JSX.Element | null = null;
@@ -79,7 +114,7 @@ export function ContextProvider<T extends Record<string, unknown>, U>({
 }: TContextProviderProps<T, U>) {
   const table = useTable({
     key: tableKey || 'TableMega',
-    features,
+    features: tableFeaturesConfig as unknown as typeof stockFeatures,
     data,
     columns,
     manualPagination: true,
